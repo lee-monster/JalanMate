@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics (replace G-XXXXXXXXXX with your GA4 Measurement ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel-ID — Discover Indonesia | Beyond Bali Travel Guide</title>
+  <meta name="description" content="Travel-ID — Discover the best travel spots across Indonesia recommended by the community. Bali, Yogyakarta, Komodo, Bromo, Raja Ampat and more. Halal-friendly, AI trip planner.">
+  <meta name="theme-color" content="#E11D2E">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Travel-ID — Discover Indonesia">
+  <meta property="og:description" content="Discover the best travel spots in Indonesia with an interactive map. Beach, temple, volcano, diving, halal food and more.">
+  <meta property="og:image" content="https://travel-id.kr/images/splash.png">
+  <meta property="og:url" content="https://travel-id.kr/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="id_ID">
+  <meta property="og:locale:alternate" content="ko_KR">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta property="og:locale:alternate" content="ja_JP">
+  <meta property="og:site_name" content="Travel-ID">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Travel-ID — Discover Indonesia">
+  <meta name="twitter:description" content="Discover the best travel spots in Indonesia with interactive map.">
+  <meta name="twitter:image" content="https://travel-id.kr/images/splash.png">
+  <link rel="canonical" id="seo-canonical" href="https://travel-id.kr/">
+
+  <!-- GEO tags for Indonesia -->
+  <meta name="geo.region" content="ID">
+  <meta name="geo.placename" content="Indonesia">
+  <meta name="geo.position" content="-2.5489;118.0149">
+  <meta name="ICBM" content="-2.5489, 118.0149">
+
+  <!-- Keywords -->
+  <meta name="keywords" content="Indonesia travel, Bali travel guide, Yogyakarta tour, Borobudur, Komodo dragon, Mt Bromo, Raja Ampat, Lombok, Indonesia trip planner, halal food Bali, Muslim friendly Indonesia, Indonesia attractions, Indonesia map, Java travel, wisata Indonesia, panduan wisata Bali, kuliner halal Bali, 인도네시아 여행, 발리 여행, 印尼旅游, 巴厘岛旅游, インドネシア旅行, バリ島旅行">
+  <meta name="author" content="Travel-ID">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://travel-id.kr/#website",
+        "url": "https://travel-id.kr/",
+        "name": "Travel-ID",
+        "description": "Discover the best travel spots in Indonesia recommended by the community",
+        "publisher": { "@id": "https://travel-id.kr/#organization" },
+        "inLanguage": ["en", "id", "ko", "zh", "ja"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://travel-id.kr/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "TravelAgency",
+        "@id": "https://travel-id.kr/#organization",
+        "name": "Travel-ID",
+        "url": "https://travel-id.kr/",
+        "logo": "https://travel-id.kr/images/main.png",
+        "description": "Community-driven Indonesia travel guide for international tourists",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Indonesia",
+          "sameAs": "https://en.wikipedia.org/wiki/Indonesia"
+        },
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "International tourists visiting Indonesia"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Travel-ID", "item": "https://travel-id.kr/" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/png" href="images/main_bar.png">
+  <link rel="stylesheet" href="css/travel-app.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="ta-splash" id="ta-splash">
+    <div class="ta-splash-inner">
+      <img src="images/splash.png" alt="Travel-ID" class="ta-splash-logo" id="ta-splash-logo">
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="ta-layout">
+    <!-- Sidebar -->
+    <aside class="ta-sidebar" id="ta-sidebar">
+      <!-- Drag handle for mobile bottom sheet -->
+      <div class="ta-drag-handle" id="ta-drag-handle">
+        <div class="ta-drag-handle-bar"></div>
+      </div>
+      <!-- Header inside sidebar -->
+      <header class="ta-topbar">
+        <a href="/" class="ta-brand">
+          <img src="images/splash.png" alt="Travel-ID" class="ta-brand-logo">
+        </a>
+        <div class="ta-topbar-actions">
+          <!-- How to Use button -->
+          <button class="ta-guide-btn" onclick="taShowGuide()" data-i18n-title="guide.btn" title="How to Use">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+          </button>
+          <!-- Travel Settings -->
+          <div class="ta-prefs-wrap" id="ta-prefs-wrap">
+            <button class="ta-prefs-btn" id="ta-prefs-btn" onclick="taTogglePrefs()" data-i18n-title="prefs.title" title="Travel Settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+              <span class="ta-prefs-badge" id="ta-prefs-badge" style="display:none"></span>
+            </button>
+            <div class="ta-prefs-dropdown" id="ta-prefs-dropdown">
+              <div class="ta-prefs-section">
+                <div class="ta-prefs-label" data-i18n="prefs.dietary">Preferences</div>
+                <label class="ta-prefs-check">
+                  <input type="checkbox" id="ta-pref-muslim" value="muslim">
+                  <span data-i18n="prefs.muslim">Muslim Friendly</span>
+                </label>
+                <label class="ta-prefs-check">
+                  <input type="checkbox" id="ta-pref-vegan" value="vegan">
+                  <span data-i18n="prefs.vegan">Vegan</span>
+                </label>
+              </div>
+              <div class="ta-prefs-section">
+                <div class="ta-prefs-label" data-i18n="prefs.visitType">Visit Type</div>
+                <label class="ta-prefs-radio">
+                  <input type="radio" name="ta-visit-type" id="ta-pref-local" value="local">
+                  <span data-i18n="prefs.local">Local Resident</span>
+                </label>
+                <label class="ta-prefs-radio">
+                  <input type="radio" name="ta-visit-type" id="ta-pref-first" value="first">
+                  <span data-i18n="prefs.firstVisit">First Visit</span>
+                </label>
+                <label class="ta-prefs-radio">
+                  <input type="radio" name="ta-visit-type" id="ta-pref-return" value="return">
+                  <span data-i18n="prefs.returnVisit">Return Visit</span>
+                </label>
+                <label class="ta-prefs-radio">
+                  <input type="radio" name="ta-visit-type" id="ta-pref-business" value="business">
+                  <span data-i18n="prefs.business">Business Trip</span>
+                </label>
+                <label class="ta-prefs-radio">
+                  <input type="radio" name="ta-visit-type" id="ta-pref-group" value="group">
+                  <span data-i18n="prefs.group">Group Travel</span>
+                </label>
+              </div>
+              <button class="ta-prefs-apply" onclick="taApplyPrefs()" data-i18n="prefs.apply">Apply</button>
+            </div>
+          </div>
+          <!-- Language selector (5 languages for Travel-ID) -->
+          <select class="ta-lang-select" id="ta-lang-select" onchange="taSetLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+            <option value="ko">한국어</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+          </select>
+          <!-- Auth: Login/Profile -->
+          <div class="ta-auth" id="ta-auth">
+            <button class="ta-auth-login" id="ta-auth-login" onclick="taGoogleSignIn()" data-i18n="auth.signIn">Sign In</button>
+            <div class="ta-auth-profile" id="ta-auth-profile" style="display:none">
+              <img class="ta-auth-avatar" id="ta-auth-avatar" src="" alt="">
+              <div class="ta-auth-menu" id="ta-auth-menu">
+                <div class="ta-auth-name" id="ta-auth-name"></div>
+                <div class="ta-auth-menu-lang">
+                  <select class="ta-lang-select" id="ta-auth-lang-select" onchange="taSetLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="id">Indonesia</option>
+                    <option value="ko">한국어</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                  </select>
+                </div>
+                <button onclick="taShowMySpots()" data-i18n="bookmark.mySpots">My Spots</button>
+                <button onclick="taShowPlanner()" data-i18n="planner.btn">Plan Trip</button>
+                <button onclick="taShowMyPlans()" data-i18n="planner.myPlans">My Plans</button>
+                <button onclick="taShowTips()" data-i18n="tips.btn">Travel Tips</button>
+                <button onclick="taShowAbout()" data-i18n="about.btn">About</button>
+                <button onclick="taSignOut()" data-i18n="auth.signOut">Sign Out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="ta-search-wrap">
+        <svg class="ta-search-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/></svg>
+        <input type="text" class="ta-search" id="ta-search" data-i18n-ph="app.searchPh" placeholder="Search places...">
+      </div>
+
+      <!-- Tab Navigation: Explore / My Spots -->
+      <div class="ta-tabs" id="ta-tabs">
+        <button class="ta-tab active" data-tab="explore" onclick="taSwitchTab('explore')">Explore</button>
+        <button class="ta-tab" data-tab="myspots" onclick="taSwitchTab('myspots')" data-i18n="bookmark.mySpots">My Spots</button>
+      </div>
+
+      <!-- Explore Tab Content -->
+      <div class="ta-tab-content active" id="ta-tab-explore">
+        <div class="ta-filters">
+          <div class="ta-cat-row-wrap" id="ta-cat-row-wrap">
+          <div class="ta-cat-row" id="ta-cat-row">
+            <button class="ta-cat-btn active" data-cat="all" data-i18n="app.catAll">All</button>
+            <button class="ta-cat-btn" data-cat="beach" data-i18n="app.catBeach">Beach</button>
+            <button class="ta-cat-btn" data-cat="temple" data-i18n="app.catTemple">Temple</button>
+            <button class="ta-cat-btn" data-cat="cultural" data-i18n="app.catCultural">Cultural</button>
+            <button class="ta-cat-btn" data-cat="volcano" data-i18n="app.catVolcano">Volcano</button>
+            <button class="ta-cat-btn" data-cat="nature" data-i18n="app.catNature">Nature</button>
+            <button class="ta-cat-btn" data-cat="diving" data-i18n="app.catDiving">Diving</button>
+            <button class="ta-cat-btn" data-cat="food" data-i18n="app.catFood">Food</button>
+            <button class="ta-cat-btn" data-cat="cafe" data-i18n="app.catCafe">Cafe</button>
+            <button class="ta-cat-btn" data-cat="shopping" data-i18n="app.catShopping">Shopping</button>
+            <button class="ta-cat-btn" data-cat="nightlife" data-i18n="app.catNightlife">Nightlife</button>
+            <button class="ta-cat-btn" data-cat="museum" data-i18n="app.catMuseum">Museum</button>
+            <button class="ta-cat-btn" data-cat="adventure" data-i18n="app.catAdventure">Adventure</button>
+            <button class="ta-cat-btn" data-cat="wellness" data-i18n="app.catWellness">Wellness</button>
+          </div>
+          </div>
+          <select class="ta-region-select" id="ta-region-select">
+            <option value="" data-i18n="app.regionAll">All Regions</option>
+            <option value="Bali" data-i18n="app.regionBali">Bali</option>
+            <option value="Jakarta" data-i18n="app.regionJakarta">Jakarta</option>
+            <option value="Yogyakarta" data-i18n="app.regionYogyakarta">Yogyakarta</option>
+            <option value="Bandung" data-i18n="app.regionBandung">Bandung</option>
+            <option value="Lombok" data-i18n="app.regionLombok">Lombok</option>
+            <option value="Komodo" data-i18n="app.regionKomodo">Komodo</option>
+            <option value="Bromo" data-i18n="app.regionBromo">Bromo</option>
+            <option value="Borobudur" data-i18n="app.regionBorobudur">Borobudur</option>
+            <option value="Surabaya" data-i18n="app.regionSurabaya">Surabaya</option>
+            <option value="Medan" data-i18n="app.regionMedan">Medan</option>
+            <option value="Raja Ampat" data-i18n="app.regionRajaAmpat">Raja Ampat</option>
+            <option value="Sumatra" data-i18n="app.regionSumatra">Sumatra</option>
+            <option value="Sulawesi" data-i18n="app.regionSulawesi">Sulawesi</option>
+            <option value="Kalimantan" data-i18n="app.regionKalimantan">Kalimantan</option>
+            <option value="Other" data-i18n="app.regionOther">Other</option>
+          </select>
+        </div>
+
+        <!-- Spot List -->
+        <div class="ta-list" id="ta-list">
+          <div class="ta-list-status" id="ta-loading" data-i18n="app.loading">Loading spots...</div>
+        </div>
+      </div>
+
+      <!-- My Spots Tab Content -->
+      <div class="ta-tab-content" id="ta-tab-myspots">
+        <div class="ta-myspots" id="ta-myspots">
+          <button class="ta-planner-cta" id="ta-planner-cta" onclick="taShowPlanner()" style="display:none">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span data-i18n="planner.btn">Create AI Travel Plan</span>
+          </button>
+          <div class="ta-myspots-target-note" id="ta-myspots-target-note" data-i18n="planner.targetNote" style="display:none">AI builds itineraries from your "Want to Visit" list only.</div>
+          <div class="ta-myspots-section ta-myspots-section-visit">
+            <h3>
+              <span class="ta-myspots-tag ta-myspots-tag-visit" aria-hidden="true">V</span>
+              <span data-i18n="bookmark.wantToVisit">Want to Visit</span>
+            </h3>
+            <div id="ta-myspots-visit" class="ta-myspots-list"></div>
+          </div>
+          <div class="ta-myspots-section ta-myspots-section-interested">
+            <h3>
+              <span class="ta-myspots-tag ta-myspots-tag-interested" aria-hidden="true">♥</span>
+              <span data-i18n="bookmark.interested">Interested</span>
+            </h3>
+            <div id="ta-myspots-interested" class="ta-myspots-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Panel -->
+      <div class="ta-detail" id="ta-detail">
+        <div class="ta-detail-header">
+          <button class="ta-detail-back" id="ta-detail-back" onclick="taBackToList()">← Back</button>
+          <div class="ta-detail-header-actions">
+            <button class="ta-detail-myspots-btn" id="ta-detail-myspots-btn" onclick="taShowMySpots()" data-i18n="bookmark.mySpots">My Spots</button>
+            <button class="ta-detail-plan-btn" id="ta-detail-plan-btn" onclick="taPlanWithCurrentSpot()" data-i18n="planner.btnFromSpot">Plan with This Spot</button>
+          </div>
+        </div>
+        <div id="ta-detail-images" class="ta-detail-images"></div>
+        <div class="ta-detail-body">
+          <span id="ta-detail-cat" class="ta-spot-cat"></span>
+          <h2 id="ta-detail-name"></h2>
+          <!-- Bookmark buttons -->
+          <div class="ta-detail-bookmarks" id="ta-detail-bookmarks"></div>
+          <div class="ta-detail-meta" id="ta-detail-meta"></div>
+          <div id="ta-detail-tags" class="ta-detail-tags"></div>
+          <div id="ta-detail-desc" class="ta-detail-desc"></div>
+          <div id="ta-detail-address" class="ta-detail-address"></div>
+          <div id="ta-detail-info" class="ta-detail-info"></div>
+          <div id="ta-detail-actions"></div>
+          <div id="ta-detail-by" class="ta-detail-by"></div>
+        </div>
+      </div>
+
+      <!-- Tips Button (desktop web only) -->
+      <button class="ta-tips-btn ta-desktop-only" onclick="taShowTips()" data-i18n="tips.btn">Travel Tips</button>
+
+      <!-- Footer (desktop web only) -->
+      <div class="ta-footer ta-desktop-only" id="ta-footer">
+        <div class="ta-footer-line ta-footer-rights"><span data-i18n="footer.text"></span></div>
+        <div class="ta-footer-line ta-footer-links">
+          <a href="/privacy" data-i18n="footer.privacy">Privacy</a>
+          <span class="ta-footer-sep">·</span>
+          <a href="/terms" data-i18n="footer.terms">Terms</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar Toggle -->
+    <button class="ta-sidebar-toggle" id="ta-sidebar-toggle" onclick="taToggleSidebar()" title="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Map -->
+    <div class="ta-map-wrap">
+      <div id="ta-map"></div>
+    </div>
+  </div>
+
+  <!-- View Toggle FAB (mobile) -->
+  <button class="ta-view-toggle" id="ta-view-toggle" onclick="taToggleView()">
+    <svg id="ta-view-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    <span id="ta-view-toggle-text" data-i18n="app.viewMap">Map</span>
+  </button>
+
+  <!-- FAB -->
+  <button class="ta-fab" id="ta-fab" onclick="taShowSubmit()" data-i18n="app.shareSpot">Share a Spot</button>
+
+  <!-- Submit Modal -->
+  <div class="ta-modal-overlay" id="ta-submit-overlay">
+    <div class="ta-modal">
+      <button class="ta-modal-close" onclick="taCloseSubmit()" aria-label="Close">&times;</button>
+      <h2 data-i18n="app.submitTitle">Share an Indonesia Travel Spot</h2>
+      <p class="ta-modal-notice" data-i18n="app.submitNotice">Your submission will appear after admin review.</p>
+      <form id="ta-submit-form" onsubmit="taSubmitSpot(event)">
+        <div class="ta-form-group">
+          <label data-i18n="app.placeLabel">Place Name</label>
+          <input type="text" id="ta-sub-name" required maxlength="100" data-i18n-ph="app.placePh" placeholder="e.g. Tegallalang Rice Terrace">
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="app.categoryLabel">Category</label>
+          <select id="ta-sub-category" required>
+            <option value="beach" data-i18n="app.catBeach">Beach</option>
+            <option value="temple" data-i18n="app.catTemple">Temple</option>
+            <option value="cultural" data-i18n="app.catCultural">Cultural</option>
+            <option value="volcano" data-i18n="app.catVolcano">Volcano</option>
+            <option value="nature" data-i18n="app.catNature">Nature</option>
+            <option value="diving" data-i18n="app.catDiving">Diving</option>
+            <option value="food" data-i18n="app.catFood">Food</option>
+            <option value="cafe" data-i18n="app.catCafe">Cafe</option>
+            <option value="shopping" data-i18n="app.catShopping">Shopping</option>
+            <option value="nightlife" data-i18n="app.catNightlife">Nightlife</option>
+            <option value="museum" data-i18n="app.catMuseum">Museum</option>
+            <option value="adventure" data-i18n="app.catAdventure">Adventure</option>
+            <option value="wellness" data-i18n="app.catWellness">Wellness</option>
+            <option value="mosque" data-i18n="app.catMosque">Mosque / Prayer Room</option>
+          </select>
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="app.descLabel">Your Review</label>
+          <textarea id="ta-sub-desc" required maxlength="3000" rows="5" data-i18n-ph="app.descPh" placeholder="Share your experience..."></textarea>
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="app.addressLabel">Address</label>
+          <input type="text" id="ta-sub-address" maxlength="200" data-i18n-ph="app.addressPh" placeholder="Search address...">
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="app.instagramLabel">Instagram Tags</label>
+          <input type="text" id="ta-sub-instagram" maxlength="100" data-i18n-ph="app.instagramPh" placeholder="@username or #hashtag">
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="app.authorLabel">Your Name</label>
+          <input type="text" id="ta-sub-author" required maxlength="30" data-i18n-ph="app.authorPh" placeholder="Your name">
+        </div>
+        <div class="ta-form-actions">
+          <button type="button" class="ta-btn-secondary" onclick="taCloseSubmit()" data-i18n="app.cancelBtn">Cancel</button>
+          <button type="submit" class="ta-btn-primary" data-i18n="app.submitBtn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Planner Modal -->
+  <div class="ta-modal-overlay" id="ta-planner-overlay">
+    <div class="ta-modal ta-modal-planner">
+      <button class="ta-modal-close" onclick="taClosePlanner()" aria-label="Close">&times;</button>
+      <div id="ta-planner-form-view">
+        <h2 data-i18n="planner.title">AI Travel Planner</h2>
+        <p class="ta-modal-notice" data-i18n="planner.desc">Plan your trip based on your saved spots</p>
+        <div class="ta-form-group">
+          <label data-i18n="planner.days">Trip Duration</label>
+          <div class="ta-planner-days">
+            <input type="range" id="ta-planner-days" min="1" max="14" value="3">
+            <span id="ta-planner-days-val">3</span>
+            <span data-i18n="planner.daysUnit">days</span>
+          </div>
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="planner.budget">Budget</label>
+          <div class="ta-planner-options" id="ta-planner-budget">
+            <button class="ta-option-btn" data-val="budget" data-i18n="planner.budgetBudget">Budget-friendly</button>
+            <button class="ta-option-btn active" data-val="moderate" data-i18n="planner.budgetModerate">Moderate</button>
+            <button class="ta-option-btn" data-val="luxury" data-i18n="planner.budgetLuxury">Luxury</button>
+          </div>
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="planner.style">Travel Style</label>
+          <div class="ta-planner-options" id="ta-planner-style">
+            <button class="ta-option-btn" data-val="relaxed" data-i18n="planner.styleRelaxed">Relaxed</button>
+            <button class="ta-option-btn active" data-val="balanced" data-i18n="planner.styleBalanced">Balanced</button>
+            <button class="ta-option-btn" data-val="packed" data-i18n="planner.stylePacked">Packed</button>
+          </div>
+        </div>
+        <div class="ta-form-group">
+          <label data-i18n="planner.spots">Spots to Include</label>
+          <div class="ta-planner-spots" id="ta-planner-spots"></div>
+        </div>
+        <div class="ta-form-actions">
+          <button type="button" class="ta-btn-secondary" onclick="taClosePlanner()" data-i18n="planner.close">Close</button>
+          <button type="button" class="ta-btn-primary" id="ta-planner-generate" onclick="taGeneratePlan()" data-i18n="planner.generate">Generate Plan</button>
+        </div>
+      </div>
+      <div id="ta-planner-result-view" style="display:none">
+        <h2 data-i18n="planner.result">Your Travel Plan</h2>
+        <div id="ta-planner-result" class="ta-planner-result"></div>
+        <div id="ta-share-panel" class="ta-share-panel" style="display:none"></div>
+        <div class="ta-form-actions">
+          <button type="button" class="ta-btn-secondary" onclick="taClosePlanner()" data-i18n="planner.close">Close</button>
+          <button type="button" class="ta-btn-save" onclick="taSaveCurrentPlan()" data-i18n="planner.save">Save Plan</button>
+          <button type="button" class="ta-btn-share" onclick="taSharePlan()" data-i18n="planner.share">Share</button>
+          <button type="button" class="ta-btn-primary" onclick="taPlannerBackToForm()" data-i18n="planner.retry">Generate Again</button>
+        </div>
+      </div>
+      <div id="ta-planner-loading-view" style="display:none">
+        <div class="ta-planner-loading">
+          <div class="ta-spinner"></div>
+          <p data-i18n="planner.generating">Creating your travel plan...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Plans Modal -->
+  <div class="ta-modal-overlay" id="ta-myplans-overlay">
+    <div class="ta-modal ta-modal-planner">
+      <button class="ta-modal-close" onclick="taCloseMyPlans()" aria-label="Close">&times;</button>
+      <div id="ta-myplans-list-view">
+        <h2 data-i18n="planner.myPlans">My Plans</h2>
+        <p class="ta-modal-notice ta-myplans-notice" data-i18n="planner.savedLocal">Saved on this device</p>
+        <div id="ta-myplans-list" class="ta-myplans-list"></div>
+        <div class="ta-form-actions">
+          <button type="button" class="ta-btn-secondary" onclick="taCloseMyPlans()" data-i18n="planner.close">Close</button>
+          <button type="button" class="ta-btn-primary" id="ta-compare-btn" onclick="taComparePlans()" style="display:none" data-i18n="planner.compare">Compare</button>
+        </div>
+      </div>
+      <div id="ta-myplans-detail-view" style="display:none">
+        <div class="ta-myplans-detail-header">
+          <button type="button" class="ta-btn-back" onclick="taMyPlansBack()">← <span data-i18n="planner.back">Back</span></button>
+          <h2 id="ta-myplans-detail-title"></h2>
+        </div>
+        <div id="ta-myplans-detail-meta" class="ta-myplans-detail-meta"></div>
+        <div id="ta-myplans-detail-content" class="ta-planner-result"></div>
+        <div id="ta-share-panel-myplan" class="ta-share-panel" style="display:none"></div>
+        <div class="ta-form-actions">
+          <button type="button" class="ta-btn-secondary" onclick="taCloseMyPlans()" data-i18n="planner.close">Close</button>
+          <button type="button" class="ta-btn-share" onclick="taShareSavedPlan()" data-i18n="planner.share">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compare Plans Modal -->
+  <div class="ta-modal-overlay" id="ta-compare-overlay">
+    <div class="ta-modal ta-modal-compare">
+      <button class="ta-modal-close" onclick="taCloseCompare()" aria-label="Close">&times;</button>
+      <h2 data-i18n="planner.comparePlans">Compare Plans</h2>
+      <div id="ta-compare-content" class="ta-compare-content"></div>
+      <div class="ta-form-actions">
+        <button type="button" class="ta-btn-secondary" onclick="taCloseCompare()" data-i18n="planner.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div class="ta-modal-overlay" id="ta-about-overlay">
+    <div class="ta-modal ta-modal-about">
+      <button class="ta-modal-close" onclick="taCloseAbout()" aria-label="Close">&times;</button>
+      <h2 data-i18n="about.title">About Travel-ID</h2>
+      <div class="ta-about-content" id="ta-about-content"></div>
+      <div class="ta-form-actions">
+        <button type="button" class="ta-btn-secondary" onclick="taCloseAbout()" data-i18n="planner.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Use (App Guide) Modal -->
+  <div class="ta-modal-overlay" id="ta-guide-overlay">
+    <div class="ta-modal ta-modal-guide">
+      <button class="ta-modal-close" onclick="taCloseGuide()" aria-label="Close">&times;</button>
+      <h2 data-i18n="guide.title">How to Use Travel-ID</h2>
+      <div class="ta-guide-content" id="ta-guide-content"></div>
+      <div class="ta-form-actions">
+        <button type="button" class="ta-btn-secondary" onclick="taCloseGuide()" data-i18n="planner.close">Close</button>
+      </div>
+      <!-- Auto-popup dismiss buttons (hidden when opened manually) -->
+      <div class="ta-guide-dismiss" id="ta-guide-dismiss" style="display:none">
+        <button class="ta-guide-dismiss-btn" onclick="taGuideDismiss('forever')" data-i18n="guide.dontShowAgain">Don't show again</button>
+        <button class="ta-guide-dismiss-btn ta-guide-dismiss-today" onclick="taGuideDismiss('today')" data-i18n="guide.dontShowToday">Don't show today</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travel Tips Modal -->
+  <div class="ta-modal-overlay" id="ta-tips-overlay">
+    <div class="ta-modal ta-modal-tips">
+      <button class="ta-modal-close" onclick="taCloseTips()" aria-label="Close">&times;</button>
+      <h2 data-i18n="tips.title">Indonesia Travel Tips</h2>
+      <div class="ta-tips-content" id="ta-tips-content"></div>
+      <p class="ta-tips-updated" data-i18n="tips.lastUpdated">Last updated: 2026</p>
+      <div class="ta-form-actions">
+        <button type="button" class="ta-btn-secondary" onclick="taCloseTips()" data-i18n="planner.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden Google Sign-In container -->
+  <div id="g_id_onload" style="display:none"></div>
+
+  <script>
+    // Sidebar toggle
+    window.taToggleSidebar = function() {
+      var sidebar = document.getElementById('ta-sidebar');
+      var toggle = document.getElementById('ta-sidebar-toggle');
+      var layout = document.querySelector('.ta-layout');
+      layout.classList.toggle('sidebar-collapsed');
+      // Trigger map resize after transition
+      setTimeout(function() {
+        if (window._taTriggerResize) window._taTriggerResize();
+      }, 350);
+    };
+
+    // Travel-ID always loads travel lang + travel-app
+    var ls = document.createElement('script');
+    ls.src = 'sites/travel/lang.js';
+    ls.onload = function() {
+      var as = document.createElement('script');
+      as.src = 'js/travel-app.js';
+      document.head.appendChild(as);
+    };
+    document.head.appendChild(ls);
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</body>
+</html>

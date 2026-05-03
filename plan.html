@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="icon" type="image/png" href="/images/main_bar.png">
+  <title>Travel Plan — Travel-ID</title>
+  <meta name="description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Travel Plan — Travel-ID">
+  <meta property="og:description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <meta property="og:image" content="https://travel-id.kr/images/splash.png">
+  <meta property="og:url" content="https://travel-id.kr/plan/">
+  <meta property="og:site_name" content="Travel-ID">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Travel Plan — Travel-ID">
+  <meta name="twitter:description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <meta name="twitter:image" content="https://travel-id.kr/images/splash.png">
+  <meta name="robots" content="noindex">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --radius: 8px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--gray-800);
+      background: var(--gray-50);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      text-decoration: none;
+    }
+
+    .header-logo:hover { text-decoration: none; }
+
+    .header-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+    }
+
+    .header-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* Main */
+    main {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    /* Loading */
+    #plan-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+      color: var(--gray-500);
+      font-size: 0.92rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--gray-200);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Plan title */
+    #plan-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+
+    /* Plan meta */
+    .plan-meta {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Plan body — matches .ta-planner-result */
+    .plan-body {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--gray-800);
+      white-space: pre-wrap;
+    }
+
+    .plan-body h1, .plan-body h2, .plan-body h3 {
+      color: var(--gray-900);
+      margin: 16px 0 8px;
+    }
+
+    .plan-body h1 { font-size: 1.1rem; }
+    .plan-body h2 { font-size: 1rem; }
+    .plan-body h3 { font-size: 0.95rem; }
+    .plan-body strong { color: var(--primary-dark); }
+    .plan-body ul, .plan-body ol { padding-left: 20px; margin: 8px 0; }
+    .plan-body li { margin-bottom: 4px; }
+    .plan-body p { margin: 8px 0; }
+    .plan-body a { color: var(--primary); }
+
+    /* CTA */
+    .plan-cta {
+      text-align: center;
+      margin-top: 28px;
+      padding: 24px 16px;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+    }
+
+    .plan-cta p {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 28px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: var(--primary-dark);
+      text-decoration: none;
+    }
+
+    /* Error */
+    #plan-error {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--gray-500);
+    }
+
+    #plan-error p {
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    #plan-error a {
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: var(--gray-400);
+      border-top: 1px solid var(--gray-200);
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main { padding: 16px 14px 32px; }
+      #plan-title { font-size: 1.2rem; }
+      .plan-body { padding: 14px; font-size: 0.85rem; }
+      .plan-cta { padding: 18px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="header-logo">
+      <img src="/images/main_bar.png" alt="Travel-ID">
+      Travel-ID
+    </a>
+    <span class="header-badge">Shared Plan</span>
+  </header>
+
+  <main>
+    <div id="plan-loading">
+      <div class="spinner"></div>
+      Loading plan...
+    </div>
+
+    <div id="plan-content" style="display:none">
+      <h1 id="plan-title"></h1>
+      <div id="plan-meta" class="plan-meta"></div>
+      <div id="plan-body" class="plan-body"></div>
+      <div class="plan-cta">
+        <p>Create your own travel plan with Travel-ID</p>
+        <a href="/" class="cta-btn">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <div id="plan-error" style="display:none">
+      <p>This plan could not be found or has expired.</p>
+      <a href="/">Go to Travel-ID</a>
+    </div>
+  </main>
+
+  <footer>&copy; 2026 Travel-ID by Travel-ID</footer>
+
+  <script>
+    // Extract plan ID from URL path: /plan/abc12345
+    var pathParts = window.location.pathname.split('/');
+    var planId = pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2];
+
+    if (!planId || planId === 'plan') {
+      document.getElementById('plan-loading').style.display = 'none';
+      document.getElementById('plan-error').style.display = '';
+    } else {
+      fetch('/api/share-plan?id=' + encodeURIComponent(planId))
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.success && data.plan) {
+            var plan = data.plan;
+            document.getElementById('plan-title').textContent = plan.title || 'Travel Plan';
+            document.title = (plan.title || 'Travel Plan') + ' \u2014 Travel-ID';
+
+            // Update OG tags dynamically
+            var ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', (plan.title || 'Travel Plan') + ' \u2014 Travel-ID');
+
+            var meta = [];
+            if (plan.days) meta.push(plan.days + ' days');
+            if (plan.budget) meta.push(plan.budget);
+            if (plan.style) meta.push(plan.style);
+            if (plan.spotNames && plan.spotNames.length) meta.push(plan.spotNames.join(', '));
+            document.getElementById('plan-meta').textContent = meta.join(' \u00b7 ');
+
+            document.getElementById('plan-body').innerHTML = plan.planHtml || '';
+
+            document.getElementById('plan-loading').style.display = 'none';
+            document.getElementById('plan-content').style.display = '';
+          } else {
+            throw new Error('not found');
+          }
+        })
+        .catch(function() {
+          document.getElementById('plan-loading').style.display = 'none';
+          document.getElementById('plan-error').style.display = '';
+        });
+    }
+  </script>
+</body>
+</html>

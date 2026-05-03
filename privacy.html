@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Travel-ID</title>
+  <meta name="robots" content="noindex">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; color: #1f2937; line-height: 1.7; }
+    .header { background: #2563EB; color: white; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    .header a { color: white; text-decoration: none; font-weight: 700; font-size: 1.25rem; }
+    .lang-bar { background: #1D4ED8; padding: 0.5rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .lang-bar button { background: rgba(255,255,255,0.15); border: none; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+    .lang-bar button.active { background: white; color: #1D4ED8; font-weight: 600; }
+    .container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .lang-section { display: none; }
+    .lang-section.active { display: block; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; color: #2563EB; }
+    h2 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #1E40AF; }
+    p, li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+    ul { padding-left: 1.5rem; }
+    .updated { color: #6b7280; font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .back { display: inline-block; margin-top: 1.5rem; color: #2563EB; text-decoration: none; }
+    .back:hover { text-decoration: underline; }
+    @media (max-width: 640px) { .container { margin: 1rem; padding: 1.25rem; } }
+  </style>
+</head>
+<body>
+  <div class="header"><a href="/">Travel-ID</a></div>
+  <div class="lang-bar">
+    <button onclick="showLang('en')" class="active">English</button>
+    <button onclick="showLang('ko')">한국어</button>
+    <button onclick="showLang('id')">Bahasa Indonesia</button>
+    <button onclick="showLang('mn')">Монгол</button>
+    <button onclick="showLang('th')">ไทย</button>
+    <button onclick="showLang('vi')">Tiếng Việt</button>
+  </div>
+  <div class="container">
+
+    <!-- English -->
+    <div class="lang-section active" id="lang-en">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: March 15, 2026</p>
+      <p>Travel-ID ("we", "us", "our") operates the travel-id.kr website. This Privacy Policy explains how we collect, use, and protect your information.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>When you sign in with Google, we collect:</p>
+      <ul>
+        <li>Name and profile picture from your Google account</li>
+        <li>Email address</li>
+        <li>Google account ID</li>
+      </ul>
+      <p>We also collect usage data such as bookmarked spots and AI planner usage.</p>
+
+      <h2>2. How We Use Your Information</h2>
+      <ul>
+        <li>To provide and maintain our service</li>
+        <li>To manage your account and bookmarks</li>
+        <li>To generate personalized travel plans via AI</li>
+        <li>To improve our service</li>
+      </ul>
+
+      <h2>3. Data Storage</h2>
+      <p>Your data is stored securely in Notion databases and processed through Vercel serverless functions. We do not sell your personal information to third parties.</p>
+
+      <h2>4. Third-Party Services</h2>
+      <p>We use the following third-party services:</p>
+      <ul>
+        <li>Google OAuth for authentication</li>
+        <li>Google Analytics for usage analytics</li>
+        <li>Google Maps and Naver Maps for map services</li>
+        <li>Google Gemini AI for travel plan generation</li>
+        <li>Notion for data storage</li>
+        <li>Vercel for hosting</li>
+      </ul>
+
+      <h2>5. Cookies</h2>
+      <p>We use localStorage to store your authentication token and preferences. Third-party services (Google Analytics, Maps) may use cookies as described in their respective privacy policies.</p>
+
+      <h2>6. Your Rights</h2>
+      <p>You may request deletion of your account and associated data. You can <a href="/delete-account">delete your account here</a>. You can also sign out at any time to clear your local session data.</p>
+
+      <h2>7. Children's Privacy</h2>
+      <p>Our service is not directed to children under 13. We do not knowingly collect personal information from children.</p>
+
+      <h2>8. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date.</p>
+
+      <h2>9. Contact Us</h2>
+      <p>If you have questions about this Privacy Policy, please contact us at travel-id.kr.</p>
+      <a href="/" class="back">&larr; Back to Travel-ID</a>
+    </div>
+
+    <!-- Korean -->
+    <div class="lang-section" id="lang-ko">
+      <h1>개인정보처리방침</h1>
+      <p class="updated">최종 업데이트: 2026년 3월 15일</p>
+      <p>Travel-ID("당사")는 travel-id.kr 웹사이트를 운영합니다. 본 개인정보처리방침은 당사가 귀하의 정보를 수집, 이용 및 보호하는 방법을 설명합니다.</p>
+
+      <h2>1. 수집하는 정보</h2>
+      <p>Google 로그인 시 다음 정보를 수집합니다:</p>
+      <ul>
+        <li>Google 계정의 이름 및 프로필 사진</li>
+        <li>이메일 주소</li>
+        <li>Google 계정 ID</li>
+      </ul>
+      <p>또한 북마크한 장소, AI 플래너 사용 기록 등의 이용 데이터를 수집합니다.</p>
+
+      <h2>2. 정보의 이용 목적</h2>
+      <ul>
+        <li>서비스 제공 및 유지</li>
+        <li>계정 및 북마크 관리</li>
+        <li>AI 맞춤형 여행 계획 생성</li>
+        <li>서비스 개선</li>
+      </ul>
+
+      <h2>3. 데이터 저장</h2>
+      <p>귀하의 데이터는 Notion 데이터베이스에 안전하게 저장되며, Vercel 서버리스 함수를 통해 처리됩니다. 당사는 개인정보를 제3자에게 판매하지 않습니다.</p>
+
+      <h2>4. 제3자 서비스</h2>
+      <p>당사는 다음 제3자 서비스를 이용합니다:</p>
+      <ul>
+        <li>Google OAuth - 인증</li>
+        <li>Google Analytics - 이용 분석</li>
+        <li>Google Maps 및 네이버 지도 - 지도 서비스</li>
+        <li>Google Gemini AI - 여행 계획 생성</li>
+        <li>Notion - 데이터 저장</li>
+        <li>Vercel - 호스팅</li>
+      </ul>
+
+      <h2>5. 쿠키</h2>
+      <p>인증 토큰과 설정을 저장하기 위해 localStorage를 사용합니다. 제3자 서비스(Google Analytics, Maps)는 각 개인정보처리방침에 따라 쿠키를 사용할 수 있습니다.</p>
+
+      <h2>6. 귀하의 권리</h2>
+      <p>계정 및 관련 데이터의 삭제를 요청할 수 있습니다. <a href="/delete-account">여기에서 계정을 삭제</a>할 수 있습니다. 언제든지 로그아웃하여 로컬 세션 데이터를 삭제할 수 있습니다.</p>
+
+      <h2>7. 아동의 개인정보</h2>
+      <p>당사 서비스는 13세 미만 아동을 대상으로 하지 않습니다. 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+
+      <h2>8. 방침의 변경</h2>
+      <p>본 개인정보처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 이 페이지에 업데이트된 날짜와 함께 게시됩니다.</p>
+
+      <h2>9. 문의</h2>
+      <p>본 개인정보처리방침에 관한 문의사항은 travel-id.kr로 연락해 주십시오.</p>
+      <a href="/" class="back">&larr; Travel-ID로 돌아가기</a>
+    </div>
+
+    <!-- Indonesian -->
+    <div class="lang-section" id="lang-id">
+      <h1>Kebijakan Privasi</h1>
+      <p class="updated">Terakhir diperbarui: 15 Maret 2026</p>
+      <p>Travel-ID ("kami") mengoperasikan situs web travel-id.kr. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi Anda.</p>
+
+      <h2>1. Informasi yang Kami Kumpulkan</h2>
+      <p>Saat Anda masuk dengan Google, kami mengumpulkan:</p>
+      <ul>
+        <li>Nama dan foto profil dari akun Google Anda</li>
+        <li>Alamat email</li>
+        <li>ID akun Google</li>
+      </ul>
+      <p>Kami juga mengumpulkan data penggunaan seperti tempat yang di-bookmark dan penggunaan perencana AI.</p>
+
+      <h2>2. Bagaimana Kami Menggunakan Informasi Anda</h2>
+      <ul>
+        <li>Untuk menyediakan dan memelihara layanan kami</li>
+        <li>Untuk mengelola akun dan bookmark Anda</li>
+        <li>Untuk menghasilkan rencana perjalanan yang dipersonalisasi melalui AI</li>
+        <li>Untuk meningkatkan layanan kami</li>
+      </ul>
+
+      <h2>3. Penyimpanan Data</h2>
+      <p>Data Anda disimpan dengan aman di database Notion dan diproses melalui fungsi serverless Vercel. Kami tidak menjual informasi pribadi Anda kepada pihak ketiga.</p>
+
+      <h2>4. Layanan Pihak Ketiga</h2>
+      <p>Kami menggunakan layanan pihak ketiga berikut:</p>
+      <ul>
+        <li>Google OAuth untuk autentikasi</li>
+        <li>Google Analytics untuk analitik penggunaan</li>
+        <li>Google Maps dan Naver Maps untuk layanan peta</li>
+        <li>Google Gemini AI untuk pembuatan rencana perjalanan</li>
+        <li>Notion untuk penyimpanan data</li>
+        <li>Vercel untuk hosting</li>
+      </ul>
+
+      <h2>5. Cookie</h2>
+      <p>Kami menggunakan localStorage untuk menyimpan token autentikasi dan preferensi Anda. Layanan pihak ketiga (Google Analytics, Maps) dapat menggunakan cookie sesuai kebijakan privasi masing-masing.</p>
+
+      <h2>6. Hak Anda</h2>
+      <p>Anda dapat meminta penghapusan akun dan data terkait. Anda dapat <a href="/delete-account">menghapus akun Anda di sini</a>. Anda juga dapat keluar kapan saja untuk menghapus data sesi lokal.</p>
+
+      <h2>7. Privasi Anak</h2>
+      <p>Layanan kami tidak ditujukan untuk anak di bawah 13 tahun. Kami tidak secara sengaja mengumpulkan informasi pribadi dari anak-anak.</p>
+
+      <h2>8. Perubahan Kebijakan Ini</h2>
+      <p>Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Perubahan akan diposting di halaman ini dengan tanggal yang diperbarui.</p>
+
+      <h2>9. Hubungi Kami</h2>
+      <p>Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, silakan hubungi kami di travel-id.kr.</p>
+      <a href="/" class="back">&larr; Kembali ke Travel-ID</a>
+    </div>
+
+    <!-- Mongolian -->
+    <div class="lang-section" id="lang-mn">
+      <h1>Нууцлалын бодлого</h1>
+      <p class="updated">Сүүлд шинэчилсэн: 2026 оны 3-р сарын 15</p>
+      <p>Travel-ID ("бид") нь travel-id.kr вэбсайтыг ажиллуулдаг. Энэхүү Нууцлалын бодлого нь бидний таны мэдээллийг хэрхэн цуглуулж, ашиглаж, хамгаалж байгааг тайлбарладаг.</p>
+
+      <h2>1. Бидний цуглуулдаг мэдээлэл</h2>
+      <p>Та Google-ээр нэвтрэх үед бид дараах мэдээллийг цуглуулна:</p>
+      <ul>
+        <li>Google бүртгэлээс таны нэр болон профайл зураг</li>
+        <li>Имэйл хаяг</li>
+        <li>Google бүртгэлийн ID</li>
+      </ul>
+      <p>Мөн тэмдэглэсэн газрууд, AI төлөвлөгчийн хэрэглээ зэрэг ашиглалтын мэдээллийг цуглуулна.</p>
+
+      <h2>2. Таны мэдээллийг хэрхэн ашигладаг</h2>
+      <ul>
+        <li>Үйлчилгээг хангах, хадгалах</li>
+        <li>Таны бүртгэл болон тэмдэглэлийг удирдах</li>
+        <li>AI-аар хувийн аялалын төлөвлөгөө гаргах</li>
+        <li>Үйлчилгээгээ сайжруулах</li>
+      </ul>
+
+      <h2>3. Мэдээлэл хадгалах</h2>
+      <p>Таны мэдээлэл Notion мэдээллийн санд аюулгүй хадгалагдаж, Vercel серверлэс функцээр боловсруулагддаг. Бид таны хувийн мэдээллийг гуравдагч этгээдэд зардаггүй.</p>
+
+      <h2>4. Гуравдагч этгээдийн үйлчилгээ</h2>
+      <p>Бид дараах гуравдагч этгээдийн үйлчилгээг ашигладаг:</p>
+      <ul>
+        <li>Google OAuth - нэвтрэлт</li>
+        <li>Google Analytics - ашиглалтын шинжилгээ</li>
+        <li>Google Maps болон Naver Maps - газрын зургийн үйлчилгээ</li>
+        <li>Google Gemini AI - аялалын төлөвлөгөө гаргах</li>
+        <li>Notion - мэдээлэл хадгалах</li>
+        <li>Vercel - хостинг</li>
+      </ul>
+
+      <h2>5. Cookie</h2>
+      <p>Бид нэвтрэлтийн токен болон тохиргоог хадгалахын тулд localStorage ашигладаг. Гуравдагч этгээдийн үйлчилгээнүүд (Google Analytics, Maps) тус тусын нууцлалын бодлогын дагуу cookie ашиглаж болно.</p>
+
+      <h2>6. Таны эрх</h2>
+      <p>Та бүртгэл болон холбогдох мэдээллээ устгахыг хүсч болно. <a href="/delete-account">Энд дарж бүртгэлээ устгана уу</a>. Та хүссэн үедээ гарч локал мэдээллээ устгах боломжтой.</p>
+
+      <h2>7. Хүүхдийн нууцлал</h2>
+      <p>Манай үйлчилгээ 13-аас доош насны хүүхдүүдэд зориулагдаагүй. Бид хүүхдийн хувийн мэдээллийг зориудаар цуглуулдаггүй.</p>
+
+      <h2>8. Энэ бодлогын өөрчлөлт</h2>
+      <p>Бид энэхүү Нууцлалын бодлогыг цаг тухай бүрт шинэчилж болно. Өөрчлөлтийг энэ хуудсанд шинэчилсэн огноотой хамт нийтлэнэ.</p>
+
+      <h2>9. Холбоо барих</h2>
+      <p>Энэхүү Нууцлалын бодлогын талаар асуулт байвал travel-id.kr-ээр холбогдоно уу.</p>
+      <a href="/" class="back">&larr; Travel-ID руу буцах</a>
+    </div>
+
+    <!-- Thai -->
+    <div class="lang-section" id="lang-th">
+      <h1>นโยบายความเป็นส่วนตัว</h1>
+      <p class="updated">อัปเดตล่าสุด: 15 มีนาคม 2026</p>
+      <p>Travel-ID ("เรา") ให้บริการเว็บไซต์ travel-id.kr นโยบายความเป็นส่วนตัวนี้อธิบายวิธีที่เราเก็บรวบรวม ใช้ และปกป้องข้อมูลของคุณ</p>
+
+      <h2>1. ข้อมูลที่เราเก็บรวบรวม</h2>
+      <p>เมื่อคุณเข้าสู่ระบบด้วย Google เราเก็บรวบรวม:</p>
+      <ul>
+        <li>ชื่อและรูปโปรไฟล์จากบัญชี Google ของคุณ</li>
+        <li>ที่อยู่อีเมล</li>
+        <li>ID บัญชี Google</li>
+      </ul>
+      <p>เรายังเก็บข้อมูลการใช้งาน เช่น สถานที่ที่บุ๊กมาร์กและการใช้นักวางแผน AI</p>
+
+      <h2>2. วิธีที่เราใช้ข้อมูลของคุณ</h2>
+      <ul>
+        <li>เพื่อให้บริการและบำรุงรักษาบริการของเรา</li>
+        <li>เพื่อจัดการบัญชีและบุ๊กมาร์กของคุณ</li>
+        <li>เพื่อสร้างแผนการเดินทางส่วนบุคคลผ่าน AI</li>
+        <li>เพื่อปรับปรุงบริการของเรา</li>
+      </ul>
+
+      <h2>3. การจัดเก็บข้อมูล</h2>
+      <p>ข้อมูลของคุณถูกจัดเก็บอย่างปลอดภัยในฐานข้อมูล Notion และประมวลผลผ่านฟังก์ชัน serverless ของ Vercel เราไม่ขายข้อมูลส่วนบุคคลของคุณให้บุคคลที่สาม</p>
+
+      <h2>4. บริการของบุคคลที่สาม</h2>
+      <p>เราใช้บริการของบุคคลที่สามดังต่อไปนี้:</p>
+      <ul>
+        <li>Google OAuth สำหรับการตรวจสอบสิทธิ์</li>
+        <li>Google Analytics สำหรับการวิเคราะห์การใช้งาน</li>
+        <li>Google Maps และ Naver Maps สำหรับบริการแผนที่</li>
+        <li>Google Gemini AI สำหรับการสร้างแผนการเดินทาง</li>
+        <li>Notion สำหรับการจัดเก็บข้อมูล</li>
+        <li>Vercel สำหรับโฮสติ้ง</li>
+      </ul>
+
+      <h2>5. คุกกี้</h2>
+      <p>เราใช้ localStorage เพื่อจัดเก็บโทเค็นการตรวจสอบสิทธิ์และความชอบของคุณ บริการของบุคคลที่สาม (Google Analytics, Maps) อาจใช้คุกกี้ตามที่ระบุในนโยบายความเป็นส่วนตัวของตน</p>
+
+      <h2>6. สิทธิ์ของคุณ</h2>
+      <p>คุณสามารถขอให้ลบบัญชีและข้อมูลที่เกี่ยวข้องได้ คุณสามารถ<a href="/delete-account">ลบบัญชีของคุณได้ที่นี่</a> คุณยังสามารถออกจากระบบได้ตลอดเวลาเพื่อลบข้อมูลเซสชันในเครื่องของคุณ</p>
+
+      <h2>7. ความเป็นส่วนตัวของเด็ก</h2>
+      <p>บริการของเราไม่ได้มีไว้สำหรับเด็กอายุต่ำกว่า 13 ปี เราไม่เก็บรวบรวมข้อมูลส่วนบุคคลจากเด็กโดยเจตนา</p>
+
+      <h2>8. การเปลี่ยนแปลงนโยบายนี้</h2>
+      <p>เราอาจอัปเดตนโยบายความเป็นส่วนตัวนี้เป็นระยะ การเปลี่ยนแปลงจะประกาศในหน้านี้พร้อมวันที่อัปเดต</p>
+
+      <h2>9. ติดต่อเรา</h2>
+      <p>หากคุณมีคำถามเกี่ยวกับนโยบายความเป็นส่วนตัวนี้ โปรดติดต่อเราที่ travel-id.kr</p>
+      <a href="/" class="back">&larr; กลับไปที่ Travel-ID</a>
+    </div>
+
+    <!-- Vietnamese -->
+    <div class="lang-section" id="lang-vi">
+      <h1>Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t</h1>
+      <p class="updated">C&#7853;p nh&#7853;t l&#7847;n cu&#7889;i: 15 th&#225;ng 3, 2026</p>
+      <p>Travel-ID ("ch&#250;ng t&#244;i") v&#7853;n h&#224;nh trang web travel-id.kr. Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y gi&#7843;i th&#237;ch c&#225;ch ch&#250;ng t&#244;i thu th&#7853;p, s&#7917; d&#7909;ng v&#224; b&#7843;o v&#7879; th&#244;ng tin c&#7911;a b&#7841;n.</p>
+
+      <h2>1. Th&#244;ng tin ch&#250;ng t&#244;i thu th&#7853;p</h2>
+      <p>Khi b&#7841;n &#273;&#259;ng nh&#7853;p b&#7857;ng Google, ch&#250;ng t&#244;i thu th&#7853;p:</p>
+      <ul>
+        <li>T&#234;n v&#224; &#7843;nh &#273;&#7841;i di&#7879;n t&#7915; t&#224;i kho&#7843;n Google c&#7911;a b&#7841;n</li>
+        <li>&#272;&#7883;a ch&#7881; email</li>
+        <li>ID t&#224;i kho&#7843;n Google</li>
+      </ul>
+      <p>Ch&#250;ng t&#244;i c&#361;ng thu th&#7853;p d&#7919; li&#7879;u s&#7917; d&#7909;ng nh&#432; &#273;&#7883;a &#273;i&#7875;m &#273;&#227; &#273;&#225;nh d&#7845;u v&#224; vi&#7879;c s&#7917; d&#7909;ng c&#244;ng c&#7909; l&#7853;p k&#7871; ho&#7841;ch AI.</p>
+
+      <h2>2. C&#225;ch ch&#250;ng t&#244;i s&#7917; d&#7909;ng th&#244;ng tin c&#7911;a b&#7841;n</h2>
+      <ul>
+        <li>&#272;&#7875; cung c&#7845;p v&#224; duy tr&#236; d&#7883;ch v&#7909;</li>
+        <li>&#272;&#7875; qu&#7843;n l&#253; t&#224;i kho&#7843;n v&#224; d&#7845;u trang c&#7911;a b&#7841;n</li>
+        <li>&#272;&#7875; t&#7841;o k&#7871; ho&#7841;ch du l&#7883;ch c&#225; nh&#226;n h&#243;a qua AI</li>
+        <li>&#272;&#7875; c&#7843;i thi&#7879;n d&#7883;ch v&#7909;</li>
+      </ul>
+
+      <h2>3. L&#432;u tr&#7919; d&#7919; li&#7879;u</h2>
+      <p>D&#7919; li&#7879;u c&#7911;a b&#7841;n &#273;&#432;&#7907;c l&#432;u tr&#7919; an to&#224;n trong c&#417; s&#7903; d&#7919; li&#7879;u Notion v&#224; &#273;&#432;&#7907;c x&#7917; l&#253; th&#244;ng qua c&#225;c h&#224;m serverless c&#7911;a Vercel. Ch&#250;ng t&#244;i kh&#244;ng b&#225;n th&#244;ng tin c&#225; nh&#226;n c&#7911;a b&#7841;n cho b&#234;n th&#7913; ba.</p>
+
+      <h2>4. D&#7883;ch v&#7909; b&#234;n th&#7913; ba</h2>
+      <p>Ch&#250;ng t&#244;i s&#7917; d&#7909;ng c&#225;c d&#7883;ch v&#7909; b&#234;n th&#7913; ba sau:</p>
+      <ul>
+        <li>Google OAuth - x&#225;c th&#7921;c</li>
+        <li>Google Analytics - ph&#226;n t&#237;ch s&#7917; d&#7909;ng</li>
+        <li>Google Maps v&#224; Naver Maps - d&#7883;ch v&#7909; b&#7843;n &#273;&#7891;</li>
+        <li>Google Gemini AI - t&#7841;o k&#7871; ho&#7841;ch du l&#7883;ch</li>
+        <li>Notion - l&#432;u tr&#7919; d&#7919; li&#7879;u</li>
+        <li>Vercel - l&#432;u tr&#7919;</li>
+      </ul>
+
+      <h2>5. Cookie</h2>
+      <p>Ch&#250;ng t&#244;i s&#7917; d&#7909;ng localStorage &#273;&#7875; l&#432;u token x&#225;c th&#7921;c v&#224; t&#249;y ch&#7885;n c&#7911;a b&#7841;n. C&#225;c d&#7883;ch v&#7909; b&#234;n th&#7913; ba (Google Analytics, Maps) c&#243; th&#7875; s&#7917; d&#7909;ng cookie theo ch&#237;nh s&#225;ch b&#7843;o m&#7853;t t&#432;&#417;ng &#7913;ng c&#7911;a h&#7885;.</p>
+
+      <h2>6. Quy&#7873;n c&#7911;a b&#7841;n</h2>
+      <p>B&#7841;n c&#243; th&#7875; y&#234;u c&#7847;u x&#243;a t&#224;i kho&#7843;n v&#224; d&#7919; li&#7879;u li&#234;n quan. B&#7841;n c&#243; th&#7875; <a href="/delete-account">x&#243;a t&#224;i kho&#7843;n t&#7841;i &#273;&#226;y</a>. B&#7841;n c&#361;ng c&#243; th&#7875; &#273;&#259;ng xu&#7845;t b&#7845;t c&#7913; l&#250;c n&#224;o &#273;&#7875; x&#243;a d&#7919; li&#7879;u phi&#234;n c&#7909;c b&#7897;.</p>
+
+      <h2>7. Quy&#7873;n ri&#234;ng t&#432; c&#7911;a tr&#7867; em</h2>
+      <p>D&#7883;ch v&#7909; c&#7911;a ch&#250;ng t&#244;i kh&#244;ng d&#224;nh cho tr&#7867; em d&#432;&#7899;i 13 tu&#7893;i. Ch&#250;ng t&#244;i kh&#244;ng c&#7889; &#253; thu th&#7853;p th&#244;ng tin c&#225; nh&#226;n t&#7915; tr&#7867; em.</p>
+
+      <h2>8. Thay &#273;&#7893;i ch&#237;nh s&#225;ch n&#224;y</h2>
+      <p>Ch&#250;ng t&#244;i c&#243; th&#7875; c&#7853;p nh&#7853;t Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y theo th&#7901;i gian. C&#225;c thay &#273;&#7893;i s&#7869; &#273;&#432;&#7907;c &#273;&#259;ng tr&#234;n trang n&#224;y v&#7899;i ng&#224;y c&#7853;p nh&#7853;t.</p>
+
+      <h2>9. Li&#234;n h&#7879;</h2>
+      <p>N&#7871;u b&#7841;n c&#243; c&#226;u h&#7887;i v&#7873; Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y, vui l&#242;ng li&#234;n h&#7879; ch&#250;ng t&#244;i t&#7841;i travel-id.kr.</p>
+      <a href="/" class="back">&larr; Quay l&#7841;i Travel-ID</a>
+    </div>
+
+  </div>
+
+  <script>
+    function showLang(lang) {
+      document.querySelectorAll('.lang-section').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.lang-bar button').forEach(function(el) { el.classList.remove('active'); });
+      document.getElementById('lang-' + lang).classList.add('active');
+      var labels = { en: 'English', ko: '한국어', id: 'Bahasa Indonesia', mn: 'Монгол', th: 'ไทย', vi: 'Tiếng Việt' };
+      document.querySelectorAll('.lang-bar button').forEach(function(btn) {
+        if (btn.textContent === labels[lang]) btn.classList.add('active');
+      });
+    }
+    // Auto-detect language from URL or localStorage
+    (function() {
+      var saved = localStorage.getItem('Travel-ID_lang');
+      if (saved && document.getElementById('lang-' + saved)) showLang(saved);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "travel-id",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Travel-ID — Discover Indonesia. Community-driven travel guide for international tourists and Indonesian residents alike.",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
