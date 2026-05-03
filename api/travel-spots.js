@@ -1,18 +1,72 @@
-// GET /api/travel-spots — public spot list backed by Notion.
+// GET /api/travel-spots — public spot list backed by Supabase.
 // Query params:
-//   lang     - en | id | ko | zh | ja  (display language; falls back to en)
+//   lang     - en | id | ms | ko | zh | ja | ar  (display language; falls back to en)
 //   category - single category name OR comma-separated list
 //   exclude  - comma-separated category names to exclude
-//   region   - region name (Bali, Yogyakarta, …)
+//   region   - region name (Bali, Yogyakarta, Kuala Lumpur, …)
+//   country  - 'ID' or 'MY'
 //   halal    - "1" to filter halal-friendly spots
 //   limit    - max rows (default 100)
-//   cursor   - Notion start_cursor for pagination
+//   cursor   - offset for pagination
 //
 // GET /api/travel-spots?render=page&id=...&lang=...
 //   Returns a server-rendered HTML page for share / OG previews.
-const { notion, SPOTS_DB, spotFromPage, getSiteUrl } = require('./_lib/notion');
+const { getSupaPublic, getSiteUrl } = require('./_lib/supabase');
 
 const LANGS = ['en', 'id', 'ms', 'ko', 'zh', 'ja', 'ar'];
+
+function pickTranslation(translations, lang) {
+  const map = {};
+  for (const t of translations || []) map[t.lang] = t;
+  return {
+    requested: map[lang] || null,
+    en: map.en || null,
+  };
+}
+
+function formatSpot(row, lang) {
+  const tr = pickTranslation(row.spot_translations, lang);
+  const name = (tr.requested && tr.requested.name) || (tr.en && tr.en.name) || row.name;
+  const description = (tr.requested && tr.requested.description)
+    || (tr.en && tr.en.description) || '';
+
+  return {
+    id: row.id,
+    name,
+    description,
+    category: row.category || '',
+    region: row.region || '',
+    country: row.country || 'ID',
+    lat: row.latitude,
+    lng: row.longitude,
+    address: row.address || '',
+    coverImage: row.cover_image || '',
+    photos: row.photos || [],
+    tags: row.tags || [],
+    instagram: row.instagram || '',
+    website: row.website || '',
+    googleMapLink: row.google_map_link || '',
+    rating: row.rating || 0,
+    featured: !!row.featured,
+    halal: !!row.halal,
+    prayerRoom: !!row.prayer_room,
+    vegFriendly: !!row.veg_friendly,
+    entryFee: row.entry_fee,
+    bestTimeToVisit: row.best_time_to_visit || '',
+    localTips: row.local_tips || '',
+    openingHours: row.opening_hours || '',
+    submittedBy: '',
+    createdAt: row.created_at,
+  };
+}
+
+const SELECT_COLUMNS = `
+  id, name, category, region, country, latitude, longitude, address, cover_image,
+  photos, tags, instagram, website, google_map_link, rating, featured,
+  halal, prayer_room, veg_friendly, entry_fee, best_time_to_visit, local_tips,
+  opening_hours, created_at, published,
+  spot_translations ( lang, name, description )
+`;
 
 function escHtml(str) {
   if (!str) return '';
@@ -22,52 +76,47 @@ function escHtml(str) {
 }
 
 async function listSpots(req, res) {
-  const { lang, category, exclude, region, halal, limit, cursor } = req.query || {};
+  const { lang, category, exclude, region, country, halal, limit, cursor } = req.query || {};
   const l = LANGS.indexOf(lang) !== -1 ? lang : 'en';
   const pageSize = Math.min(parseInt(limit, 10) || 100, 100);
-
-  const filters = [{ property: 'Published', checkbox: { equals: true } }];
-
-  if (category && category !== 'all') {
-    const cats = category.split(',').map((s) => s.trim()).filter(Boolean);
-    if (cats.length === 1) {
-      filters.push({ property: 'Category', select: { equals: cats[0] } });
-    } else if (cats.length > 1) {
-      filters.push({ or: cats.map((c) => ({ property: 'Category', select: { equals: c } })) });
-    }
-  }
-  if (exclude) {
-    const excludeCats = exclude.split(',').map((s) => s.trim()).filter(Boolean);
-    excludeCats.forEach((c) => filters.push({ property: 'Category', select: { does_not_equal: c } }));
-  }
-  if (region) {
-    filters.push({ property: 'Region', select: { equals: region } });
-  }
-  if (halal === '1' || halal === 'true') {
-    filters.push({ property: 'Halal', checkbox: { equals: true } });
-  }
+  const offset = parseInt(cursor, 10) || 0;
 
   try {
-    const query = {
-      database_id: SPOTS_DB,
-      filter: filters.length === 1 ? filters[0] : { and: filters },
-      sorts: [
-        { property: 'Featured', direction: 'descending' },
-        { property: 'Rating', direction: 'descending' },
-        { timestamp: 'created_time', direction: 'descending' },
-      ],
-      page_size: pageSize,
-    };
-    if (cursor) query.start_cursor = cursor;
+    let q = getSupaPublic()
+      .from('spots')
+      .select(SELECT_COLUMNS)
+      .eq('published', true);
 
-    const result = await notion().databases.query(query);
-    const spots = result.results.map((page) => spotFromPage(page, l));
+    if (category && category !== 'all') {
+      const cats = category.split(',').map((s) => s.trim()).filter(Boolean);
+      if (cats.length === 1) q = q.eq('category', cats[0]);
+      else if (cats.length > 1) q = q.in('category', cats);
+    }
+    if (exclude) {
+      const excludeCats = exclude.split(',').map((s) => s.trim()).filter(Boolean);
+      if (excludeCats.length) q = q.not('category', 'in', '(' + excludeCats.join(',') + ')');
+    }
+    if (region) q = q.eq('region', region);
+    if (country) q = q.eq('country', country);
+    if (halal === '1' || halal === 'true') q = q.eq('halal', true);
+
+    q = q
+      .order('featured', { ascending: false })
+      .order('rating', { ascending: false, nullsFirst: false })
+      .order('created_at', { ascending: false })
+      .range(offset, offset + pageSize - 1);
+
+    const { data, error } = await q;
+    if (error) throw error;
+
+    const spots = (data || []).map((row) => formatSpot(row, l));
+    const hasMore = spots.length === pageSize;
 
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
     res.json({
       spots,
-      hasMore: result.has_more,
-      nextCursor: result.next_cursor || null,
+      hasMore,
+      nextCursor: hasMore ? String(offset + pageSize) : null,
       lang: l,
     });
   } catch (err) {
@@ -80,12 +129,18 @@ async function renderSpotPage(req, res) {
   const { id, lang } = req.query || {};
   if (!id) return res.status(400).send('Missing spot id');
   const l = LANGS.indexOf(lang) !== -1 ? lang : 'en';
-
   const SITE = getSiteUrl(req);
+
   try {
-    const page = await notion().pages.retrieve({ page_id: id });
-    const spot = spotFromPage(page, l);
-    if (!spot.name) return res.redirect(302, SITE + '/');
+    const { data: row, error } = await getSupaPublic()
+      .from('spots')
+      .select(SELECT_COLUMNS)
+      .eq('id', id)
+      .eq('published', true)
+      .maybeSingle();
+
+    if (error || !row) return res.redirect(302, SITE + '/');
+    const spot = formatSpot(row, l);
 
     const e = escHtml;
     const ogImage = spot.coverImage || (spot.photos[0] || SITE + '/images/splash.png');
@@ -99,8 +154,7 @@ async function renderSpotPage(req, res) {
       beach: '🏖️', temple: '🛕', cultural: '🎭', volcano: '🌋',
       nature: '🌿', diving: '🤿', food: '🍜', cafe: '☕',
       shopping: '🛍️', nightlife: '🌙', museum: '🏛️',
-      adventure: '🧗', wellness: '🧘',
-      mosque: '🕌', halal: '🥘', vegetarian: '🥗',
+      adventure: '🧗', wellness: '🧘', mosque: '🕌',
     };
     const catEmoji = CAT_EMOJI[spot.category] || '📍';
 

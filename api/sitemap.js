@@ -1,6 +1,6 @@
-// Travel-ID sitemap generator (Notion-backed).
+// Travel-ID sitemap generator (Supabase-backed).
 // Lists base/lang URLs and one entry per published spot × language.
-const { notion, SPOTS_DB, getSiteUrl } = require('./_lib/notion');
+const { getSupaPublic, getSiteUrl } = require('./_lib/supabase');
 
 const LANGS = ['en', 'id', 'ms', 'ko', 'zh', 'ja', 'ar'];
 const CATEGORIES = [
@@ -17,7 +17,8 @@ const REGIONS = [
 ];
 
 function escXml(str) {
-  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 module.exports = async function handler(req, res) {
@@ -54,19 +55,23 @@ module.exports = async function handler(req, res) {
     });
   });
 
-  // Append one block per published spot per language
+  // One block per published spot per language
   try {
-    let cursor;
-    do {
-      const result = await notion().databases.query({
-        database_id: SPOTS_DB,
-        filter: { property: 'Published', checkbox: { equals: true } },
-        page_size: 100,
-        start_cursor: cursor,
-      });
-      result.results.forEach((page) => {
-        const spotPath = '/spot/' + page.id;
-        const lastmod = (page.last_edited_time || now).split('T')[0];
+    const supa = getSupaPublic();
+    let from = 0;
+    const STEP = 1000;
+    /* eslint-disable no-constant-condition */
+    while (true) {
+      const { data, error } = await supa
+        .from('spots')
+        .select('id, updated_at')
+        .eq('published', true)
+        .range(from, from + STEP - 1);
+      if (error || !data || data.length === 0) break;
+
+      data.forEach((row) => {
+        const spotPath = '/spot/' + row.id;
+        const lastmod = ((row.updated_at || now) + '').split('T')[0];
         LANGS.forEach((lang) => {
           const url = BASE_URL + spotPath + '?lang=' + lang;
           xml += '  <url>\n';
@@ -81,14 +86,15 @@ module.exports = async function handler(req, res) {
           xml += '  </url>\n';
         });
       });
-      cursor = result.has_more ? result.next_cursor : null;
-    } while (cursor);
+
+      if (data.length < STEP) break;
+      from += STEP;
+    }
   } catch (err) {
-    console.error('sitemap notion error:', err.message);
+    console.error('sitemap supabase error:', err.message);
   }
 
   xml += '</urlset>';
-
   res.setHeader('Content-Type', 'application/xml');
   res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
   res.status(200).send(xml);

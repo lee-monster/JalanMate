@@ -1,10 +1,10 @@
 # Travel-ID Project Guidelines
 
 ## Project Overview
-Travel-ID (`travel-id.kr` — placeholder until domain decision) is a community-driven
-travel guide for **Indonesia AND Malaysia**, serving both international visitors
-AND local residents (domestic travelers) of either country. Forked & adapted from
-TravelKo (travel.koinfo.kr) on 2026-05-03; expanded to Malaysia + Arabic on 2026-05-03.
+Travel-ID is a community-driven travel guide for **Indonesia AND Malaysia**, serving
+both international visitors AND local residents (domestic travelers) of either country.
+Forked & adapted from TravelKo (travel.koinfo.kr) on 2026-05-03; expanded to Malaysia
++ Arabic on 2026-05-03; pivoted from Notion to Supabase on 2026-05-04.
 
 Two audiences with subtly different UX:
 - International visitors get visa, SIM, currency, and embassy info; pricing in IDR/MYR
@@ -16,134 +16,137 @@ Two audiences with subtly different UX:
 ## Architecture
 - **SPA**: single `index.html` + `js/travel-app.js` (no framework)
 - **7 languages**: en (default), id, ms (peer languages for locals), ko, zh, ja, ar (RTL)
-- **Vercel Serverless**: API endpoints in `/api/*` (Notion-backed)
+- **Vercel Serverless**: API endpoints in `/api/*` (Supabase-backed)
 - **Single map provider**: Google Maps only (Naver Maps does not cover ID/MY)
-- **Auth**: Google OAuth → Travel-ID issues HS256 JWT (no Supabase)
+- **Auth**: Supabase Auth via `signInWithIdToken` (Google provider). Frontend stores
+  the access token; API routes verify via `supabase.auth.getUser(token)`.
 - **RTL**: `<html dir="rtl">` + `body.rtl` class auto-applied when `ar` is selected
 
 ## Tech Stack
 - Vanilla HTML/CSS/JS
-- Vercel deployment
-- Notion API as primary content backend
+- Vercel deployment (Node 18+)
+- Supabase (Postgres + Auth + RLS) as the data + auth backend
 - Google Maps JS API (frontend) + Google Geocoding API (server)
-- Google Identity Services + custom JWT
-- Gemini 2.0 Flash AI Planner (with Google Search Grounding, Indonesia-tuned prompt)
+- Google Identity Services (sign-in button) + Supabase Auth (session)
+- Gemini 2.0 Flash AI Planner (with Google Search Grounding, ID+MY prompt)
 
 ## File Structure
 ```
-├── index.html              SPA entrypoint, brand-Indonesia SEO/OG/JSON-LD
-├── plan.html               Shared-plan landing
+├── index.html                       SPA entrypoint, brand SEO/OG/JSON-LD
+├── plan.html                        Shared-plan landing
 ├── privacy.html, terms.html
-├── offline.html, sw.js     PWA offline shell
-├── manifest.json           PWA manifest (theme #E11D2E)
-├── vercel.json             Routes & cache headers
-├── package.json            Single dep: @notionhq/client
-├── robots.txt              Sitemap pointer
-├── css/travel-app.css      Indonesia-themed palette (red+emerald)
-├── js/travel-app.js        Main SPA logic
-├── sites/travel/lang.js    5-language translation catalog
-├── images/                 OG image, splash, brand mark (placeholders)
-├── icons/                  PWA icons
+├── offline.html, sw.js              PWA offline shell
+├── manifest.json                    PWA manifest (theme #E11D2E)
+├── vercel.json                      Routes & cache headers
+├── package.json                     Dep: @supabase/supabase-js
+├── robots.txt                       Sitemap pointer
+├── css/travel-app.css               Indonesia/Malaysia palette + RTL block
+├── js/travel-app.js                 Main SPA logic
+├── sites/travel/lang.js             7-language translation catalog
+├── images/, icons/                  Brand assets (placeholders for now)
+├── supabase/
+│   └── migrations/
+│       ├── 0001_init.sql            Schema (profiles, spots, translations,
+│       │                            bookmarks, shared_plans, submissions,
+│       │                            events, RLS policies, log_event helper)
+│       └── 0002_demo_seed.sql       6 iconic spots in 7 langs
+├── scripts/
+│   └── migrate-notion-to-supabase.js  One-time importer for the 36 Notion spots
 └── api/
-    ├── _lib/notion.js      Notion client + spot/user accessors
-    ├── _lib/auth.js        JWT sign/verify + Google ID token verification
-    ├── map-config.js       Public client config (Google keys only)
-    ├── travel-spots.js     Spot list + SSR spot detail page
-    ├── travel-submit.js    Community spot submission
-    ├── travel-planner.js   AI planner (Indonesia + visitor-type aware)
-    ├── geocode.js          Google Geocoding (region=id biased)
-    ├── place-photos.js     Google Places photos proxy
-    ├── share-plan.js       Save / fetch shared plans (Notion)
-    ├── sitemap.js          5 lang × spots sitemap
-    ├── auth/google.js      Google ID token → Travel-ID JWT
-    └── user/bookmarks.js   Per-user bookmark CRUD
+    ├── _lib/supabase.js             getSupaPublic + getSupaAdmin + getSiteUrl
+    ├── _lib/auth.js                 setCors + getUserFromRequest (Supabase token)
+    ├── map-config.js                Public client config (keys + supabaseUrl/anonKey)
+    ├── travel-spots.js              Spot list + SSR spot detail page
+    ├── travel-submit.js             Community spot submission → spot_submissions
+    ├── travel-planner.js            AI planner; planner_usage in profiles
+    ├── geocode.js                   Google Geocoding (region=id biased)
+    ├── place-photos.js              Google Places photos proxy
+    ├── share-plan.js                Save / fetch shared plans
+    ├── sitemap.js                   7 lang × spots sitemap
+    └── user/bookmarks.js            Per-user bookmark CRUD
 ```
 
 ## Vercel Environment Variables
 | Variable | Purpose | Notes |
 |---|---|---|
-| `NOTION_TOKEN_TRAVEL` | Notion integration token | Share `Travel-ID` parent page with the integration |
-| `NOTION_DB_TRAVEL` | Spots DB ID | `10e3dd6ce89841e98a211c5ac4fd2449` |
-| `NOTION_DB_USERS` | Users DB ID | `d4a523eeebae48eb868a61259ec1d98d` |
-| `NOTION_DB_SHARED_PLANS` | SharedPlans DB ID (optional override) | Defaults to `43e9ab1e470d4894a708e8a6a2f513d5` |
-| `GOOGLE_MAPS_API_KEY` | Frontend Maps JS key | Restrict to HTTP referrer (your domain) |
-| `GOOGLE_GEOCODING_API_KEY` | Server geocoding/places key | Restrict by IP (Vercel egress IPs) |
-| `GOOGLE_CLIENT_ID` | OAuth client id | Add domain to Authorized JavaScript origins |
-| `JWT_SECRET` | HS256 secret | Generate: `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"` |
+| `PUBLIC_SITE_URL` | Canonical origin | `https://travel-id.vercel.app` (placeholder) |
+| `SUPABASE_URL` | Supabase project URL | from Project → Settings → API |
+| `SUPABASE_ANON_KEY` | Public anon key | safe to expose; RLS protects rows |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only admin key | NEVER expose to browser |
+| `GOOGLE_MAPS_API_KEY` | Frontend Maps JS key | restrict to HTTP referrer |
+| `GOOGLE_GEOCODING_API_KEY` | Server geocoding/places key | restrict by IP |
+| `GOOGLE_CLIENT_ID` | OAuth client id (Google Identity Services button) | also paste in Supabase Auth → Providers → Google |
 | `GEMINI_API_KEY` | AI planner | https://aistudio.google.com/app/apikey |
 
-## Notion Databases (created 2026-05-03 via Notion MCP)
-Parent page: <https://www.notion.so/355722c54b8881548b33fa2f1417ba1d>
+## Supabase Schema
+See `supabase/migrations/0001_init.sql`. Key tables:
+- `profiles` — extends `auth.users` with `display_name`, `avatar_url`,
+  `preferred_lang`, `planner_usage` (jsonb, last 7 days)
+- `spots` — main catalog. `country` ('ID'|'MY'), `region`, halal/prayer/
+  veg_friendly flags, `entry_fee` (numeric, IDR or MYR), `best_time_to_visit`,
+  `local_tips`, `opening_hours`, `tags[]`, `featured`, `published`
+- `spot_translations` — `(spot_id, lang)` PK, where `lang` ∈ 7 langs
+- `bookmarks` — `(user_id, spot_id, type)` PK; type ∈ ('want_to_visit','interested')
+- `shared_plans` — saved AI plans, public read by `share_id`
+- `spot_submissions` — community submissions (status: pending/approved/rejected)
+- `events` — append-only behavior log
 
-### Travel-ID Spots (`10e3dd6ce89841e98a211c5ac4fd2449`)
-Multi-language spot catalog. Property highlights:
-- Title: `Name` (English canonical)
-- Multi-lang names: `Name_id`, `Name_ms`, `Name_ko`, `Name_zh`, `Name_ja`, `Name_ar`
-- Multi-lang descriptions: `Description`, `Description_id`, `Description_ms`, `Description_ko`, `Description_zh`, `Description_ja`, `Description_ar`
-- `Category` (select): beach, temple, cultural, volcano, nature, diving, food, cafe, shopping, nightlife, mosque, museum, adventure, wellness
-- `Region` (select):
-  - **Indonesia**: Bali, Jakarta, Yogyakarta, Bandung, Lombok, Komodo, Surabaya, Medan, Bromo, Borobudur, Raja Ampat, Sumatra, Sulawesi, Kalimantan
-  - **Malaysia**: Kuala Lumpur, Penang, Langkawi, Melaka, Sabah, Sarawak, Cameron Highlands, Johor Bahru, Ipoh, Putrajaya
-- Coordinates: `Latitude`, `Longitude`
-- Halal/Muslim fields: `Halal` (checkbox), `PrayerRoom` (checkbox; covers musholla in ID & surau in MY), `VegFriendly`
-- Pricing: `EntryFeeIDR` (number — labeled IDR but reused for MYR by convention; UI shows currency from Region)
-- Other: `BestTimeToVisit` (select), `LocalTips` (text), `OpeningHours`, `Tags` (multi_select)
-- Publish gate: `Published` (checkbox; spots are invisible until set true)
-- 36 seed spots loaded: 24 Indonesia + 12 Malaysia, across every region
+RLS:
+- Public read of published spots + their translations
+- Each user reads/writes only their own bookmarks, profile, submissions
+- service_role bypasses RLS for admin / migration scripts
 
-### Travel-ID Users (`d4a523eeebae48eb868a61259ec1d98d`)
-Title `Email`, plus `GoogleId`, `Name`, `Picture`, `Locale`, `Bookmarks` (JSON), `Plans` (JSON; doubles as planner usage tracker).
+## Auth Flow
+1. Browser loads Google Identity Services → renders sign-in button
+2. On Google credential callback, browser calls
+   `supabase.auth.signInWithIdToken({ provider: 'google', token: credential })`
+3. Supabase issues an access_token (JWT) + persists session in localStorage
+4. `onAuthStateChange` → `applySupaSession()` updates `state.authUser`
+5. API requests send `Authorization: Bearer <access_token>`; routes call
+   `supabase.auth.getUser(token)` to validate.
 
-### Travel-ID SharedPlans (`43e9ab1e470d4894a708e8a6a2f513d5`)
-Title `ShareId` (8-hex). `PlanTitle`, `Days`, `Budget`, `Style`, `Lang`, `SpotNames` (JSON), `PlanHtml` (chunked rich_text up to ~60k chars).
-
-## Auth flow
-1. Browser loads Google Identity Services, prompts user.
-2. On callback, browser POSTs the Google credential JWT to `/api/auth/google`.
-3. Server verifies the credential against Google's tokeninfo endpoint, looks up
-   (or creates) a Notion Users row, and returns a Travel-ID HS256 JWT.
-4. Browser stores the JWT in `localStorage.travelid_token` and sends it as
-   `Authorization: Bearer …` on subsequent calls.
+Important: enable **Google as a provider** in Supabase Dashboard → Authentication
+→ Providers → Google. Paste the SAME `GOOGLE_CLIENT_ID` (and Client Secret) you
+configured in Google Cloud Console.
 
 ## AI Planner notes
 - Prompt is **island/peninsula-aware** — Indonesia + Malaysia together span 5,000+ km
-  with both archipelagos and a peninsula. The planner is told to group spots by
-  ISLAND/PENINSULA first to avoid impossible same-day routes.
-- Cross-border ID↔MY: prompt includes flight pricing (KL↔Jakarta, KL↔Bali, Penang↔Medan).
+  with both archipelagos and a peninsula. Spots are grouped by ISLAND/PENINSULA
+  first to avoid impossible same-day routes.
+- Cross-border ID↔MY: flight pricing (KL↔Jakarta, KL↔Bali, Penang↔Medan).
 - `visitType === 'local'` produces a domestic-traveler plan: no visa/SIM/currency,
   local-currency-only pricing (IDR or MYR), KAI/Pelni (ID) or KTM ETS / KLIA Ekspres
   (MY) preferred over flights, e-wallet payment hints in both currencies.
 - `respondLang === 'ar'`: planner generates the entire itinerary in Modern Standard
-  Arabic; markdown renders RTL automatically when paired with `<html dir="rtl">`.
-- Reference transport prices (ID flights/ferry/KAI/Whoosh HSR; MY KTM ETS/KLIA
-  Ekspres/AirAsia/Grab) are embedded in the system prompt — refresh annually.
-- Daily rate-limit: 20 plans/user; usage state piggybacks on `Plans` rich_text in
-  the Notion Users row.
+  Arabic; markdown renders RTL when paired with `<html dir="rtl">`.
+- Reference prices embedded in the prompt — refresh annually.
+- Daily rate-limit: 20 plans/user; usage state in `profiles.planner_usage` (jsonb).
 
 ## Languages
 - User-facing: choose dynamically. Resolution order:
   1. URL `?lang=`
   2. localStorage (`travelid_lang`)
   3. Browser `navigator.language` (collapses `zh-*` → zh, `ar-*` → ar)
-  4. Timezone heuristic: Asia/Jakarta family → id; Asia/Kuala_Lumpur / Asia/Kuching → ms
+  4. Timezone heuristic: Asia/Jakarta family → id; Asia/Kuala_Lumpur / Kuching → ms
   5. English fallback
 - RTL: when `ar` is selected, `<html dir="rtl">` and `body.rtl` are set; CSS overrides
-  in `css/travel-app.css` (search "RTL Support") flip layout where needed. Map controls
-  stay LTR (Google Maps native chrome doesn't honor dir reliably).
-- Code comments: English.
-- Commit messages: English.
-- All seven language strings live in `sites/travel/lang.js` — keep them in sync
-  when adding a new key.
+  in `css/travel-app.css` (search "RTL Support"). Map controls stay LTR.
+- All seven language strings live in `sites/travel/lang.js` — keep in sync.
+
+## Notion legacy
+The 36 spots that were briefly hosted in Notion can be imported with
+`scripts/migrate-notion-to-supabase.js` (needs `NOTION_TOKEN_TRAVEL` +
+`NOTION_DB_TRAVEL` + Supabase service-role key in `.env.local`). After that,
+the Notion DB can be archived.
 
 ## Workflow: Session Start Protocol
 Before any new task:
-1. `git status` — uncommitted changes / untracked
+1. `git status` — uncommitted / untracked
 2. `git diff` — in-progress edits
 3. `git log --oneline -5` — recent history
 4. Summarize to the user, then proceed.
 
 ## Pending follow-ups
-- Domain decision (placeholder is `travel-id.kr`)
-- Replace splash/main/icon images with Indonesia-branded artwork
+- Domain decision (placeholder is `travel-id.vercel.app`)
+- Replace splash/main/icon images with branded artwork
 - GA4 measurement ID is currently `G-XXXXXXXXXX` — replace once registered
-- (Optional) Notion → Postgres migration once spot count exceeds ~1k

@@ -1,10 +1,6 @@
-// JWT helpers + Google ID token verification for Travel-ID.
-// We issue our own HS256 JWT after verifying a Google ID token. Bookmarks/plans
-// live in the Notion Users DB; the JWT is the only session state.
-const crypto = require('crypto');
-
-const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_TTL_SECONDS = 60 * 60 * 24 * 30;  // 30 days
+// Auth utilities — validates Supabase access tokens issued by the front-end's
+// supabase.auth.signInWithIdToken() flow.
+const { getSupaPublic } = require('./supabase');
 
 function setCors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,81 +8,29 @@ function setCors(res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 }
 
-// ─── Minimal HS256 JWT (no extra dependency) ───
-function b64url(buf) {
-  return buf.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-function b64urlDecode(s) {
-  s = s.replace(/-/g, '+').replace(/_/g, '/');
-  while (s.length % 4) s += '=';
-  return Buffer.from(s, 'base64');
-}
-
-function signJwt(payload) {
-  if (!JWT_SECRET) throw new Error('JWT_SECRET not configured');
-  const header = { alg: 'HS256', typ: 'JWT' };
-  const now = Math.floor(Date.now() / 1000);
-  const body = Object.assign({ iat: now, exp: now + JWT_TTL_SECONDS }, payload);
-  const head = b64url(Buffer.from(JSON.stringify(header)));
-  const data = b64url(Buffer.from(JSON.stringify(body)));
-  const sig = b64url(crypto.createHmac('sha256', JWT_SECRET).update(head + '.' + data).digest());
-  return head + '.' + data + '.' + sig;
-}
-
-function verifyJwt(token) {
-  if (!JWT_SECRET || !token) return null;
-  const parts = token.split('.');
-  if (parts.length !== 3) return null;
-  const [head, data, sig] = parts;
-  const expected = b64url(crypto.createHmac('sha256', JWT_SECRET).update(head + '.' + data).digest());
-  if (expected.length !== sig.length) return null;
-  if (!crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(sig))) return null;
-  try {
-    const payload = JSON.parse(b64urlDecode(data).toString('utf8'));
-    if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) return null;
-    return payload;
-  } catch (_) {
-    return null;
-  }
-}
-
-function getBearerToken(req) {
+async function getUserFromRequest(req) {
   const auth = req.headers && (req.headers.authorization || req.headers.Authorization);
   if (!auth || !auth.toLowerCase().startsWith('bearer ')) return null;
-  return auth.slice(7).trim();
-}
-
-function getUserFromRequest(req) {
-  const token = getBearerToken(req);
+  const token = auth.slice(7).trim();
   if (!token) return null;
-  return verifyJwt(token);  // { sub: notionPageId, email, name, picture, ... }
-}
 
-// ─── Google ID token verification via Google's tokeninfo endpoint ───
-// Sufficient for low-traffic apps. Switch to JWKS verification (cached certs)
-// if you start hitting tokeninfo's rate limit.
-async function verifyGoogleIdToken(idToken) {
-  if (!idToken) return null;
-  const parts = idToken.split('.');
-  if (parts.length !== 3) return null;
-  const url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(idToken);
   try {
-    const r = await fetch(url);
-    if (!r.ok) return null;
-    const claims = await r.json();
-    if (process.env.GOOGLE_CLIENT_ID && claims.aud !== process.env.GOOGLE_CLIENT_ID) return null;
-    if (claims.iss !== 'accounts.google.com' && claims.iss !== 'https://accounts.google.com') return null;
+    const supa = getSupaPublic();
+    const { data, error } = await supa.auth.getUser(token);
+    if (error || !data || !data.user) return null;
+    const u = data.user;
     return {
-      googleId: claims.sub,
-      email: claims.email,
-      emailVerified: claims.email_verified === 'true' || claims.email_verified === true,
-      name: claims.name || '',
-      picture: claims.picture || '',
-      locale: (claims.locale || '').split('-')[0],
+      id: u.id,                                          // auth.users.id (uuid)
+      email: u.email || '',
+      googleId: (u.user_metadata && u.user_metadata.google_id) || null,
+      name: (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name))
+            || (u.email || '').split('@')[0],
+      avatar: (u.user_metadata && (u.user_metadata.avatar_url || u.user_metadata.picture)) || '',
     };
   } catch (e) {
+    console.error('getUserFromRequest error:', e.message);
     return null;
   }
 }
 
-module.exports = { setCors, signJwt, verifyJwt, getUserFromRequest, verifyGoogleIdToken };
+module.exports = { setCors, getUserFromRequest };

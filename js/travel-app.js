@@ -343,25 +343,45 @@
     return _configPromise;
   }
 
-  // === Auth (Travel-ID JWT exchange via /api/auth/google) ===
+  // === Auth (Supabase Auth via signInWithIdToken) ===
   function initAuth() {
-    // Restore existing session
-    var storedToken = localStorage.getItem('travelid_token');
-    var storedUser = localStorage.getItem('travelid_user');
-    if (storedToken && storedUser) {
-      try {
-        state.authToken = storedToken;
-        state.authUser = JSON.parse(storedUser);
-        updateAuthUI();
-        fetchBookmarks();
-      } catch (e) {
-        localStorage.removeItem('travelid_token');
-        localStorage.removeItem('travelid_user');
-      }
-    }
+    // Drop legacy storage from any previous custom-JWT build
+    localStorage.removeItem('travelid_token');
+    localStorage.removeItem('travelid_user');
 
-    // Init Google Identity Services when ready (rendered as the login button)
-    fetchClientConfig().then(function() {
+    fetchClientConfig().then(function(cfg) {
+      if (cfg.googleClientId) window._taGoogleClientId = cfg.googleClientId;
+      if (!window.supabase || !cfg.supabaseUrl || !cfg.supabaseAnonKey) {
+        console.error('Supabase not configured; auth disabled');
+        return;
+      }
+      window._taSupa = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+        auth: { persistSession: true, autoRefreshToken: true }
+      });
+
+      // Restore existing session if present
+      window._taSupa.auth.getSession().then(function(r) {
+        if (r && r.data && r.data.session) {
+          applySupaSession(r.data.session);
+          fetchBookmarks();
+        }
+      });
+
+      // React to sign-in / sign-out / token refresh
+      window._taSupa.auth.onAuthStateChange(function(event, session) {
+        if (session) {
+          applySupaSession(session);
+          if (event === 'SIGNED_IN') {
+            fetchBookmarks();
+            renderMySpots();
+            renderSpotList();
+          }
+        } else if (event === 'SIGNED_OUT') {
+          clearAuthData();
+        }
+      });
+
+      // Init Google Identity Services after Supabase client is ready
       initGoogleSignIn();
     });
 
@@ -445,22 +465,16 @@
     }
   };
 
-  function applySession(token, user) {
-    state.authToken = token;
+  function applySupaSession(session) {
+    state.authToken = session.access_token;
+    var u = session.user || {};
+    var meta = u.user_metadata || {};
     state.authUser = {
-      id: user.id,
-      name: user.name || (user.email || '').split('@')[0],
-      email: user.email || '',
-      avatar: user.picture || '',
+      id: u.id,
+      name: meta.full_name || meta.name || (u.email || '').split('@')[0],
+      email: u.email || '',
+      avatar: meta.avatar_url || meta.picture || ''
     };
-    localStorage.setItem('travelid_token', token);
-    localStorage.setItem('travelid_user', JSON.stringify(state.authUser));
-    if (user.bookmarks) {
-      var bm = [];
-      (user.bookmarks.want_to_visit || []).forEach(function(id) { bm.push({ spotId: id, type: 'want_to_visit' }); });
-      (user.bookmarks.interested    || []).forEach(function(id) { bm.push({ spotId: id, type: 'interested' }); });
-      state.bookmarks = bm;
-    }
     updateAuthUI();
   }
 
@@ -473,34 +487,33 @@
       showToast('Sign in failed. Please try again.');
       return;
     }
+    if (!window._taSupa) {
+      console.error('Supabase client not ready');
+      showToast('Sign in not ready. Please refresh the page.');
+      return;
+    }
 
-    fetch('/api/auth/google', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ credential: response.credential }),
-    })
-      .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, body: j }; }); })
-      .then(function(res) {
-        if (!res.ok) {
-          console.error('auth/google error:', res.body);
-          showToast('Sign in failed: ' + (res.body.error || 'unknown'));
-          return;
-        }
-        applySession(res.body.token, res.body.user);
-        renderMySpots();
-        renderSpotList();
-        showToast(t('auth.welcome') + ', ' + state.authUser.name + '!');
-      })
-      .catch(function(err) {
-        console.error('Auth error:', err);
-        showToast('Sign in failed. Please try again.');
-      });
+    window._taSupa.auth.signInWithIdToken({
+      provider: 'google',
+      token: response.credential
+    }).then(function(r) {
+      if (r.error) {
+        console.error('Supabase signIn error:', r.error);
+        showToast('Sign in failed: ' + r.error.message);
+        return;
+      }
+      // applySupaSession + fetchBookmarks fire from onAuthStateChange listener
+      var name = (r.data.user.user_metadata.full_name || r.data.user.user_metadata.name || r.data.user.email);
+      showToast(t('auth.welcome') + ', ' + name + '!');
+    }).catch(function(err) {
+      console.error('Auth error:', err);
+      showToast('Sign in failed. Please try again.');
+    });
   }
 
   window.taSignOut = function() {
-    localStorage.removeItem('travelid_token');
-    localStorage.removeItem('travelid_user');
-    clearAuthData();
+    if (window._taSupa) window._taSupa.auth.signOut();
+    // clearAuthData() runs via onAuthStateChange (event='SIGNED_OUT')
   };
 
   function clearAuthData() {

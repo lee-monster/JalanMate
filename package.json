@@ -2,14 +2,15 @@
   "name": "travel-id",
   "version": "1.0.0",
   "private": true,
-  "description": "Travel-ID — Discover Indonesia. Community-driven travel guide for international tourists and Indonesian residents alike.",
+  "description": "Travel-ID — Discover Indonesia & Malaysia. Community-driven travel guide for international tourists and local residents alike.",
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.15"
+    "@supabase/supabase-js": "^2.45.0"
   },
   "devDependencies": {
+    "@notionhq/client": "^2.2.15",
     "dotenv": "^16.4.5"
   }
 }

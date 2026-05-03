@@ -1,38 +1,46 @@
 # Travel-ID Deploy Guide
 
-Step-by-step bootstrap for a fresh deployment. Allow ~30 minutes the first time.
+Step-by-step bootstrap for a fresh deployment. Allow ~30-45 minutes the first time.
 
-## 1. GitHub repo
-1. Create a new GitHub repo (suggested: `lee-monster/Travel-ID`).
-2. From this directory:
-   ```bash
-   git remote add origin https://github.com/lee-monster/Travel-ID.git
-   git add .
-   git commit -m "Initial Travel-ID import (forked from TravelKo, adapted for Indonesia)"
-   git branch -M main
-   git push -u origin main
-   ```
+## 1. GitHub repo (already done)
+Repo lives at `https://github.com/lee-monster/Travel-ID`. Vercel pulls from `main`.
 
-## 2. Notion integration
-The Notion databases are pre-created (see CLAUDE.md for IDs). You only need to:
-1. Visit <https://www.notion.so/my-integrations> and create a new internal
-   integration named "Travel-ID". Copy the secret token.
-2. Open the **Travel-ID** parent page in Notion
-   (<https://www.notion.so/355722c54b8881548b33fa2f1417ba1d>) → click "…" →
-   *Connections → Add connection → Travel-ID*. This grants access to all child
-   databases automatically.
+## 2. Supabase project
+1. Sign up / sign in at <https://supabase.com/dashboard> → **New Project**.
+   Region: pick `Singapore` (closest to ID/MY users + low Vercel egress latency).
+   Pricing: Free tier is enough to start (500MB DB, 50k MAU).
+2. Once provisioned (~2 min), go to **Settings → API**:
+   - Copy `Project URL` → `SUPABASE_URL`
+   - Copy `anon public` key → `SUPABASE_ANON_KEY`
+   - Copy `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (keep secret)
+3. **Run migrations**. Open **SQL Editor → New query** and paste each file in
+   order:
+   - Paste `supabase/migrations/0001_init.sql` → Run
+   - Paste `supabase/migrations/0002_demo_seed.sql` → Run (loads 6 demo spots)
+
+   Verify in **Table Editor**: `spots` should have 6 rows, `spot_translations` ~42.
+
+4. **Enable Google as auth provider**: **Authentication → Providers → Google** →
+   toggle ON. Paste `Client ID` (and `Client Secret` from GCP). The redirect URL
+   shown there (e.g. `https://<project>.supabase.co/auth/v1/callback`) **must be
+   added to your Google OAuth Authorized redirect URIs** in step 3 below.
 
 ## 3. Google Cloud project
 1. Create a project at <https://console.cloud.google.com/>
-2. Enable APIs: Maps JavaScript API, Places API (New), Geocoding API.
-3. Create credentials → API key. Make **two** keys:
+2. Enable APIs: **Maps JavaScript API**, **Places API (New)**, **Geocoding API**.
+3. **Credentials → Create Credentials → API key** twice:
    - **Frontend key** (`GOOGLE_MAPS_API_KEY`): restrict to *HTTP referrers* —
-     `https://travel-id.kr/*`, `https://*.vercel.app/*`, `http://localhost:*/*`.
-   - **Server key** (`GOOGLE_GEOCODING_API_KEY`): restrict by *IP addresses* —
-     leave blank initially, lock to Vercel egress IPs after first deploy.
-4. Create OAuth credentials → Web application:
-   - Authorized JavaScript origins: `https://travel-id.kr`, `https://*.vercel.app`, `http://localhost:3000`
-   - Copy the Client ID into `GOOGLE_CLIENT_ID`.
+     `https://travel-id.vercel.app/*`, `https://*.vercel.app/*`,
+     `http://localhost:*/*`, plus your future domain.
+   - **Server key** (`GOOGLE_GEOCODING_API_KEY`): leave unrestricted at first;
+     lock to Vercel egress IPs after the first deploy.
+4. **Credentials → Create Credentials → OAuth Client ID → Web application**:
+   - Authorized JavaScript origins: `https://travel-id.vercel.app`,
+     `https://*.vercel.app`, `http://localhost:3000`, `http://localhost:8000`
+   - Authorized redirect URIs: paste the Supabase callback from step 2.4
+     (`https://<project>.supabase.co/auth/v1/callback`)
+   - Copy Client ID → `GOOGLE_CLIENT_ID`
+   - Copy Client Secret → also paste in Supabase → Auth → Providers → Google
 5. (Optional) Verify your domain at <https://search.google.com/search-console>
    for OAuth consent.
 
@@ -40,49 +48,68 @@ The Notion databases are pre-created (see CLAUDE.md for IDs). You only need to:
 1. <https://aistudio.google.com/app/apikey> → Create API key.
 2. Copy into `GEMINI_API_KEY`.
 
-## 5. JWT secret
-```bash
-node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
-```
-Copy the output into `JWT_SECRET`.
+## 5. Vercel environment variables
+Vercel → **Travel-ID project → Settings → Environment Variables** → add the
+following (Production, Preview, Development all checked):
 
-## 6. Vercel project
-1. Visit <https://vercel.com/new> and import the GitHub repo.
-2. Framework preset: *Other*. Build command: leave empty. Output dir: leave empty.
-3. Environment Variables → add every key from `.env.example`. Select all
-   environments (Production, Preview, Development).
-4. Deploy. The first build takes ~30 seconds.
+```
+PUBLIC_SITE_URL              https://travel-id.vercel.app
+SUPABASE_URL                 (step 2.2)
+SUPABASE_ANON_KEY            (step 2.2)
+SUPABASE_SERVICE_ROLE_KEY    (step 2.2)
+GOOGLE_MAPS_API_KEY          (step 3.3 - frontend key)
+GOOGLE_GEOCODING_API_KEY     (step 3.3 - server key)
+GOOGLE_CLIENT_ID             (step 3.4)
+GEMINI_API_KEY               (step 4)
+```
+
+Then **Deployments → latest → Redeploy** to pick them up.
+
+## 6. (Optional) Import the 36 Notion spots
+The demo seed has only 6 spots. To load the full 36 spots from the Notion DB:
+
+```bash
+npm install
+cp .env.example .env.local
+# Fill in NOTION_TOKEN_TRAVEL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY in .env.local
+node -r dotenv/config scripts/migrate-notion-to-supabase.js dotenv_config_path=.env.local
+```
+
+The script is idempotent (upserts on lower(name)) — safe to re-run.
 
 ## 7. Domain
-1. Vercel Project → Settings → Domains → add `travel-id.kr` (or your chosen
-   domain).
+Once you've decided on a domain:
+1. Vercel Project → Settings → Domains → add it.
 2. At your DNS registrar, add the CNAME / A records Vercel suggests.
-3. Once SSL provisions (~5 min), update OAuth Authorized origins and Maps API
-   referrer restrictions to include the production domain.
+3. Once SSL provisions (~5 min):
+   - Update `PUBLIC_SITE_URL` env var to the new domain → Redeploy
+   - Update Google OAuth Authorized JavaScript origins
+   - Update Google Maps API key referrer restrictions
 
-## 8. First content & verification
+## 8. Verification
 - Visit `/` — splash screen → map centered on Bali, list of seeded spots loads
-  (24 Indonesia + 12 Malaysia).
+  (6 demo spots; 36 after migration).
 - Click a spot — detail panel opens with photos, Google Maps deep link.
 - Switch language: `id` → Bahasa Indonesia, `ms` → Bahasa Melayu, `ar` → page
   flips to right-to-left layout. Spot names/descriptions reload.
 - Region filter → groups Indonesia 🇮🇩 and Malaysia 🇲🇾 separately.
-- Sign in with Google — your name appears top-right.
+- Sign in with Google — your name appears top-right; Supabase Dashboard →
+  Authentication → Users shows the new user.
 - Bookmark a spot to "Want to Visit" — toggle persists across reloads.
-- AI Planner → pick 2-3 spots from one or both countries → expect a cross-border
-  itinerary with IDR / MYR pricing and inter-island/cross-border transport.
+  (Verify: Supabase Table Editor → bookmarks has the row.)
+- AI Planner → pick 2-3 spots → cross-border itinerary with IDR / MYR pricing.
 - Toggle Travel Settings → "Local Resident" → re-open Tips: visa/SIM sections
-  disappear, IDR/MYR-only payment tips appear.
+  disappear.
 
 ## 9. Operating cadence
-- New spots are submitted through the in-app "Share a Spot" button (creates
-  rows in Notion with `Published=false`).
-- Admin reviews directly in the Notion `Travel-ID Spots` database, fills in
-  multi-language fields, sets `Published=true`.
-- No code deployment needed for content updates; the next request hits Notion
-  directly (cache: 60s edge / 5 min stale).
+- Community-submitted spots land in `spot_submissions` (status='pending').
+  Review via Supabase Dashboard → Table Editor.
+- Approved spots go into `spots` (set `published = true`). Translations go into
+  `spot_translations`.
+- API responses cached at edge (60s) — content goes live on next refresh.
 
 ## 10. Rollback
 - Each Vercel deployment is immutable. Revert via Vercel dashboard → Deployments
   → ⋯ → Promote to production.
-- Notion content has its own revision history per page.
+- Supabase has Point-in-Time Recovery on paid plans; on Free tier, manual
+  pg_dump backups are recommended weekly.
