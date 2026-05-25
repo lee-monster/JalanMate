@@ -1,8 +1,8 @@
 {
-  "name": "travel-id",
+  "name": "jalanmate",
   "version": "1.0.0",
   "private": true,
-  "description": "Travel-ID — Discover Indonesia & Malaysia. Community-driven travel guide for international tourists and local residents alike.",
+  "description": "JalanMate — AI travel planner for Indonesia. Accurate, local travel info to make exploring Indonesia easier. Expanding to Malaysia & Singapore.",
   "engines": {
     "node": ">=18"
   },

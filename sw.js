@@ -1,5 +1,5 @@
-// Travel-ID Service Worker v1
-var CACHE_NAME = 'Travel-ID-v1';
+// JalanMate Service Worker v1
+var CACHE_NAME = 'JalanMate-v1';
 var OFFLINE_URL = '/offline.html';
 
 // Assets to precache

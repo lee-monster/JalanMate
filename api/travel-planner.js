@@ -116,7 +116,7 @@ pulang" for ID; "Jumaat malam bertolak, Ahad malam balik" for MY) and family-fri
 logistics where applicable.` : ''
   );
 
-  const systemPrompt = `You are Travel-ID's AI Travel Planner — an expert on traveling in Indonesia AND
+  const systemPrompt = `You are JalanMate's AI Travel Planner — an expert on traveling in Indonesia AND
 Malaysia, serving both international visitors AND local residents of either country.
 Create a detailed, practical day-by-day travel itinerary based on the user's selected
 spots and preferences. Use Google Search to verify the latest opening hours, ticket

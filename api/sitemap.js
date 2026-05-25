@@ -1,4 +1,4 @@
-// Travel-ID sitemap generator (Supabase-backed).
+// JalanMate sitemap generator (Supabase-backed).
 // Lists base/lang URLs and one entry per published spot × language.
 const { getSupaPublic, getSiteUrl } = require('./_lib/supabase');
 

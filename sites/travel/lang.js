@@ -1,4 +1,4 @@
-// Travel-ID i18n catalog
+// JalanMate i18n catalog
 // Languages (7): en (default), id (Bahasa Indonesia), ms (Bahasa Melayu),
 //                ko (한국어), zh (简体中文), ja (日本語), ar (العربية, RTL)
 // Categories: beach, temple, cultural, volcano, nature, diving, food, cafe,
@@ -11,9 +11,9 @@
 
 const translations = {
   en: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — Discover Indonesia & Malaysia | Beyond Bali & KL",
+    "seo.title": "JalanMate — Discover Indonesia & Malaysia | Beyond Bali & KL",
     "seo.description": "Discover the best travel spots across Indonesia and Malaysia. Bali, Yogyakarta, Komodo, Bromo, Kuala Lumpur, Penang, Langkawi, Borneo and beyond — halal-friendly, AI trip planning.",
     "seo.keywords": "Indonesia travel, Malaysia travel, Bali, Yogyakarta, Borobudur, Komodo, Mt Bromo, Raja Ampat, Lombok, Kuala Lumpur travel, Penang, Langkawi, Melaka, Cameron Highlands, Sabah, Sarawak, halal travel SEA, Muslim friendly, AI trip planner",
 
@@ -57,7 +57,7 @@ const translations = {
     "prefs.apply": "Apply",
 
     "guide.btn": "How to Use",
-    "guide.title": "How to Use Travel-ID",
+    "guide.title": "How to Use JalanMate",
     "guide.step1Title": "Browse Spots",
     "guide.step1Desc": "Explore travel spots across Indonesia and Malaysia recommended by fellow travelers. Filter by category (Beach, Temple, Volcano, …) and region (Bali, KL, Penang, Komodo, …).",
     "guide.step2Title": "Travel Settings",
@@ -74,7 +74,7 @@ const translations = {
     "guide.dontShowToday": "Don't show today",
 
     "about.btn": "About",
-    "about.title": "About Travel-ID",
+    "about.title": "About JalanMate",
     "about.privacy": "Privacy Policy",
     "about.terms": "Terms of Service",
     "about.koinfo": "",
@@ -238,15 +238,15 @@ const translations = {
     "tips.tourist": "Tourist Police — Indonesia Bali: +62-361-754-599. Malaysia: 03-2149-6590 (Tourist Police KL).",
     "tips.lastUpdated": "Information current as of 2026 · Sources: Indonesian Ministry of Tourism, Tourism Malaysia, official airline sites",
 
-    "footer.text": "© 2026 Travel-ID. All rights reserved.",
+    "footer.text": "© 2026 JalanMate. All rights reserved.",
     "footer.privacy": "Privacy Policy",
     "footer.terms": "Terms of Service",
   },
 
   id: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — Jelajahi Indonesia & Malaysia | Beyond Bali & KL",
+    "seo.title": "JalanMate — Jelajahi Indonesia & Malaysia | Beyond Bali & KL",
     "seo.description": "Temukan tempat wisata terbaik di Indonesia dan Malaysia. Bali, Yogyakarta, Komodo, Bromo, Kuala Lumpur, Penang, Langkawi, Borneo dan banyak lagi — info halal, perencana perjalanan AI.",
     "seo.keywords": "wisata Indonesia, wisata Malaysia, Bali, Yogyakarta, Borobudur, Komodo, Bromo, Raja Ampat, Lombok, Kuala Lumpur, Penang, Langkawi, Melaka, Sabah, Sarawak, kuliner halal, perencana perjalanan AI",
 
@@ -290,7 +290,7 @@ const translations = {
     "prefs.apply": "Terapkan",
 
     "guide.btn": "Cara Pakai",
-    "guide.title": "Cara Menggunakan Travel-ID",
+    "guide.title": "Cara Menggunakan JalanMate",
     "guide.step1Title": "Jelajah Tempat",
     "guide.step1Desc": "Telusuri tempat wisata di Indonesia dan Malaysia yang direkomendasikan traveler. Filter berdasarkan kategori (Pantai, Candi, dll.) dan wilayah (Bali, KL, Penang, Komodo, …).",
     "guide.step2Title": "Pengaturan Perjalanan",
@@ -307,7 +307,7 @@ const translations = {
     "guide.dontShowToday": "Jangan tampilkan hari ini",
 
     "about.btn": "Tentang",
-    "about.title": "Tentang Travel-ID",
+    "about.title": "Tentang JalanMate",
     "about.privacy": "Kebijakan Privasi",
     "about.terms": "Syarat Layanan",
     "about.koinfo": "",
@@ -471,15 +471,15 @@ const translations = {
     "tips.tourist": "Polisi Wisata — Bali: +62-361-754-599. KL: 03-2149-6590.",
     "tips.lastUpdated": "Informasi per 2026 · Sumber: Kementerian Pariwisata RI, Tourism Malaysia",
 
-    "footer.text": "© 2026 Travel-ID. Hak cipta dilindungi.",
+    "footer.text": "© 2026 JalanMate. Hak cipta dilindungi.",
     "footer.privacy": "Kebijakan Privasi",
     "footer.terms": "Syarat Layanan",
   },
 
   ms: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — Terokai Malaysia & Indonesia | Lebih dari KL & Bali",
+    "seo.title": "JalanMate — Terokai Malaysia & Indonesia | Lebih dari KL & Bali",
     "seo.description": "Temui destinasi pelancongan terbaik di Malaysia dan Indonesia. Kuala Lumpur, Penang, Langkawi, Borneo, Bali, Yogyakarta, Komodo dan banyak lagi — info halal, perancang perjalanan AI.",
     "seo.keywords": "pelancongan Malaysia, pelancongan Indonesia, Kuala Lumpur, Penang, Langkawi, Melaka, Sabah, Sarawak, Cameron Highlands, Bali, Yogyakarta, Borobudur, makanan halal, perancang AI",
 
@@ -523,7 +523,7 @@ const translations = {
     "prefs.apply": "Guna",
 
     "guide.btn": "Cara Guna",
-    "guide.title": "Cara Menggunakan Travel-ID",
+    "guide.title": "Cara Menggunakan JalanMate",
     "guide.step1Title": "Layari Tempat",
     "guide.step1Desc": "Terokai tempat menarik di Malaysia dan Indonesia yang dicadangkan oleh pelancong lain. Tapis mengikut kategori dan wilayah (KL, Penang, Bali, Komodo, …).",
     "guide.step2Title": "Tetapan Perjalanan",
@@ -540,7 +540,7 @@ const translations = {
     "guide.dontShowToday": "Jangan tunjukkan hari ini",
 
     "about.btn": "Mengenai",
-    "about.title": "Mengenai Travel-ID",
+    "about.title": "Mengenai JalanMate",
     "about.privacy": "Polisi Privasi",
     "about.terms": "Syarat Perkhidmatan",
     "about.koinfo": "",
@@ -704,15 +704,15 @@ const translations = {
     "tips.tourist": "Polis Pelancong — KL: 03-2149-6590. Bali: +62-361-754-599.",
     "tips.lastUpdated": "Maklumat sehingga 2026 · Sumber: Tourism Malaysia, Kementerian Pelancongan RI",
 
-    "footer.text": "© 2026 Travel-ID. Hak cipta terpelihara.",
+    "footer.text": "© 2026 JalanMate. Hak cipta terpelihara.",
     "footer.privacy": "Polisi Privasi",
     "footer.terms": "Syarat Perkhidmatan",
   },
 
   ko: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — 인도네시아 & 말레이시아 여행 가이드 | 발리·KL부터 라자암팟까지",
+    "seo.title": "JalanMate — 인도네시아 & 말레이시아 여행 가이드 | 발리·KL부터 라자암팟까지",
     "seo.description": "커뮤니티가 추천하는 인도네시아·말레이시아 최고의 여행지. 발리, 족자카르타, 코모도, 쿠알라룸푸르, 페낭, 랑카위, 보르네오 — 할랄 식당과 기도실 정보, AI 여행 플래너 포함.",
     "seo.keywords": "인도네시아 여행, 말레이시아 여행, 발리 여행, 쿠알라룸푸르 여행, 페낭, 랑카위, 코타키나발루, 보르네오, 코모도, 보로부두르, 무슬림 친화 동남아, 할랄 여행, AI 여행 플래너",
 
@@ -756,7 +756,7 @@ const translations = {
     "prefs.apply": "적용",
 
     "guide.btn": "사용법",
-    "guide.title": "Travel-ID 사용법",
+    "guide.title": "JalanMate 사용법",
     "guide.step1Title": "장소 둘러보기",
     "guide.step1Desc": "인도네시아·말레이시아 추천 여행지를 탐색하세요. 카테고리(해변/사원/화산 등)와 지역(발리/KL/페낭/코모도 등)으로 필터링.",
     "guide.step2Title": "여행 설정",
@@ -773,7 +773,7 @@ const translations = {
     "guide.dontShowToday": "오늘 다시 안보기",
 
     "about.btn": "앱 정보",
-    "about.title": "Travel-ID 정보",
+    "about.title": "JalanMate 정보",
     "about.privacy": "개인정보처리방침",
     "about.terms": "이용약관",
     "about.koinfo": "",
@@ -938,15 +938,15 @@ const translations = {
     "tips.korean": "주인도네시아 한국대사관: +62-21-2967-2555 (자카르타). 주말레이시아 한국대사관: +60-3-4251-2336 (KL). 영사콜센터(24h): +82-2-3210-0404.",
     "tips.lastUpdated": "정보 기준 2026년 · 출처: 인도네시아 관광부, 말레이시아 관광청, 항공사 공식 사이트",
 
-    "footer.text": "© 2026 Travel-ID. All rights reserved.",
+    "footer.text": "© 2026 JalanMate. All rights reserved.",
     "footer.privacy": "개인정보처리방침",
     "footer.terms": "이용약관",
   },
 
   zh: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — 探索印度尼西亚与马来西亚 | 巴厘岛、吉隆坡及更多",
+    "seo.title": "JalanMate — 探索印度尼西亚与马来西亚 | 巴厘岛、吉隆坡及更多",
     "seo.description": "发现社区推荐的印尼和马来西亚最佳旅游胜地。巴厘岛、日惹、科莫多、吉隆坡、槟城、兰卡威、婆罗洲等 — 含清真餐厅、礼拜室及AI行程规划。",
     "seo.keywords": "印尼旅游, 马来西亚旅游, 巴厘岛, 吉隆坡, 槟城, 兰卡威, 马六甲, 沙巴, 砂拉越, 婆罗洲, 科莫多, 日惹, 婆罗浮屠, 穆斯林友好, AI行程",
 
@@ -990,7 +990,7 @@ const translations = {
     "prefs.apply": "应用",
 
     "guide.btn": "使用说明",
-    "guide.title": "Travel-ID 使用方法",
+    "guide.title": "JalanMate 使用方法",
     "guide.step1Title": "浏览地点",
     "guide.step1Desc": "探索印尼和马来西亚的旅游胜地。可按分类(海滩、寺庙、火山等)和地区(巴厘、吉隆坡、槟城、科莫多等)筛选。",
     "guide.step2Title": "旅行设置",
@@ -1007,7 +1007,7 @@ const translations = {
     "guide.dontShowToday": "今日不再显示",
 
     "about.btn": "关于",
-    "about.title": "关于 Travel-ID",
+    "about.title": "关于 JalanMate",
     "about.privacy": "隐私政策",
     "about.terms": "服务条款",
     "about.koinfo": "",
@@ -1172,15 +1172,15 @@ const translations = {
     "tips.korean": "中国驻印尼大使馆:+62-21-525-1981(雅加达)。中国驻马来西亚大使馆:+60-3-2161-2148(吉隆坡)。",
     "tips.lastUpdated": "信息截至 2026 年 · 来源:印尼旅游部、马来西亚旅游局、各航空公司官方网站",
 
-    "footer.text": "© 2026 Travel-ID. 版权所有。",
+    "footer.text": "© 2026 JalanMate. 版权所有。",
     "footer.privacy": "隐私政策",
     "footer.terms": "服务条款",
   },
 
   ja: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — インドネシア&マレーシア旅行ガイド | バリ島・KLから先へ",
+    "seo.title": "JalanMate — インドネシア&マレーシア旅行ガイド | バリ島・KLから先へ",
     "seo.description": "コミュニティ推薦のインドネシア・マレーシア最高の観光地を発見。バリ島、ジョグジャカルタ、コモド、クアラルンプール、ペナン、ランカウイ、ボルネオ等 — ハラル料理・礼拝室情報、AI旅行プランナー付き。",
     "seo.keywords": "インドネシア旅行, マレーシア旅行, バリ島, ジョグジャカルタ, ボロブドゥール, コモド, クアラルンプール, ペナン, ランカウイ, マラッカ, サバ, サラワク, ボルネオ, ムスリムフレンドリー, AI旅行プランナー",
 
@@ -1224,7 +1224,7 @@ const translations = {
     "prefs.apply": "適用",
 
     "guide.btn": "使い方",
-    "guide.title": "Travel-IDの使い方",
+    "guide.title": "JalanMateの使い方",
     "guide.step1Title": "観光地を見る",
     "guide.step1Desc": "インドネシア・マレーシアの旅行者推薦スポットを探索。カテゴリ(ビーチ・寺院・火山など)と地域(バリ・KL・ペナン・コモドなど)で絞り込めます。",
     "guide.step2Title": "旅行設定",
@@ -1241,7 +1241,7 @@ const translations = {
     "guide.dontShowToday": "今日は表示しない",
 
     "about.btn": "アプリについて",
-    "about.title": "Travel-ID について",
+    "about.title": "JalanMate について",
     "about.privacy": "プライバシーポリシー",
     "about.terms": "利用規約",
     "about.koinfo": "",
@@ -1406,15 +1406,15 @@ const translations = {
     "tips.korean": "在インドネシア日本国大使館:+62-21-3192-4308。在マレーシア日本国大使館:+60-3-2177-2600(KL)。",
     "tips.lastUpdated": "情報は2026年現在 · 出典:インドネシア観光省、マレーシア観光局、各航空会社公式サイト",
 
-    "footer.text": "© 2026 Travel-ID. All rights reserved.",
+    "footer.text": "© 2026 JalanMate. All rights reserved.",
     "footer.privacy": "プライバシーポリシー",
     "footer.terms": "利用規約",
   },
 
   ar: {
-    "common.tagline": "Travel-ID",
+    "common.tagline": "JalanMate",
 
-    "seo.title": "Travel-ID — اكتشف إندونيسيا وماليزيا | بالي وكوالالمبور وما وراءها",
+    "seo.title": "JalanMate — اكتشف إندونيسيا وماليزيا | بالي وكوالالمبور وما وراءها",
     "seo.description": "اكتشف أفضل الوجهات السياحية في إندونيسيا وماليزيا. بالي، يوغياكارتا، كومودو، كوالالمبور، بينانغ، لانكاوي، بورنيو والمزيد — مطاعم حلال وغرف صلاة، مخطط رحلات بالذكاء الاصطناعي.",
     "seo.keywords": "سياحة إندونيسيا, سياحة ماليزيا, بالي, كوالالمبور, بينانغ, لانكاوي, ملاكا, صباح, ساراواك, طعام حلال, سياحة إسلامية, مخطط رحلات",
 
@@ -1458,7 +1458,7 @@ const translations = {
     "prefs.apply": "تطبيق",
 
     "guide.btn": "كيفية الاستخدام",
-    "guide.title": "كيفية استخدام Travel-ID",
+    "guide.title": "كيفية استخدام JalanMate",
     "guide.step1Title": "تصفح المواقع",
     "guide.step1Desc": "استكشف المواقع السياحية في إندونيسيا وماليزيا التي يوصي بها المسافرون. صفِّ حسب الفئة (شاطئ، معبد، بركان...) والمنطقة (بالي، كوالالمبور، بينانغ، كومودو...).",
     "guide.step2Title": "إعدادات السفر",
@@ -1475,7 +1475,7 @@ const translations = {
     "guide.dontShowToday": "لا تعرض اليوم",
 
     "about.btn": "حول",
-    "about.title": "حول Travel-ID",
+    "about.title": "حول JalanMate",
     "about.privacy": "سياسة الخصوصية",
     "about.terms": "شروط الخدمة",
     "about.koinfo": "",
@@ -1639,7 +1639,7 @@ const translations = {
     "tips.tourist": "شرطة السياحة — بالي: +62-361-754-599. كوالالمبور: 03-2149-6590.",
     "tips.lastUpdated": "المعلومات حتى عام 2026 · المصادر: وزارة السياحة الإندونيسية، السياحة الماليزية، مواقع شركات الطيران الرسمية",
 
-    "footer.text": "© 2026 Travel-ID. جميع الحقوق محفوظة.",
+    "footer.text": "© 2026 JalanMate. جميع الحقوق محفوظة.",
     "footer.privacy": "سياسة الخصوصية",
     "footer.terms": "شروط الخدمة",
   }

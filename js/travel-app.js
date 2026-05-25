@@ -1,11 +1,11 @@
-// Travel-ID - travel-id.kr Main Application
+// JalanMate - travel-id.kr Main Application
 // Requires: sites/travel/lang.js (translations)
 
 (function() {
   'use strict';
 
   // === Resolve initial language from URL > localStorage > default ===
-  // Travel-ID covers Indonesia + Malaysia and serves both international visitors
+  // JalanMate covers Indonesia + Malaysia and serves both international visitors
   // and local residents, so id (Bahasa Indonesia) and ms (Bahasa Melayu) are
   // first-class peer languages — not just translation targets.
   var SUPPORTED_LANGS = ['en', 'id', 'ms', 'ko', 'zh', 'ja', 'ar'];
@@ -258,7 +258,7 @@
     document.documentElement.lang = lang;
 
     // title
-    var title = langData['seo.title'] || 'Travel-ID - Discover Korea';
+    var title = langData['seo.title'] || 'JalanMate - Discover Korea';
     document.title = title;
 
     // meta description
@@ -355,7 +355,7 @@
         console.error('Supabase not configured; auth disabled');
         return;
       }
-      // Travel-ID co-tenants the TravelKo Supabase project; all our tables
+      // JalanMate co-tenants the TravelKo Supabase project; all our tables
       // live in the `travelid` schema (overridable via map-config response).
       window._taSupa = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
         auth: { persistSession: true, autoRefreshToken: true },
@@ -1001,7 +1001,7 @@
     // Share buttons
     var siteOrigin = (state.mapConfig && state.mapConfig.siteUrl) || window.location.origin;
     var shareUrl = siteOrigin + '/spot/' + spot.id + '?lang=' + state.lang;
-    var shareText = spot.name + ' — Travel-ID';
+    var shareText = spot.name + ' — JalanMate';
     actionsHtml += '<div class="ta-spot-share">' +
       '<button class="ta-share-spot-btn ta-share-spot-copy" onclick="taShareSpot(\'copy\')" title="Copy Link">🔗</button>' +
       '<button class="ta-share-spot-btn ta-share-spot-whatsapp" onclick="taShareSpot(\'whatsapp\')" title="WhatsApp">WhatsApp</button>' +
@@ -1819,7 +1819,7 @@
   }
 
   function renderShareButtons(panel, shareUrl, planTitle) {
-    var text = encodeURIComponent(planTitle + ' — Travel-ID');
+    var text = encodeURIComponent(planTitle + ' — JalanMate');
     var url = encodeURIComponent(shareUrl);
 
     panel.innerHTML =
@@ -1887,8 +1887,8 @@
     document.getElementById('ta-auth-profile').classList.remove('open');
     var content = document.getElementById('ta-about-content');
     content.innerHTML =
-      '<div class="ta-about-logo"><img src="images/main.png" alt="Travel-ID"></div>' +
-      '<div class="ta-about-version">Travel-ID v1.0.0</div>' +
+      '<div class="ta-about-logo"><img src="images/main.png" alt="JalanMate"></div>' +
+      '<div class="ta-about-version">JalanMate v1.0.0</div>' +
       '<div class="ta-about-tagline">Discover Indonesia, Beyond Bali — for tourists and locals alike</div>' +
       '<div class="ta-about-links">' +
         '<a href="/privacy" target="_blank">' + t('about.privacy') + '</a>' +

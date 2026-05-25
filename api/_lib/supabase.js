@@ -4,7 +4,7 @@
 // - getSupaAdmin(): service_role key, bypasses RLS. Use for admin/cleanup,
 //   migration, server-side writes that need to override RLS.
 //
-// SCHEMA NOTE: Travel-ID co-tenants the TravelKo Supabase project, isolating
+// SCHEMA NOTE: JalanMate co-tenants the TravelKo Supabase project, isolating
 // all its tables in a dedicated `travelid` PostgreSQL schema. The schema is
 // configurable via SUPABASE_SCHEMA env (default 'travelid'). The schema must
 // also be added to Project Settings → API → Exposed schemas in Supabase.

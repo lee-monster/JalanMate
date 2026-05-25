@@ -144,7 +144,7 @@ async function renderSpotPage(req, res) {
 
     const e = escHtml;
     const ogImage = spot.coverImage || (spot.photos[0] || SITE + '/images/splash.png');
-    const ogTitle = e(spot.name + ' — Travel-ID');
+    const ogTitle = e(spot.name + ' — JalanMate');
     const ogDesc = e((spot.description || '').substring(0, 200));
     const spotUrl = SITE + '/spot/' + id + (lang ? '?lang=' + lang : '');
     const appUrl = SITE + '/?spot=' + id + (lang ? '&lang=' + lang : '');
@@ -171,7 +171,7 @@ async function renderSpotPage(req, res) {
 <meta property="og:image" content="${e(ogImage)}">
 <meta property="og:url" content="${e(spotUrl)}">
 <meta property="og:locale" content="${localeMap[l] || 'en_US'}">
-<meta property="og:site_name" content="Travel-ID">
+<meta property="og:site_name" content="JalanMate">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${ogTitle}">
 <meta name="twitter:description" content="${ogDesc}">
@@ -191,7 +191,7 @@ ${spot.coverImage ? `<img src="${e(spot.coverImage)}" alt="${e(spot.name)}">` : 
 <h1>${catEmoji} ${e(spot.name)}</h1>
 <div class="meta">${e(spot.region)} · ${e(spot.category)}</div>
 <p>${e(spot.description)}</p>
-<a class="cta" href="${e(appUrl)}">Open in Travel-ID →</a>
+<a class="cta" href="${e(appUrl)}">Open in JalanMate →</a>
 </body>
 </html>`;
 

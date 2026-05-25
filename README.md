@@ -1,11 +1,13 @@
-# Travel-ID
+# JalanMate
 
-> Discover Indonesia & Malaysia — for international tourists and local residents alike.
+> AI travel planner for Indonesia — accurate, local travel info that makes exploring
+> Indonesia easier and more comfortable. Malaysia & Singapore coming next.
 
-Community-driven travel guide for Indonesia and Malaysia. Bali, Yogyakarta, Komodo,
-Bromo, Kuala Lumpur, Penang, Langkawi, Borneo — with halal / prayer-room info, AI
-trip planning, and an interactive Google Map. Seven languages: English, Bahasa
-Indonesia, Bahasa Melayu, 한국어, 中文, 日本語, العربية (RTL).
+JalanMate (formerly Travel-ID) is an AI-powered travel planner and guide focused on
+Indonesia first, expanding to Malaysia and Singapore. Bali, Yogyakarta, Komodo, Bromo
+and beyond — with halal / prayer-room info, AI trip planning, and an interactive
+Google Map. Seven languages: English, Bahasa Indonesia, Bahasa Melayu, 한국어, 中文,
+日本語, العربية (RTL).
 
 ## Stack
 - Vanilla HTML / CSS / JS (no framework, no build step)

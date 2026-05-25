@@ -1,7 +1,19 @@
-# Travel-ID Project Guidelines
+# JalanMate
+
+> **서비스 정체성 (2026-05-25 리브랜딩)**
+>
+> - **이름**: 이 프로젝트는 `Travel-ID`에서 **`JalanMate`**로 변경되었습니다.
+> - **서비스 목적**: 인도네시아 지역 여행을 위한 **AI 여행 플래너**.
+> - **핵심 고객가치**: 인도네시아 지역을 여행하는 사람들에게 **정확한 여행 정보**를 제공하여,
+>   더 쉽고 편하게 인도네시아 지역을 여행할 수 있도록 한다.
+> - **장기 로드맵**: 인도네시아를 시작으로 **말레이시아, 싱가포르** 지역까지 포괄.
+> - **로고**: `images/logo_fit.png` (메인 로고), `images/logo_app_icon.png` (앱 아이콘).
+>
+> 아래 문서의 `Travel-ID` 명칭·코드 식별자(`travelid` 스키마, `travel-app.js` 등)는
+> 리브랜딩 이전의 레거시 표기이며, 점진적으로 `JalanMate`로 정리한다.
 
 ## Project Overview
-Travel-ID is a community-driven travel guide for **Indonesia AND Malaysia**, serving
+JalanMate (formerly Travel-ID) is a community-driven travel guide for **Indonesia AND Malaysia**, serving
 both international visitors AND local residents (domestic travelers) of either country.
 Forked & adapted from TravelKo (travel.koinfo.kr) on 2026-05-03; expanded to Malaysia
 + Arabic on 2026-05-03; pivoted from Notion to Supabase on 2026-05-04.

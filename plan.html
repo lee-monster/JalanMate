@@ -13,17 +13,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#2563EB">
   <link rel="icon" type="image/png" href="/images/main_bar.png">
-  <title>Travel Plan — Travel-ID</title>
-  <meta name="description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <title>Travel Plan — JalanMate</title>
+  <meta name="description" content="Check out this Korea travel plan created with JalanMate AI Planner">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Travel Plan — Travel-ID">
-  <meta property="og:description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <meta property="og:title" content="Travel Plan — JalanMate">
+  <meta property="og:description" content="Check out this Korea travel plan created with JalanMate AI Planner">
   <meta property="og:image" content="https://travel-id.kr/images/splash.png">
   <meta property="og:url" content="https://travel-id.kr/plan/">
-  <meta property="og:site_name" content="Travel-ID">
+  <meta property="og:site_name" content="JalanMate">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Travel Plan — Travel-ID">
-  <meta name="twitter:description" content="Check out this Korea travel plan created with Travel-ID AI Planner">
+  <meta name="twitter:title" content="Travel Plan — JalanMate">
+  <meta name="twitter:description" content="Check out this Korea travel plan created with JalanMate AI Planner">
   <meta name="twitter:image" content="https://travel-id.kr/images/splash.png">
   <meta name="robots" content="noindex">
   <style>
@@ -246,8 +246,8 @@
 <body>
   <header>
     <a href="/" class="header-logo">
-      <img src="/images/main_bar.png" alt="Travel-ID">
-      Travel-ID
+      <img src="/images/main_bar.png" alt="JalanMate">
+      JalanMate
     </a>
     <span class="header-badge">Shared Plan</span>
   </header>
@@ -263,18 +263,18 @@
       <div id="plan-meta" class="plan-meta"></div>
       <div id="plan-body" class="plan-body"></div>
       <div class="plan-cta">
-        <p>Create your own travel plan with Travel-ID</p>
+        <p>Create your own travel plan with JalanMate</p>
         <a href="/" class="cta-btn">Plan Your Trip</a>
       </div>
     </div>
 
     <div id="plan-error" style="display:none">
       <p>This plan could not be found or has expired.</p>
-      <a href="/">Go to Travel-ID</a>
+      <a href="/">Go to JalanMate</a>
     </div>
   </main>
 
-  <footer>&copy; 2026 Travel-ID by Travel-ID</footer>
+  <footer>&copy; 2026 JalanMate by JalanMate</footer>
 
   <script>
     // Extract plan ID from URL path: /plan/abc12345
@@ -291,11 +291,11 @@
           if (data.success && data.plan) {
             var plan = data.plan;
             document.getElementById('plan-title').textContent = plan.title || 'Travel Plan';
-            document.title = (plan.title || 'Travel Plan') + ' \u2014 Travel-ID';
+            document.title = (plan.title || 'Travel Plan') + ' \u2014 JalanMate';
 
             // Update OG tags dynamically
             var ogTitle = document.querySelector('meta[property="og:title"]');
-            if (ogTitle) ogTitle.setAttribute('content', (plan.title || 'Travel Plan') + ' \u2014 Travel-ID');
+            if (ogTitle) ogTitle.setAttribute('content', (plan.title || 'Travel Plan') + ' \u2014 JalanMate');
 
             var meta = [];
             if (plan.days) meta.push(plan.days + ' days');

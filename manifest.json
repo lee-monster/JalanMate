@@ -1,6 +1,6 @@
 {
-  "name": "Travel-ID — Indonesia & Malaysia Trip Planner",
-  "short_name": "Travel-ID",
+  "name": "JalanMate — Indonesia & Malaysia Trip Planner",
+  "short_name": "JalanMate",
   "description": "Discover the best travel spots across Indonesia and Malaysia, recommended by the community. Bali, Yogyakarta, Komodo, Bromo, Kuala Lumpur, Penang, Langkawi, Borneo. AI-powered trip planner.",
   "start_url": "/?source=pwa",
   "scope": "/",
@@ -37,7 +37,7 @@
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Travel-ID homepage with map and spot listings"
+      "label": "JalanMate homepage with map and spot listings"
     }
   ],
   "shortcuts": [
