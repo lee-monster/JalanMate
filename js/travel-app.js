@@ -17,22 +17,8 @@
     if (urlLang && SUPPORTED_LANGS.indexOf(urlLang) !== -1) return urlLang;
     var stored = localStorage.getItem('travelid_lang');
     if (stored && SUPPORTED_LANGS.indexOf(stored) !== -1) return stored;
-    // Auto-detect from browser language. Collapse zh-* / zh-Hans / zh-CN / zh-TW → 'zh',
-    // and ar-* (ar-SA, ar-AE, ar-EG, ...) → 'ar'.
-    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    var primary = nav.split('-')[0];
-    if (primary === 'zh') return 'zh';
-    if (primary === 'ar') return 'ar';
-    if (SUPPORTED_LANGS.indexOf(primary) !== -1) return primary;
-    // Indonesian browsers may report 'in' (legacy ISO 639-1 alias).
-    if (primary === 'in') return 'id';
-    // Timezone heuristic: pick id for Indonesia, ms for Malaysia.
-    try {
-      var tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
-      if (tz.indexOf('asia/jakarta') !== -1 || tz.indexOf('asia/makassar') !== -1 ||
-          tz.indexOf('asia/jayapura') !== -1 || tz.indexOf('asia/pontianak') !== -1) return 'id';
-      if (tz.indexOf('asia/kuala_lumpur') !== -1 || tz.indexOf('asia/kuching') !== -1) return 'ms';
-    } catch (e) {}
+    // Default language is English. A user's explicit choice (via the selector)
+    // is persisted to localStorage above and takes precedence on return visits.
     return 'en';
   }
 

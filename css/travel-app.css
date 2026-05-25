@@ -48,7 +48,7 @@ body {
 }
 .ta-brand:hover { text-decoration: none; }
 .ta-brand-logo {
-  height: 48px; width: auto; object-fit: contain;
+  height: 34px; width: auto; object-fit: contain;
 }
 .ta-topbar-actions {
   display: flex; align-items: center; gap: 6px;
@@ -58,6 +58,9 @@ body {
   padding: 5px 8px; border: 1px solid var(--t-gray-200); border-radius: var(--t-radius-sm);
   font-size: 0.8rem; background: var(--t-white); cursor: pointer; color: var(--t-gray-700);
 }
+/* Topbar language select: stay compact + shrinkable so it never overflows the 380px sidebar.
+   Direct child only — the copy inside the profile dropdown stays full-width. */
+.ta-topbar-actions > .ta-lang-select { max-width: 88px; min-width: 0; }
 .ta-koinfo-link {
   font-size: 0.78rem; color: var(--t-gray-300); text-decoration: none;
   padding: 5px 10px; border-radius: var(--t-radius-sm); transition: all var(--t-transition);
@@ -969,7 +972,7 @@ body {
     position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     height: 48px; padding: 0 10px;
   }
-  .ta-brand-logo { height: 40px; }
+  .ta-brand-logo { height: 30px; }
   /* No padding-top needed: sidebar is bottom sheet, header floats above map */
 
   /* Category row: horizontal scroll with fade hint */
