@@ -1,5 +1,5 @@
 // JalanMate Service Worker v1
-var CACHE_NAME = 'JalanMate-v1';
+var CACHE_NAME = 'JalanMate-v2';
 var OFFLINE_URL = '/offline.html';
 
 // Assets to precache
@@ -8,7 +8,6 @@ var PRECACHE_ASSETS = [
   '/css/travel-app.css',
   '/js/travel-app.js',
   '/sites/travel/lang.js',
-  '/favicon.svg',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/offline.html'
