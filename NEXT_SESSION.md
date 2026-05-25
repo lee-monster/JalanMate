@@ -34,7 +34,7 @@ Vercel dashboard → jalanmate project → Settings → Environment Variables.
 Add the following (Production / Preview / Development all checked):
 
 ```
-PUBLIC_SITE_URL              https://travel-id.vercel.app
+PUBLIC_SITE_URL              https://jalanmate.vercel.app
 SUPABASE_URL                 (same as TravelKo)
 SUPABASE_ANON_KEY            (same as TravelKo)
 SUPABASE_SERVICE_ROLE_KEY    (same as TravelKo)
@@ -50,18 +50,18 @@ Vercel → Deployments → latest → ⋯ → Redeploy
 
 ### Step 3 — Verify (run from your PC)
 ```bash
-curl https://travel-id.vercel.app/api/map-config
+curl https://jalanmate.vercel.app/api/map-config
 # Expect: { "googleKey": "AIza...", "googleClientId": "...", "supabaseUrl": "https://...", "supabaseAnonKey": "...", "supabaseSchema": "travelid", "siteUrl": "..." }
 
-curl "https://travel-id.vercel.app/api/travel-spots?lang=en&limit=3"
+curl "https://jalanmate.vercel.app/api/travel-spots?lang=en&limit=3"
 # Expect: { "spots": [...3 demo spots...], "hasMore": true, ... }
 
-curl https://travel-id.vercel.app/sitemap.xml | head -20
-# Expect: URLs starting with https://travel-id.vercel.app/
+curl https://jalanmate.vercel.app/sitemap.xml | head -20
+# Expect: URLs starting with https://jalanmate.vercel.app/
 ```
 
 ### Step 4 — Browser smoke test
-Open https://travel-id.vercel.app/ — verify:
+Open https://jalanmate.vercel.app/ — verify:
 - Splash → map shows on Bali
 - 6 demo spots appear (3 in ID, 3 in MY)
 - Language switch works (try `ar` for RTL)

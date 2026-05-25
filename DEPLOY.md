@@ -40,12 +40,12 @@ PostgreSQL schema; TravelKo's `public.*` tables remain untouched. The
 2. Enable APIs: **Maps JavaScript API**, **Places API (New)**, **Geocoding API**.
 3. **Credentials → Create Credentials → API key** twice:
    - **Frontend key** (`GOOGLE_MAPS_API_KEY`): restrict to *HTTP referrers* —
-     `https://travel-id.vercel.app/*`, `https://*.vercel.app/*`,
+     `https://jalanmate.vercel.app/*`, `https://*.vercel.app/*`,
      `http://localhost:*/*`, plus your future domain.
    - **Server key** (`GOOGLE_GEOCODING_API_KEY`): leave unrestricted at first;
      lock to Vercel egress IPs after the first deploy.
 4. **Credentials → Create Credentials → OAuth Client ID → Web application**:
-   - Authorized JavaScript origins: `https://travel-id.vercel.app`,
+   - Authorized JavaScript origins: `https://jalanmate.vercel.app`,
      `https://*.vercel.app`, `http://localhost:3000`, `http://localhost:8000`
    - Authorized redirect URIs: paste the Supabase callback from step 2.4
      (`https://<project>.supabase.co/auth/v1/callback`)
@@ -63,7 +63,7 @@ Vercel → **jalanmate project → Settings → Environment Variables** → add 
 following (Production, Preview, Development all checked):
 
 ```
-PUBLIC_SITE_URL              https://travel-id.vercel.app
+PUBLIC_SITE_URL              https://jalanmate.vercel.app
 SUPABASE_URL                 (step 2.2 - same as TravelKo)
 SUPABASE_ANON_KEY            (step 2.2 - same as TravelKo)
 SUPABASE_SERVICE_ROLE_KEY    (step 2.2 - same as TravelKo)

@@ -1,4 +1,4 @@
-// JalanMate - travel-id.kr Main Application
+// JalanMate - jalanmate.vercel.app Main Application
 // Requires: sites/travel/lang.js (translations)
 
 (function() {
@@ -252,7 +252,7 @@
     var t = (typeof translations !== 'undefined') ? translations : {};
     var langData = t[lang] || t['en'] || {};
     // siteUrl is delivered by /api/map-config; fall back to current origin while config is in flight.
-    var baseUrl = (state.mapConfig && state.mapConfig.siteUrl) || (window.location.origin || 'https://travel-id.vercel.app');
+    var baseUrl = (state.mapConfig && state.mapConfig.siteUrl) || (window.location.origin || 'https://jalanmate.vercel.app');
 
     // html lang attribute
     document.documentElement.lang = lang;

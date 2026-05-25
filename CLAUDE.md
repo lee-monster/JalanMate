@@ -81,7 +81,7 @@ Two audiences with subtly different UX:
 ## Vercel Environment Variables
 | Variable | Purpose | Notes |
 |---|---|---|
-| `PUBLIC_SITE_URL` | Canonical origin | `https://travel-id.vercel.app` (placeholder) |
+| `PUBLIC_SITE_URL` | Canonical origin | `https://jalanmate.vercel.app` |
 | `SUPABASE_URL` | Supabase project URL | **Reused** from TravelKo (co-tenant) |
 | `SUPABASE_ANON_KEY` | Public anon key | **Reused**; safe to expose, RLS protects rows |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only admin key | **Reused**; NEVER expose to browser |
@@ -176,6 +176,10 @@ Before any new task:
 4. Summarize to the user, then proceed.
 
 ## Pending follow-ups
-- Domain decision (placeholder is `travel-id.vercel.app`)
-- Replace splash/main/icon images with branded artwork
+- Canonical domain is `jalanmate.vercel.app` — add it in Vercel → Settings →
+  Domains (currently unassigned → 404) and set `PUBLIC_SITE_URL` env to match;
+  custom domain still TBD.
+- App icons + OG card (`splash.png`) now built from the new logo. Still legacy:
+  `main_preview.png` (PWA screenshot) is old art; `main.png`/`main_bar.png`/
+  `og-*.png` are now orphaned and removable.
 - GA4 measurement ID is currently `G-XXXXXXXXXX` — replace once registered
