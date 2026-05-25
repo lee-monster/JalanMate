@@ -184,7 +184,8 @@ Before any new task:
 - Canonical domain is `jalanmate.vercel.app` — add it in Vercel → Settings →
   Domains (currently unassigned → 404) and set `PUBLIC_SITE_URL` env to match;
   custom domain still TBD.
-- App icons + OG card (`splash.png`) now built from the new logo. Still legacy:
-  `main_preview.png` (PWA screenshot) is old art; `main.png`/`main_bar.png`/
-  `og-*.png` are now orphaned and removable.
+- App icons + OG card (`splash.png`) built from the new logo. Removed orphaned
+  legacy art (`main.png`, `main_bar.png`, `og-*.png`). Still legacy:
+  `main_preview.png` (PWA "wide" screenshot in `manifest.json`) — replace with a
+  real JalanMate screenshot.
 - GA4 measurement ID is currently `G-XXXXXXXXXX` — replace once registered

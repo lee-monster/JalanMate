@@ -30,3 +30,8 @@ scripts/data/
 scripts/*.json
 !scripts/seed-spots.json
 WORK_LOG.md
+
+# Local design / working assets (not deployed; app uses logo_fit.png + logo_app_icon.png)
+/jalanmate_logo.png
+images/logo_origin.png
+images/*.pptx
