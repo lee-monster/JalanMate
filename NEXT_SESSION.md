@@ -12,24 +12,42 @@ git pull origin main              # latest from GitHub
 git log --oneline -5              # confirm latest commit
 ```
 
-**Latest commit as of session close (2026-05-04)**:
-`9760228 — SQL audit: add explicit search_path to all SECURITY DEFINER functions`
+**Latest commit as of session close (2026-05-26)**:
+`b7b5588 — Fix sidebar topbar overflow; default language to English`
 
 If `git pull` says "already up to date" and the latest commit matches, you're
 synced.
 
 ---
 
-## What was completed today (2026-05-04)
+## What was completed this session (2026-05-26) — Travel-ID → JalanMate rebrand
 
-- ✅ Pivoted from Notion → Supabase (rewrote all APIs, frontend auth)
-- ✅ Co-tenanted with TravelKo Supabase project (`travelid` schema isolation)
-- ✅ Ran `0001_init.sql` + `0002_demo_seed.sql` on Supabase
-- ✅ Added `travelid` to Supabase Exposed Schemas
+- ✅ Renamed service **Travel-ID → JalanMate** (AI travel planner for Indonesia;
+  Malaysia/Singapore long-term). New logos wired in (`logo_fit.png`,
+  `logo_app_icon.png`); PWA icons regenerated; branded 1200×630 OG card.
+- ✅ Removed TravelKo legacy: Korea/Naver/Notion text. Legal pages (privacy/terms)
+  rebuilt for the real 7 languages (en/id/ms/ko/zh/ja/ar, Arabic RTL).
+- ✅ GitHub repo → `lee-monster/JalanMate`; Vercel project → `jalanmate`; canonical
+  domain `jalanmate.vercel.app` across code + docs (was bogus `travel-id.kr`).
+- ✅ Brand palette from logo + ID/MY/SG flags: red `#E11D2E` (primary), navy
+  `#1A3C8C` (secondary), gold `#F5B301` (accent), white. (`css/travel-app.css` `:root`)
+- ✅ Removed orphaned art + TravelKo `assetlinks.json`; gitignored local working files.
+- ✅ Sidebar topbar overflow fixed (logo 34px + compact language select); default
+  UI language now English.
 
 ## What remains — pick up from here
 
-### 🔥 Step 1 — Set Vercel env vars (5 min)
+> Rebrand is done & pushed. GitHub repo (`lee-monster/JalanMate`), Vercel project
+> (`jalanmate`), and the `jalanmate.vercel.app` domain are all set. Below is the
+> deploy/verify checklist + small follow-ups.
+
+**On the other PC**: `git remote set-url origin https://github.com/lee-monster/JalanMate.git`, then `git pull`.
+
+**Small follow-ups**: `images/main_preview.png` (PWA "wide" screenshot) is still old
+art — replace with a real JalanMate screenshot; GA4 id is still `G-XXXXXXXXXX`; add
+`jalanmate.vercel.app` to Google Cloud OAuth JS origins + Maps key referrers.
+
+### 🔥 Step 1 — Confirm Vercel env vars + redeploy
 Vercel dashboard → jalanmate project → Settings → Environment Variables.
 Add the following (Production / Preview / Development all checked):
 
