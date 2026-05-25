@@ -92,9 +92,9 @@ Two audiences with subtly different UX:
 | `GEMINI_API_KEY` | AI planner | https://aistudio.google.com/app/apikey |
 
 ## Supabase — co-tenant with TravelKo
-To stay within Supabase's 2-project free-tier limit, Travel-ID and TravelKo
+To stay within Supabase's 2-project free-tier limit, JalanMate and TravelKo
 share a single Supabase project. Isolation lives at the **PostgreSQL schema**
-level: TravelKo keeps `public.*`, Travel-ID lives in `travelid.*`. The
+level: TravelKo keeps `public.*`, JalanMate lives in `travelid.*`. The
 `auth.users` table is shared (single sign-in pool — a user signed into either
 app shares the auth identity).
 
@@ -105,7 +105,7 @@ The schema name flows from `SUPABASE_SCHEMA` env var (server) and from the
 
 **Required Supabase setting**: Project Settings → API → Exposed schemas must
 include `travelid` (alongside `public`). Without this, PostgREST returns 404
-for every Travel-ID table.
+for every JalanMate table.
 
 ## Supabase Schema
 See `supabase/migrations/0001_init.sql`. Key tables (all in `travelid` schema):

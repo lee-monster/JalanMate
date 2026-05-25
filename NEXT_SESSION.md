@@ -6,7 +6,7 @@
 ## Tomorrow's first command (on the other PC)
 
 ```bash
-cd "C:\Users\User\OneDrive\0_project\TravelID"
+cd "C:\Users\User\OneDrive\0_project\JalanMate"
 git status                        # should be clean
 git pull origin main              # latest from GitHub
 git log --oneline -5              # confirm latest commit
@@ -30,7 +30,7 @@ synced.
 ## What remains — pick up from here
 
 ### 🔥 Step 1 — Set Vercel env vars (5 min)
-Vercel dashboard → Travel-ID project → Settings → Environment Variables.
+Vercel dashboard → jalanmate project → Settings → Environment Variables.
 Add the following (Production / Preview / Development all checked):
 
 ```
@@ -87,8 +87,8 @@ node -r dotenv/config scripts/migrate-notion-to-supabase.js dotenv_config_path=.
 
 ## Key external resources
 
-- GitHub repo:        https://github.com/lee-monster/Travel-ID
-- Vercel project:     https://vercel.com/dashboard → Travel-ID
+- GitHub repo:        https://github.com/lee-monster/JalanMate
+- Vercel project:     https://vercel.com/hbtars/jalanmate
 - Supabase project:   (same as TravelKo dashboard)
 - Notion parent page: https://www.notion.so/355722c54b8881548b33fa2f1417ba1d
 
@@ -98,7 +98,7 @@ GitHub is the source of truth. Local OneDrive folder may have stale or
 half-synced files. To force-resync from authoritative source:
 
 ```bash
-cd "C:\Users\User\OneDrive\0_project\TravelID"
+cd "C:\Users\User\OneDrive\0_project\JalanMate"
 git fetch origin
 git reset --hard origin/main      # ⚠️ wipes uncommitted local changes
 ```

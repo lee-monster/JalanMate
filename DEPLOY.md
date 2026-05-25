@@ -1,13 +1,13 @@
-# Travel-ID Deploy Guide
+# JalanMate Deploy Guide
 
 Step-by-step bootstrap for a fresh deployment. Allow ~30-45 minutes the first time.
 
 ## 1. GitHub repo (already done)
-Repo lives at `https://github.com/lee-monster/Travel-ID`. Vercel pulls from `main`.
+Repo lives at `https://github.com/lee-monster/JalanMate`. Vercel pulls from `main`.
 
 ## 2. Supabase — co-tenant with TravelKo
-Travel-ID shares the existing TravelKo Supabase project to stay within the
-free-tier 2-project limit. All Travel-ID tables live in a dedicated `travelid`
+JalanMate shares the existing TravelKo Supabase project to stay within the
+free-tier 2-project limit. All JalanMate tables live in a dedicated `travelid`
 PostgreSQL schema; TravelKo's `public.*` tables remain untouched. The
 `auth.users` table is shared (single sign-in pool).
 
@@ -16,7 +16,7 @@ PostgreSQL schema; TravelKo's `public.*` tables remain untouched. The
    - `Project URL` → `SUPABASE_URL`
    - `anon public` key → `SUPABASE_ANON_KEY`
    - `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (keep secret)
-3. **Run Travel-ID migrations**. Open **SQL Editor → New query** and paste each
+3. **Run JalanMate migrations**. Open **SQL Editor → New query** and paste each
    file in order:
    - Paste `supabase/migrations/0001_init.sql` → Run
      (creates `travelid` schema + all tables + RLS + trigger + backfills profiles
@@ -59,7 +59,7 @@ PostgreSQL schema; TravelKo's `public.*` tables remain untouched. The
 2. Copy into `GEMINI_API_KEY`.
 
 ## 5. Vercel environment variables
-Vercel → **Travel-ID project → Settings → Environment Variables** → add the
+Vercel → **jalanmate project → Settings → Environment Variables** → add the
 following (Production, Preview, Development all checked):
 
 ```
