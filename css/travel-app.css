@@ -5,11 +5,14 @@
 
 :root {
   --t-primary: #E11D2E;
-  --t-primary-dark: #B91C2E;
+  --t-primary-dark: #B0121F;
   --t-primary-light: #F87171;
   --t-primary-bg: #FEF2F2;
-  --t-accent: #10B981;
-  --t-accent-light: #ECFDF5;
+  --t-accent: #F5B301;
+  --t-accent-light: #FFF8E6;
+  --t-navy: #1A3C8C;
+  --t-navy-dark: #142E6B;
+  --t-navy-bg: #EEF2FB;
   --t-white: #FFFFFF;
   --t-gray-50: #F8FAFC;
   --t-gray-100: #F3F4F6;
@@ -447,10 +450,10 @@ body {
   position: fixed; bottom: 60px; right: 24px; z-index: 50;
   padding: 14px 24px; background: var(--t-primary); color: var(--t-white);
   border: none; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
-  cursor: pointer; box-shadow: 0 4px 16px rgba(5,150,105,0.4);
+  cursor: pointer; box-shadow: 0 4px 16px rgba(225,29,46,0.4);
   transition: all var(--t-transition); display: flex; align-items: center; gap: 8px;
 }
-.ta-fab:hover { background: var(--t-primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5,150,105,0.5); }
+.ta-fab:hover { background: var(--t-primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(225,29,46,0.5); }
 
 /* === Submit Modal === */
 .ta-modal-overlay {
@@ -566,7 +569,7 @@ body {
   width: 18px; height: 18px; border-radius: 50%; color: #fff;
   font-size: 0.7rem; font-weight: 800; line-height: 1;
 }
-.ta-myspots-tag-visit { background: #2563EB; }
+.ta-myspots-tag-visit { background: var(--t-navy); }
 .ta-myspots-tag-interested { background: #EF4444; font-weight: 400; }
 .ta-myspots-target-note {
   font-size: 0.72rem; color: var(--t-gray-500); padding: 0 4px 10px;
@@ -599,9 +602,9 @@ body {
   background: linear-gradient(135deg, var(--t-primary), var(--t-primary-dark));
   color: var(--t-white); border: none; border-radius: var(--t-radius);
   font-weight: 700; font-size: 0.92rem; cursor: pointer;
-  box-shadow: 0 4px 12px rgba(5,150,105,0.3); transition: all var(--t-transition);
+  box-shadow: 0 4px 12px rgba(225,29,46,0.3); transition: all var(--t-transition);
 }
-.ta-planner-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(5,150,105,0.4); }
+.ta-planner-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(225,29,46,0.4); }
 
 /* === Detail Bookmark Buttons === */
 .ta-detail-bookmarks {
@@ -616,7 +619,7 @@ body {
 }
 .ta-bookmark-btn:hover { border-color: var(--t-primary); color: var(--t-primary); }
 .ta-bookmark-btn.active-visit {
-  background: #DBEAFE; border-color: #3B82F6; color: #3B82F6;
+  background: var(--t-navy-bg); border-color: var(--t-navy); color: var(--t-navy);
 }
 .ta-bookmark-btn.active-interested {
   background: #FEF3C7; border-color: #F59E0B; color: #F59E0B;
@@ -627,7 +630,7 @@ body {
 .ta-spot-bookmark-badge {
   width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
 }
-.ta-spot-bookmark-badge.visit { background: #3B82F6; }
+.ta-spot-bookmark-badge.visit { background: var(--t-navy); }
 .ta-spot-bookmark-badge.interested { background: #F59E0B; }
 
 /* === Planner Modal === */
@@ -697,7 +700,7 @@ body {
 }
 .ta-plan-table tbody tr:nth-child(even) { background: var(--t-white); }
 .ta-plan-table tbody tr:nth-child(odd) { background: var(--t-gray-50); }
-.ta-plan-table tbody tr:hover { background: rgba(5,150,105,0.06); }
+.ta-plan-table tbody tr:hover { background: rgba(225,29,46,0.06); }
 .ta-plan-table td:last-child, .ta-plan-table th:last-child { white-space: normal; }
 
 /* Planner loading */
@@ -716,9 +719,9 @@ body {
 /* Share button & panel */
 .ta-btn-share {
   padding: 8px 16px; border-radius: var(--t-radius-sm); font-size: 0.88rem; font-weight: 600;
-  cursor: pointer; border: 2px solid #3B82F6; background: var(--t-white); color: #3B82F6;
+  cursor: pointer; border: 2px solid var(--t-navy); background: var(--t-white); color: var(--t-navy);
 }
-.ta-btn-share:hover { background: #3B82F6; color: var(--t-white); }
+.ta-btn-share:hover { background: var(--t-navy); color: var(--t-white); }
 .ta-share-panel {
   border: 1px solid var(--t-gray-200); border-radius: var(--t-radius-sm);
   padding: 14px; margin: 12px 0; background: var(--t-gray-50);
@@ -764,7 +767,7 @@ body {
   cursor: pointer; transition: border-color 0.2s;
 }
 .ta-myplans-card:hover { border-color: var(--t-primary); }
-.ta-myplans-card.selected { border-color: var(--t-primary); background: rgba(5,150,105,0.05); }
+.ta-myplans-card.selected { border-color: var(--t-primary); background: rgba(225,29,46,0.05); }
 .ta-myplans-card-check { flex-shrink: 0; width: 18px; height: 18px; accent-color: var(--t-primary); }
 .ta-myplans-card-info { flex: 1; min-width: 0; }
 .ta-myplans-card-title { font-weight: 600; font-size: 0.9rem; color: var(--t-gray-900); }
