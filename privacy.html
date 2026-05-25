@@ -8,21 +8,23 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; color: #1f2937; line-height: 1.7; }
-    .header { background: #2563EB; color: white; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    .header { background: #E11D2E; color: white; padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; }
     .header a { color: white; text-decoration: none; font-weight: 700; font-size: 1.25rem; }
-    .lang-bar { background: #1D4ED8; padding: 0.5rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .lang-bar { background: #B0121F; padding: 0.5rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
     .lang-bar button { background: rgba(255,255,255,0.15); border: none; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
-    .lang-bar button.active { background: white; color: #1D4ED8; font-weight: 600; }
+    .lang-bar button.active { background: white; color: #E11D2E; font-weight: 600; }
     .container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     .lang-section { display: none; }
     .lang-section.active { display: block; }
-    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; color: #2563EB; }
-    h2 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #1E40AF; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; color: #E11D2E; }
+    h2 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; color: #B0121F; }
     p, li { margin-bottom: 0.5rem; font-size: 0.95rem; }
     ul { padding-left: 1.5rem; }
     .updated { color: #6b7280; font-size: 0.85rem; margin-bottom: 1.5rem; }
-    .back { display: inline-block; margin-top: 1.5rem; color: #2563EB; text-decoration: none; }
+    .back { display: inline-block; margin-top: 1.5rem; color: #E11D2E; text-decoration: none; }
     .back:hover { text-decoration: underline; }
+    .lang-section[dir="rtl"] { direction: rtl; text-align: right; }
+    .lang-section[dir="rtl"] ul { padding-left: 0; padding-right: 1.5rem; }
     @media (max-width: 640px) { .container { margin: 1rem; padding: 1.25rem; } }
   </style>
 </head>
@@ -30,18 +32,19 @@
   <div class="header"><a href="/">JalanMate</a></div>
   <div class="lang-bar">
     <button onclick="showLang('en')" class="active">English</button>
-    <button onclick="showLang('ko')">한국어</button>
     <button onclick="showLang('id')">Bahasa Indonesia</button>
-    <button onclick="showLang('mn')">Монгол</button>
-    <button onclick="showLang('th')">ไทย</button>
-    <button onclick="showLang('vi')">Tiếng Việt</button>
+    <button onclick="showLang('ms')">Bahasa Melayu</button>
+    <button onclick="showLang('ko')">한국어</button>
+    <button onclick="showLang('zh')">中文</button>
+    <button onclick="showLang('ja')">日本語</button>
+    <button onclick="showLang('ar')">العربية</button>
   </div>
   <div class="container">
 
     <!-- English -->
     <div class="lang-section active" id="lang-en">
       <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: March 15, 2026</p>
+      <p class="updated">Last updated: May 25, 2026</p>
       <p>JalanMate ("we", "us", "our") operates the travel-id.kr website. This Privacy Policy explains how we collect, use, and protect your information.</p>
 
       <h2>1. Information We Collect</h2>
@@ -62,16 +65,16 @@
       </ul>
 
       <h2>3. Data Storage</h2>
-      <p>Your data is stored securely in Notion databases and processed through Vercel serverless functions. We do not sell your personal information to third parties.</p>
+      <p>Your data is stored securely in Supabase (a PostgreSQL database) and processed through Vercel serverless functions. We do not sell your personal information to third parties.</p>
 
       <h2>4. Third-Party Services</h2>
       <p>We use the following third-party services:</p>
       <ul>
-        <li>Google OAuth for authentication</li>
+        <li>Google OAuth for sign-in</li>
+        <li>Supabase for authentication and database storage</li>
         <li>Google Analytics for usage analytics</li>
-        <li>Google Maps and Naver Maps for map services</li>
+        <li>Google Maps for map services</li>
         <li>Google Gemini AI for travel plan generation</li>
-        <li>Notion for data storage</li>
         <li>Vercel for hosting</li>
       </ul>
 
@@ -92,64 +95,10 @@
       <a href="/" class="back">&larr; Back to JalanMate</a>
     </div>
 
-    <!-- Korean -->
-    <div class="lang-section" id="lang-ko">
-      <h1>개인정보처리방침</h1>
-      <p class="updated">최종 업데이트: 2026년 3월 15일</p>
-      <p>JalanMate("당사")는 travel-id.kr 웹사이트를 운영합니다. 본 개인정보처리방침은 당사가 귀하의 정보를 수집, 이용 및 보호하는 방법을 설명합니다.</p>
-
-      <h2>1. 수집하는 정보</h2>
-      <p>Google 로그인 시 다음 정보를 수집합니다:</p>
-      <ul>
-        <li>Google 계정의 이름 및 프로필 사진</li>
-        <li>이메일 주소</li>
-        <li>Google 계정 ID</li>
-      </ul>
-      <p>또한 북마크한 장소, AI 플래너 사용 기록 등의 이용 데이터를 수집합니다.</p>
-
-      <h2>2. 정보의 이용 목적</h2>
-      <ul>
-        <li>서비스 제공 및 유지</li>
-        <li>계정 및 북마크 관리</li>
-        <li>AI 맞춤형 여행 계획 생성</li>
-        <li>서비스 개선</li>
-      </ul>
-
-      <h2>3. 데이터 저장</h2>
-      <p>귀하의 데이터는 Notion 데이터베이스에 안전하게 저장되며, Vercel 서버리스 함수를 통해 처리됩니다. 당사는 개인정보를 제3자에게 판매하지 않습니다.</p>
-
-      <h2>4. 제3자 서비스</h2>
-      <p>당사는 다음 제3자 서비스를 이용합니다:</p>
-      <ul>
-        <li>Google OAuth - 인증</li>
-        <li>Google Analytics - 이용 분석</li>
-        <li>Google Maps 및 네이버 지도 - 지도 서비스</li>
-        <li>Google Gemini AI - 여행 계획 생성</li>
-        <li>Notion - 데이터 저장</li>
-        <li>Vercel - 호스팅</li>
-      </ul>
-
-      <h2>5. 쿠키</h2>
-      <p>인증 토큰과 설정을 저장하기 위해 localStorage를 사용합니다. 제3자 서비스(Google Analytics, Maps)는 각 개인정보처리방침에 따라 쿠키를 사용할 수 있습니다.</p>
-
-      <h2>6. 귀하의 권리</h2>
-      <p>계정 및 관련 데이터의 삭제를 요청할 수 있습니다. <a href="/delete-account">여기에서 계정을 삭제</a>할 수 있습니다. 언제든지 로그아웃하여 로컬 세션 데이터를 삭제할 수 있습니다.</p>
-
-      <h2>7. 아동의 개인정보</h2>
-      <p>당사 서비스는 13세 미만 아동을 대상으로 하지 않습니다. 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
-
-      <h2>8. 방침의 변경</h2>
-      <p>본 개인정보처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 이 페이지에 업데이트된 날짜와 함께 게시됩니다.</p>
-
-      <h2>9. 문의</h2>
-      <p>본 개인정보처리방침에 관한 문의사항은 travel-id.kr로 연락해 주십시오.</p>
-      <a href="/" class="back">&larr; JalanMate로 돌아가기</a>
-    </div>
-
     <!-- Indonesian -->
     <div class="lang-section" id="lang-id">
       <h1>Kebijakan Privasi</h1>
-      <p class="updated">Terakhir diperbarui: 15 Maret 2026</p>
+      <p class="updated">Terakhir diperbarui: 25 Mei 2026</p>
       <p>JalanMate ("kami") mengoperasikan situs web travel-id.kr. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi Anda.</p>
 
       <h2>1. Informasi yang Kami Kumpulkan</h2>
@@ -170,16 +119,16 @@
       </ul>
 
       <h2>3. Penyimpanan Data</h2>
-      <p>Data Anda disimpan dengan aman di database Notion dan diproses melalui fungsi serverless Vercel. Kami tidak menjual informasi pribadi Anda kepada pihak ketiga.</p>
+      <p>Data Anda disimpan dengan aman di Supabase (basis data PostgreSQL) dan diproses melalui fungsi serverless Vercel. Kami tidak menjual informasi pribadi Anda kepada pihak ketiga.</p>
 
       <h2>4. Layanan Pihak Ketiga</h2>
       <p>Kami menggunakan layanan pihak ketiga berikut:</p>
       <ul>
-        <li>Google OAuth untuk autentikasi</li>
+        <li>Google OAuth untuk masuk</li>
+        <li>Supabase untuk autentikasi dan penyimpanan basis data</li>
         <li>Google Analytics untuk analitik penggunaan</li>
-        <li>Google Maps dan Naver Maps untuk layanan peta</li>
+        <li>Google Maps untuk layanan peta</li>
         <li>Google Gemini AI untuk pembuatan rencana perjalanan</li>
-        <li>Notion untuk penyimpanan data</li>
         <li>Vercel untuk hosting</li>
       </ul>
 
@@ -200,166 +149,274 @@
       <a href="/" class="back">&larr; Kembali ke JalanMate</a>
     </div>
 
-    <!-- Mongolian -->
-    <div class="lang-section" id="lang-mn">
-      <h1>Нууцлалын бодлого</h1>
-      <p class="updated">Сүүлд шинэчилсэн: 2026 оны 3-р сарын 15</p>
-      <p>JalanMate ("бид") нь travel-id.kr вэбсайтыг ажиллуулдаг. Энэхүү Нууцлалын бодлого нь бидний таны мэдээллийг хэрхэн цуглуулж, ашиглаж, хамгаалж байгааг тайлбарладаг.</p>
+    <!-- Malay -->
+    <div class="lang-section" id="lang-ms">
+      <h1>Dasar Privasi</h1>
+      <p class="updated">Kemas kini terakhir: 25 Mei 2026</p>
+      <p>JalanMate ("kami") mengendalikan laman web travel-id.kr. Dasar Privasi ini menerangkan cara kami mengumpul, menggunakan, dan melindungi maklumat anda.</p>
 
-      <h2>1. Бидний цуглуулдаг мэдээлэл</h2>
-      <p>Та Google-ээр нэвтрэх үед бид дараах мэдээллийг цуглуулна:</p>
+      <h2>1. Maklumat yang Kami Kumpul</h2>
+      <p>Apabila anda log masuk dengan Google, kami mengumpul:</p>
       <ul>
-        <li>Google бүртгэлээс таны нэр болон профайл зураг</li>
-        <li>Имэйл хаяг</li>
-        <li>Google бүртгэлийн ID</li>
+        <li>Nama dan gambar profil daripada akaun Google anda</li>
+        <li>Alamat e-mel</li>
+        <li>ID akaun Google</li>
       </ul>
-      <p>Мөн тэмдэглэсэн газрууд, AI төлөвлөгчийн хэрэглээ зэрэг ашиглалтын мэдээллийг цуглуулна.</p>
+      <p>Kami juga mengumpul data penggunaan seperti tempat yang ditanda buku dan penggunaan perancang AI.</p>
 
-      <h2>2. Таны мэдээллийг хэрхэн ашигладаг</h2>
+      <h2>2. Cara Kami Menggunakan Maklumat Anda</h2>
       <ul>
-        <li>Үйлчилгээг хангах, хадгалах</li>
-        <li>Таны бүртгэл болон тэмдэглэлийг удирдах</li>
-        <li>AI-аар хувийн аялалын төлөвлөгөө гаргах</li>
-        <li>Үйлчилгээгээ сайжруулах</li>
+        <li>Untuk menyediakan dan menyelenggara perkhidmatan kami</li>
+        <li>Untuk mengurus akaun dan penanda buku anda</li>
+        <li>Untuk menjana pelan perjalanan yang diperibadikan melalui AI</li>
+        <li>Untuk menambah baik perkhidmatan kami</li>
       </ul>
 
-      <h2>3. Мэдээлэл хадгалах</h2>
-      <p>Таны мэдээлэл Notion мэдээллийн санд аюулгүй хадгалагдаж, Vercel серверлэс функцээр боловсруулагддаг. Бид таны хувийн мэдээллийг гуравдагч этгээдэд зардаггүй.</p>
+      <h2>3. Penyimpanan Data</h2>
+      <p>Data anda disimpan dengan selamat dalam Supabase (pangkalan data PostgreSQL) dan diproses melalui fungsi serverless Vercel. Kami tidak menjual maklumat peribadi anda kepada pihak ketiga.</p>
 
-      <h2>4. Гуравдагч этгээдийн үйлчилгээ</h2>
-      <p>Бид дараах гуравдагч этгээдийн үйлчилгээг ашигладаг:</p>
+      <h2>4. Perkhidmatan Pihak Ketiga</h2>
+      <p>Kami menggunakan perkhidmatan pihak ketiga berikut:</p>
       <ul>
-        <li>Google OAuth - нэвтрэлт</li>
-        <li>Google Analytics - ашиглалтын шинжилгээ</li>
-        <li>Google Maps болон Naver Maps - газрын зургийн үйлчилгээ</li>
-        <li>Google Gemini AI - аялалын төлөвлөгөө гаргах</li>
-        <li>Notion - мэдээлэл хадгалах</li>
-        <li>Vercel - хостинг</li>
+        <li>Google OAuth untuk log masuk</li>
+        <li>Supabase untuk pengesahan dan penyimpanan pangkalan data</li>
+        <li>Google Analytics untuk analitik penggunaan</li>
+        <li>Google Maps untuk perkhidmatan peta</li>
+        <li>Google Gemini AI untuk penjanaan pelan perjalanan</li>
+        <li>Vercel untuk pengehosan</li>
+      </ul>
+
+      <h2>5. Kuki</h2>
+      <p>Kami menggunakan localStorage untuk menyimpan token pengesahan dan keutamaan anda. Perkhidmatan pihak ketiga (Google Analytics, Maps) mungkin menggunakan kuki seperti yang diterangkan dalam dasar privasi masing-masing.</p>
+
+      <h2>6. Hak Anda</h2>
+      <p>Anda boleh meminta pemadaman akaun dan data berkaitan. Anda boleh <a href="/delete-account">memadam akaun anda di sini</a>. Anda juga boleh log keluar pada bila-bila masa untuk membersihkan data sesi tempatan anda.</p>
+
+      <h2>7. Privasi Kanak-kanak</h2>
+      <p>Perkhidmatan kami tidak ditujukan kepada kanak-kanak bawah 13 tahun. Kami tidak mengumpul maklumat peribadi daripada kanak-kanak dengan sengaja.</p>
+
+      <h2>8. Perubahan pada Dasar Ini</h2>
+      <p>Kami mungkin mengemas kini Dasar Privasi ini dari semasa ke semasa. Perubahan akan disiarkan di halaman ini dengan tarikh yang dikemas kini.</p>
+
+      <h2>9. Hubungi Kami</h2>
+      <p>Jika anda mempunyai soalan tentang Dasar Privasi ini, sila hubungi kami di travel-id.kr.</p>
+      <a href="/" class="back">&larr; Kembali ke JalanMate</a>
+    </div>
+
+    <!-- Korean -->
+    <div class="lang-section" id="lang-ko">
+      <h1>개인정보처리방침</h1>
+      <p class="updated">최종 업데이트: 2026년 5월 25일</p>
+      <p>JalanMate("당사")는 travel-id.kr 웹사이트를 운영합니다. 본 개인정보처리방침은 당사가 귀하의 정보를 수집, 이용 및 보호하는 방법을 설명합니다.</p>
+
+      <h2>1. 수집하는 정보</h2>
+      <p>Google 로그인 시 다음 정보를 수집합니다:</p>
+      <ul>
+        <li>Google 계정의 이름 및 프로필 사진</li>
+        <li>이메일 주소</li>
+        <li>Google 계정 ID</li>
+      </ul>
+      <p>또한 북마크한 장소, AI 플래너 사용 기록 등의 이용 데이터를 수집합니다.</p>
+
+      <h2>2. 정보의 이용 목적</h2>
+      <ul>
+        <li>서비스 제공 및 유지</li>
+        <li>계정 및 북마크 관리</li>
+        <li>AI 맞춤형 여행 계획 생성</li>
+        <li>서비스 개선</li>
+      </ul>
+
+      <h2>3. 데이터 저장</h2>
+      <p>귀하의 데이터는 Supabase(PostgreSQL 데이터베이스)에 안전하게 저장되며, Vercel 서버리스 함수를 통해 처리됩니다. 당사는 개인정보를 제3자에게 판매하지 않습니다.</p>
+
+      <h2>4. 제3자 서비스</h2>
+      <p>당사는 다음 제3자 서비스를 이용합니다:</p>
+      <ul>
+        <li>Google OAuth - 로그인</li>
+        <li>Supabase - 인증 및 데이터베이스 저장</li>
+        <li>Google Analytics - 이용 분석</li>
+        <li>Google Maps - 지도 서비스</li>
+        <li>Google Gemini AI - 여행 계획 생성</li>
+        <li>Vercel - 호스팅</li>
+      </ul>
+
+      <h2>5. 쿠키</h2>
+      <p>인증 토큰과 설정을 저장하기 위해 localStorage를 사용합니다. 제3자 서비스(Google Analytics, Maps)는 각 개인정보처리방침에 따라 쿠키를 사용할 수 있습니다.</p>
+
+      <h2>6. 귀하의 권리</h2>
+      <p>계정 및 관련 데이터의 삭제를 요청할 수 있습니다. <a href="/delete-account">여기에서 계정을 삭제</a>할 수 있습니다. 언제든지 로그아웃하여 로컬 세션 데이터를 삭제할 수 있습니다.</p>
+
+      <h2>7. 아동의 개인정보</h2>
+      <p>당사 서비스는 13세 미만 아동을 대상으로 하지 않습니다. 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+
+      <h2>8. 방침의 변경</h2>
+      <p>본 개인정보처리방침은 수시로 업데이트될 수 있습니다. 변경 사항은 이 페이지에 업데이트된 날짜와 함께 게시됩니다.</p>
+
+      <h2>9. 문의</h2>
+      <p>본 개인정보처리방침에 관한 문의사항은 travel-id.kr로 연락해 주십시오.</p>
+      <a href="/" class="back">&larr; JalanMate로 돌아가기</a>
+    </div>
+
+    <!-- Chinese -->
+    <div class="lang-section" id="lang-zh">
+      <h1>隐私政策</h1>
+      <p class="updated">最后更新：2026年5月25日</p>
+      <p>JalanMate（"我们"）运营 travel-id.kr 网站。本隐私政策说明我们如何收集、使用和保护您的信息。</p>
+
+      <h2>1. 我们收集的信息</h2>
+      <p>当您使用 Google 登录时，我们会收集：</p>
+      <ul>
+        <li>来自您 Google 账户的姓名和头像</li>
+        <li>电子邮件地址</li>
+        <li>Google 账户 ID</li>
+      </ul>
+      <p>我们还会收集使用数据，例如收藏的地点和 AI 规划工具的使用情况。</p>
+
+      <h2>2. 我们如何使用您的信息</h2>
+      <ul>
+        <li>提供和维护我们的服务</li>
+        <li>管理您的账户和收藏</li>
+        <li>通过 AI 生成个性化旅行计划</li>
+        <li>改进我们的服务</li>
+      </ul>
+
+      <h2>3. 数据存储</h2>
+      <p>您的数据安全地存储在 Supabase（PostgreSQL 数据库）中，并通过 Vercel 无服务器函数进行处理。我们不会将您的个人信息出售给第三方。</p>
+
+      <h2>4. 第三方服务</h2>
+      <p>我们使用以下第三方服务：</p>
+      <ul>
+        <li>Google OAuth - 登录</li>
+        <li>Supabase - 身份验证和数据库存储</li>
+        <li>Google Analytics - 使用情况分析</li>
+        <li>Google Maps - 地图服务</li>
+        <li>Google Gemini AI - 旅行计划生成</li>
+        <li>Vercel - 托管</li>
       </ul>
 
       <h2>5. Cookie</h2>
-      <p>Бид нэвтрэлтийн токен болон тохиргоог хадгалахын тулд localStorage ашигладаг. Гуравдагч этгээдийн үйлчилгээнүүд (Google Analytics, Maps) тус тусын нууцлалын бодлогын дагуу cookie ашиглаж болно.</p>
+      <p>我们使用 localStorage 来存储您的身份验证令牌和偏好设置。第三方服务（Google Analytics、Maps）可能会按照其各自的隐私政策使用 Cookie。</p>
 
-      <h2>6. Таны эрх</h2>
-      <p>Та бүртгэл болон холбогдох мэдээллээ устгахыг хүсч болно. <a href="/delete-account">Энд дарж бүртгэлээ устгана уу</a>. Та хүссэн үедээ гарч локал мэдээллээ устгах боломжтой.</p>
+      <h2>6. 您的权利</h2>
+      <p>您可以请求删除您的账户及相关数据。您可以<a href="/delete-account">在此删除您的账户</a>。您也可以随时退出登录以清除本地会话数据。</p>
 
-      <h2>7. Хүүхдийн нууцлал</h2>
-      <p>Манай үйлчилгээ 13-аас доош насны хүүхдүүдэд зориулагдаагүй. Бид хүүхдийн хувийн мэдээллийг зориудаар цуглуулдаггүй.</p>
+      <h2>7. 儿童隐私</h2>
+      <p>我们的服务不面向 13 岁以下的儿童。我们不会有意收集儿童的个人信息。</p>
 
-      <h2>8. Энэ бодлогын өөрчлөлт</h2>
-      <p>Бид энэхүү Нууцлалын бодлогыг цаг тухай бүрт шинэчилж болно. Өөрчлөлтийг энэ хуудсанд шинэчилсэн огноотой хамт нийтлэнэ.</p>
+      <h2>8. 本政策的变更</h2>
+      <p>我们可能会不时更新本隐私政策。变更将在本页面发布并注明更新日期。</p>
 
-      <h2>9. Холбоо барих</h2>
-      <p>Энэхүү Нууцлалын бодлогын талаар асуулт байвал travel-id.kr-ээр холбогдоно уу.</p>
-      <a href="/" class="back">&larr; JalanMate руу буцах</a>
+      <h2>9. 联系我们</h2>
+      <p>如果您对本隐私政策有任何疑问，请通过 travel-id.kr 联系我们。</p>
+      <a href="/" class="back">&larr; 返回 JalanMate</a>
     </div>
 
-    <!-- Thai -->
-    <div class="lang-section" id="lang-th">
-      <h1>นโยบายความเป็นส่วนตัว</h1>
-      <p class="updated">อัปเดตล่าสุด: 15 มีนาคม 2026</p>
-      <p>JalanMate ("เรา") ให้บริการเว็บไซต์ travel-id.kr นโยบายความเป็นส่วนตัวนี้อธิบายวิธีที่เราเก็บรวบรวม ใช้ และปกป้องข้อมูลของคุณ</p>
+    <!-- Japanese -->
+    <div class="lang-section" id="lang-ja">
+      <h1>プライバシーポリシー</h1>
+      <p class="updated">最終更新日：2026年5月25日</p>
+      <p>JalanMate（「当社」）は travel-id.kr ウェブサイトを運営しています。本プライバシーポリシーは、当社がお客様の情報をどのように収集、利用、保護するかを説明します。</p>
 
-      <h2>1. ข้อมูลที่เราเก็บรวบรวม</h2>
-      <p>เมื่อคุณเข้าสู่ระบบด้วย Google เราเก็บรวบรวม:</p>
+      <h2>1. 収集する情報</h2>
+      <p>Google でログインする際、当社は以下を収集します：</p>
       <ul>
-        <li>ชื่อและรูปโปรไฟล์จากบัญชี Google ของคุณ</li>
-        <li>ที่อยู่อีเมล</li>
-        <li>ID บัญชี Google</li>
+        <li>Google アカウントの名前とプロフィール画像</li>
+        <li>メールアドレス</li>
+        <li>Google アカウント ID</li>
       </ul>
-      <p>เรายังเก็บข้อมูลการใช้งาน เช่น สถานที่ที่บุ๊กมาร์กและการใช้นักวางแผน AI</p>
+      <p>また、ブックマークしたスポットや AI プランナーの利用状況などの利用データも収集します。</p>
 
-      <h2>2. วิธีที่เราใช้ข้อมูลของคุณ</h2>
+      <h2>2. 情報の利用方法</h2>
       <ul>
-        <li>เพื่อให้บริการและบำรุงรักษาบริการของเรา</li>
-        <li>เพื่อจัดการบัญชีและบุ๊กมาร์กของคุณ</li>
-        <li>เพื่อสร้างแผนการเดินทางส่วนบุคคลผ่าน AI</li>
-        <li>เพื่อปรับปรุงบริการของเรา</li>
-      </ul>
-
-      <h2>3. การจัดเก็บข้อมูล</h2>
-      <p>ข้อมูลของคุณถูกจัดเก็บอย่างปลอดภัยในฐานข้อมูล Notion และประมวลผลผ่านฟังก์ชัน serverless ของ Vercel เราไม่ขายข้อมูลส่วนบุคคลของคุณให้บุคคลที่สาม</p>
-
-      <h2>4. บริการของบุคคลที่สาม</h2>
-      <p>เราใช้บริการของบุคคลที่สามดังต่อไปนี้:</p>
-      <ul>
-        <li>Google OAuth สำหรับการตรวจสอบสิทธิ์</li>
-        <li>Google Analytics สำหรับการวิเคราะห์การใช้งาน</li>
-        <li>Google Maps และ Naver Maps สำหรับบริการแผนที่</li>
-        <li>Google Gemini AI สำหรับการสร้างแผนการเดินทาง</li>
-        <li>Notion สำหรับการจัดเก็บข้อมูล</li>
-        <li>Vercel สำหรับโฮสติ้ง</li>
+        <li>サービスの提供および維持のため</li>
+        <li>アカウントとブックマークの管理のため</li>
+        <li>AI による個別の旅行プラン生成のため</li>
+        <li>サービスの改善のため</li>
       </ul>
 
-      <h2>5. คุกกี้</h2>
-      <p>เราใช้ localStorage เพื่อจัดเก็บโทเค็นการตรวจสอบสิทธิ์และความชอบของคุณ บริการของบุคคลที่สาม (Google Analytics, Maps) อาจใช้คุกกี้ตามที่ระบุในนโยบายความเป็นส่วนตัวของตน</p>
+      <h2>3. データの保存</h2>
+      <p>お客様のデータは Supabase（PostgreSQL データベース）に安全に保存され、Vercel のサーバーレス関数を通じて処理されます。当社はお客様の個人情報を第三者に販売しません。</p>
 
-      <h2>6. สิทธิ์ของคุณ</h2>
-      <p>คุณสามารถขอให้ลบบัญชีและข้อมูลที่เกี่ยวข้องได้ คุณสามารถ<a href="/delete-account">ลบบัญชีของคุณได้ที่นี่</a> คุณยังสามารถออกจากระบบได้ตลอดเวลาเพื่อลบข้อมูลเซสชันในเครื่องของคุณ</p>
+      <h2>4. 第三者サービス</h2>
+      <p>当社は以下の第三者サービスを利用しています：</p>
+      <ul>
+        <li>Google OAuth - ログイン</li>
+        <li>Supabase - 認証およびデータベース保存</li>
+        <li>Google Analytics - 利用状況分析</li>
+        <li>Google Maps - 地図サービス</li>
+        <li>Google Gemini AI - 旅行プラン生成</li>
+        <li>Vercel - ホスティング</li>
+      </ul>
 
-      <h2>7. ความเป็นส่วนตัวของเด็ก</h2>
-      <p>บริการของเราไม่ได้มีไว้สำหรับเด็กอายุต่ำกว่า 13 ปี เราไม่เก็บรวบรวมข้อมูลส่วนบุคคลจากเด็กโดยเจตนา</p>
+      <h2>5. クッキー</h2>
+      <p>当社は認証トークンと設定を保存するために localStorage を使用します。第三者サービス（Google Analytics、Maps）は、それぞれのプライバシーポリシーに記載のとおりクッキーを使用する場合があります。</p>
 
-      <h2>8. การเปลี่ยนแปลงนโยบายนี้</h2>
-      <p>เราอาจอัปเดตนโยบายความเป็นส่วนตัวนี้เป็นระยะ การเปลี่ยนแปลงจะประกาศในหน้านี้พร้อมวันที่อัปเดต</p>
+      <h2>6. お客様の権利</h2>
+      <p>アカウントおよび関連データの削除を請求できます。<a href="/delete-account">こちらでアカウントを削除</a>できます。また、いつでもログアウトしてローカルのセッションデータを消去できます。</p>
 
-      <h2>9. ติดต่อเรา</h2>
-      <p>หากคุณมีคำถามเกี่ยวกับนโยบายความเป็นส่วนตัวนี้ โปรดติดต่อเราที่ travel-id.kr</p>
-      <a href="/" class="back">&larr; กลับไปที่ JalanMate</a>
+      <h2>7. 子どものプライバシー</h2>
+      <p>当社のサービスは13歳未満の子どもを対象としていません。当社は子どもの個人情報を故意に収集することはありません。</p>
+
+      <h2>8. 本ポリシーの変更</h2>
+      <p>当社は本プライバシーポリシーを随時更新することがあります。変更は更新日とともに本ページに掲載されます。</p>
+
+      <h2>9. お問い合わせ</h2>
+      <p>本プライバシーポリシーに関するご質問は、travel-id.kr までお問い合わせください。</p>
+      <a href="/" class="back">&larr; JalanMate に戻る</a>
     </div>
 
-    <!-- Vietnamese -->
-    <div class="lang-section" id="lang-vi">
-      <h1>Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t</h1>
-      <p class="updated">C&#7853;p nh&#7853;t l&#7847;n cu&#7889;i: 15 th&#225;ng 3, 2026</p>
-      <p>JalanMate ("ch&#250;ng t&#244;i") v&#7853;n h&#224;nh trang web travel-id.kr. Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y gi&#7843;i th&#237;ch c&#225;ch ch&#250;ng t&#244;i thu th&#7853;p, s&#7917; d&#7909;ng v&#224; b&#7843;o v&#7879; th&#244;ng tin c&#7911;a b&#7841;n.</p>
+    <!-- Arabic (RTL) -->
+    <div class="lang-section" id="lang-ar" dir="rtl">
+      <h1>سياسة الخصوصية</h1>
+      <p class="updated">آخر تحديث: 25 مايو 2026</p>
+      <p>تُشغّل JalanMate ("نحن") موقع travel-id.kr. توضّح سياسة الخصوصية هذه كيفية جمعنا لمعلوماتك واستخدامها وحمايتها.</p>
 
-      <h2>1. Th&#244;ng tin ch&#250;ng t&#244;i thu th&#7853;p</h2>
-      <p>Khi b&#7841;n &#273;&#259;ng nh&#7853;p b&#7857;ng Google, ch&#250;ng t&#244;i thu th&#7853;p:</p>
+      <h2>1. المعلومات التي نجمعها</h2>
+      <p>عند تسجيل الدخول باستخدام Google، نجمع ما يلي:</p>
       <ul>
-        <li>T&#234;n v&#224; &#7843;nh &#273;&#7841;i di&#7879;n t&#7915; t&#224;i kho&#7843;n Google c&#7911;a b&#7841;n</li>
-        <li>&#272;&#7883;a ch&#7881; email</li>
-        <li>ID t&#224;i kho&#7843;n Google</li>
+        <li>الاسم وصورة الملف الشخصي من حساب Google الخاص بك</li>
+        <li>عنوان البريد الإلكتروني</li>
+        <li>معرّف حساب Google</li>
       </ul>
-      <p>Ch&#250;ng t&#244;i c&#361;ng thu th&#7853;p d&#7919; li&#7879;u s&#7917; d&#7909;ng nh&#432; &#273;&#7883;a &#273;i&#7875;m &#273;&#227; &#273;&#225;nh d&#7845;u v&#224; vi&#7879;c s&#7917; d&#7909;ng c&#244;ng c&#7909; l&#7853;p k&#7871; ho&#7841;ch AI.</p>
+      <p>كما نجمع بيانات الاستخدام مثل الأماكن المحفوظة واستخدام مخطّط الذكاء الاصطناعي.</p>
 
-      <h2>2. C&#225;ch ch&#250;ng t&#244;i s&#7917; d&#7909;ng th&#244;ng tin c&#7911;a b&#7841;n</h2>
+      <h2>2. كيفية استخدامنا لمعلوماتك</h2>
       <ul>
-        <li>&#272;&#7875; cung c&#7845;p v&#224; duy tr&#236; d&#7883;ch v&#7909;</li>
-        <li>&#272;&#7875; qu&#7843;n l&#253; t&#224;i kho&#7843;n v&#224; d&#7845;u trang c&#7911;a b&#7841;n</li>
-        <li>&#272;&#7875; t&#7841;o k&#7871; ho&#7841;ch du l&#7883;ch c&#225; nh&#226;n h&#243;a qua AI</li>
-        <li>&#272;&#7875; c&#7843;i thi&#7879;n d&#7883;ch v&#7909;</li>
-      </ul>
-
-      <h2>3. L&#432;u tr&#7919; d&#7919; li&#7879;u</h2>
-      <p>D&#7919; li&#7879;u c&#7911;a b&#7841;n &#273;&#432;&#7907;c l&#432;u tr&#7919; an to&#224;n trong c&#417; s&#7903; d&#7919; li&#7879;u Notion v&#224; &#273;&#432;&#7907;c x&#7917; l&#253; th&#244;ng qua c&#225;c h&#224;m serverless c&#7911;a Vercel. Ch&#250;ng t&#244;i kh&#244;ng b&#225;n th&#244;ng tin c&#225; nh&#226;n c&#7911;a b&#7841;n cho b&#234;n th&#7913; ba.</p>
-
-      <h2>4. D&#7883;ch v&#7909; b&#234;n th&#7913; ba</h2>
-      <p>Ch&#250;ng t&#244;i s&#7917; d&#7909;ng c&#225;c d&#7883;ch v&#7909; b&#234;n th&#7913; ba sau:</p>
-      <ul>
-        <li>Google OAuth - x&#225;c th&#7921;c</li>
-        <li>Google Analytics - ph&#226;n t&#237;ch s&#7917; d&#7909;ng</li>
-        <li>Google Maps v&#224; Naver Maps - d&#7883;ch v&#7909; b&#7843;n &#273;&#7891;</li>
-        <li>Google Gemini AI - t&#7841;o k&#7871; ho&#7841;ch du l&#7883;ch</li>
-        <li>Notion - l&#432;u tr&#7919; d&#7919; li&#7879;u</li>
-        <li>Vercel - l&#432;u tr&#7919;</li>
+        <li>لتقديم خدمتنا وصيانتها</li>
+        <li>لإدارة حسابك والأماكن المحفوظة</li>
+        <li>لإنشاء خطط سفر مخصّصة عبر الذكاء الاصطناعي</li>
+        <li>لتحسين خدمتنا</li>
       </ul>
 
-      <h2>5. Cookie</h2>
-      <p>Ch&#250;ng t&#244;i s&#7917; d&#7909;ng localStorage &#273;&#7875; l&#432;u token x&#225;c th&#7921;c v&#224; t&#249;y ch&#7885;n c&#7911;a b&#7841;n. C&#225;c d&#7883;ch v&#7909; b&#234;n th&#7913; ba (Google Analytics, Maps) c&#243; th&#7875; s&#7917; d&#7909;ng cookie theo ch&#237;nh s&#225;ch b&#7843;o m&#7853;t t&#432;&#417;ng &#7913;ng c&#7911;a h&#7885;.</p>
+      <h2>3. تخزين البيانات</h2>
+      <p>تُخزَّن بياناتك بأمان في Supabase (قاعدة بيانات PostgreSQL) وتُعالَج عبر دوال Vercel عديمة الخادم. نحن لا نبيع معلوماتك الشخصية لأطراف ثالثة.</p>
 
-      <h2>6. Quy&#7873;n c&#7911;a b&#7841;n</h2>
-      <p>B&#7841;n c&#243; th&#7875; y&#234;u c&#7847;u x&#243;a t&#224;i kho&#7843;n v&#224; d&#7919; li&#7879;u li&#234;n quan. B&#7841;n c&#243; th&#7875; <a href="/delete-account">x&#243;a t&#224;i kho&#7843;n t&#7841;i &#273;&#226;y</a>. B&#7841;n c&#361;ng c&#243; th&#7875; &#273;&#259;ng xu&#7845;t b&#7845;t c&#7913; l&#250;c n&#224;o &#273;&#7875; x&#243;a d&#7919; li&#7879;u phi&#234;n c&#7909;c b&#7897;.</p>
+      <h2>4. خدمات الأطراف الثالثة</h2>
+      <p>نستخدم خدمات الأطراف الثالثة التالية:</p>
+      <ul>
+        <li>Google OAuth لتسجيل الدخول</li>
+        <li>Supabase للمصادقة وتخزين قاعدة البيانات</li>
+        <li>Google Analytics لتحليلات الاستخدام</li>
+        <li>Google Maps لخدمات الخرائط</li>
+        <li>Google Gemini AI لإنشاء خطط السفر</li>
+        <li>Vercel للاستضافة</li>
+      </ul>
 
-      <h2>7. Quy&#7873;n ri&#234;ng t&#432; c&#7911;a tr&#7867; em</h2>
-      <p>D&#7883;ch v&#7909; c&#7911;a ch&#250;ng t&#244;i kh&#244;ng d&#224;nh cho tr&#7867; em d&#432;&#7899;i 13 tu&#7893;i. Ch&#250;ng t&#244;i kh&#244;ng c&#7889; &#253; thu th&#7853;p th&#244;ng tin c&#225; nh&#226;n t&#7915; tr&#7867; em.</p>
+      <h2>5. ملفات تعريف الارتباط</h2>
+      <p>نستخدم localStorage لتخزين رمز المصادقة وتفضيلاتك. قد تستخدم خدمات الأطراف الثالثة (Google Analytics وMaps) ملفات تعريف الارتباط على النحو الموضّح في سياسات الخصوصية الخاصة بها.</p>
 
-      <h2>8. Thay &#273;&#7893;i ch&#237;nh s&#225;ch n&#224;y</h2>
-      <p>Ch&#250;ng t&#244;i c&#243; th&#7875; c&#7853;p nh&#7853;t Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y theo th&#7901;i gian. C&#225;c thay &#273;&#7893;i s&#7869; &#273;&#432;&#7907;c &#273;&#259;ng tr&#234;n trang n&#224;y v&#7899;i ng&#224;y c&#7853;p nh&#7853;t.</p>
+      <h2>6. حقوقك</h2>
+      <p>يمكنك طلب حذف حسابك والبيانات المرتبطة به. يمكنك <a href="/delete-account">حذف حسابك من هنا</a>. كما يمكنك تسجيل الخروج في أي وقت لمسح بيانات الجلسة المحلية.</p>
 
-      <h2>9. Li&#234;n h&#7879;</h2>
-      <p>N&#7871;u b&#7841;n c&#243; c&#226;u h&#7887;i v&#7873; Ch&#237;nh s&#225;ch B&#7843;o m&#7853;t n&#224;y, vui l&#242;ng li&#234;n h&#7879; ch&#250;ng t&#244;i t&#7841;i travel-id.kr.</p>
-      <a href="/" class="back">&larr; Quay l&#7841;i JalanMate</a>
+      <h2>7. خصوصية الأطفال</h2>
+      <p>خدمتنا ليست موجَّهة للأطفال دون سنّ 13 عامًا. ولا نجمع عن قصد معلومات شخصية من الأطفال.</p>
+
+      <h2>8. تغييرات هذه السياسة</h2>
+      <p>قد نحدّث سياسة الخصوصية هذه من حين لآخر. ستُنشَر التغييرات على هذه الصفحة مع تاريخ التحديث.</p>
+
+      <h2>9. تواصل معنا</h2>
+      <p>إذا كانت لديك أسئلة حول سياسة الخصوصية هذه، يُرجى التواصل معنا عبر travel-id.kr.</p>
+      <a href="/" class="back">&rarr; العودة إلى JalanMate</a>
     </div>
 
   </div>
@@ -369,12 +426,12 @@
       document.querySelectorAll('.lang-section').forEach(function(el) { el.classList.remove('active'); });
       document.querySelectorAll('.lang-bar button').forEach(function(el) { el.classList.remove('active'); });
       document.getElementById('lang-' + lang).classList.add('active');
-      var labels = { en: 'English', ko: '한국어', id: 'Bahasa Indonesia', mn: 'Монгол', th: 'ไทย', vi: 'Tiếng Việt' };
+      var labels = { en: 'English', id: 'Bahasa Indonesia', ms: 'Bahasa Melayu', ko: '한국어', zh: '中文', ja: '日本語', ar: 'العربية' };
       document.querySelectorAll('.lang-bar button').forEach(function(btn) {
         if (btn.textContent === labels[lang]) btn.classList.add('active');
       });
     }
-    // Auto-detect language from URL or localStorage
+    // Auto-detect language from localStorage
     (function() {
       var saved = localStorage.getItem('travelid_lang');
       if (saved && document.getElementById('lang-' + saved)) showLang(saved);

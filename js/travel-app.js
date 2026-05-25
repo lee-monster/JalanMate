@@ -258,7 +258,7 @@
     document.documentElement.lang = lang;
 
     // title
-    var title = langData['seo.title'] || 'JalanMate - Discover Korea';
+    var title = langData['seo.title'] || 'JalanMate - Discover Indonesia & Malaysia';
     document.title = title;
 
     // meta description
@@ -1634,7 +1634,7 @@
     localStorage.setItem('travelid_saved_plans', JSON.stringify(plans));
 
     showToast(t('planner.saved'));
-    syncPlansToNotion(plans);
+    syncPlansToServer(plans);
   };
 
   function getSavedPlans() {
@@ -1643,7 +1643,7 @@
     } catch(e) { return []; }
   }
 
-  function syncPlansToNotion(plans) {
+  function syncPlansToServer(plans) {
     if (!state.authUser) return;
     var meta = plans.map(function(p) {
       return { id: p.id, title: p.title, days: p.days, createdAt: p.createdAt.substring(0, 10) };
@@ -1808,7 +1808,7 @@
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (data.success && data.shareUrl) {
-        renderShareButtons(panel, data.shareUrl, planObj.title || 'My Korea Travel Plan');
+        renderShareButtons(panel, data.shareUrl, planObj.title || 'My Travel Plan');
       } else {
         panel.innerHTML = '<p class="ta-share-error">' + (data.error || 'Failed to create share link') + '</p>';
       }
@@ -1887,7 +1887,7 @@
     document.getElementById('ta-auth-profile').classList.remove('open');
     var content = document.getElementById('ta-about-content');
     content.innerHTML =
-      '<div class="ta-about-logo"><img src="images/main.png" alt="JalanMate"></div>' +
+      '<div class="ta-about-logo"><img src="images/logo_fit.png" alt="JalanMate"></div>' +
       '<div class="ta-about-version">JalanMate v1.0.0</div>' +
       '<div class="ta-about-tagline">Discover Indonesia, Beyond Bali — for tourists and locals alike</div>' +
       '<div class="ta-about-links">' +
