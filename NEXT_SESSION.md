@@ -3,123 +3,100 @@
 > This file is committed to git, so `git pull` on any PC will retrieve it.
 > The companion `WORK_LOG.md` (gitignored, OneDrive-synced) has more detail.
 
-## Tomorrow's first command (on the other PC)
+## First commands (on the other PC)
 
 ```bash
-cd "C:\Users\User\OneDrive\0_project\JalanMate"
+cd "C:\Users\<you>\OneDrive\0_project\JalanMate"
 git status                        # should be clean
 git pull origin main              # latest from GitHub
 git log --oneline -5              # confirm latest commit
 ```
 
-**Latest commit as of session close (2026-05-26)**:
-`b7b5588 — Fix sidebar topbar overflow; default language to English`
+After `git pull`, the newest commit should be the **"Add 56 regional Indonesia
+spots"** commit, and these three files should exist:
 
-If `git pull` says "already up to date" and the latest commit matches, you're
-synced.
+- `scripts/regional-spots-data.js`        ← 56-spot source of truth
+- `scripts/seed-regional-spots.js`         ← seeder + SQL generator
+- `supabase/migrations/0003_regional_spots.sql`  ← generated migration
 
 ---
 
-## What was completed this session (2026-05-26) — Travel-ID → JalanMate rebrand
+## What was completed this session (2026-05-26) — 56 regional spots
 
-- ✅ Renamed service **Travel-ID → JalanMate** (AI travel planner for Indonesia;
-  Malaysia/Singapore long-term). New logos wired in (`logo_fit.png`,
-  `logo_app_icon.png`); PWA icons regenerated; branded 1200×630 OG card.
-- ✅ Removed TravelKo legacy: Korea/Naver/Notion text. Legal pages (privacy/terms)
-  rebuilt for the real 7 languages (en/id/ms/ko/zh/ja/ar, Arabic RTL).
-- ✅ GitHub repo → `lee-monster/JalanMate`; Vercel project → `jalanmate`; canonical
-  domain `jalanmate.vercel.app` across code + docs (was bogus `travel-id.kr`).
-- ✅ Brand palette from logo + ID/MY/SG flags: red `#E11D2E` (primary), navy
-  `#1A3C8C` (secondary), gold `#F5B301` (accent), white. (`css/travel-app.css` `:root`)
-- ✅ Removed orphaned art + TravelKo `assetlinks.json`; gitignored local working files.
-- ✅ Sidebar topbar overflow fixed (logo 34px + compact language select); default
-  UI language now English.
+Added a broad set of tourist spots across **7 Indonesian regions** (8 each = 56):
+Jakarta · Yogyakarta · Malang · Bandung · Medan · Manado · Bogor.
 
-## What remains — pick up from here
+- ✅ **Data module** `scripts/regional-spots-data.js` — single source of truth.
+  Each spot has coordinates, category, entry fee (IDR), best time, local tips,
+  opening hours, tags, and translations for **en + id + ko + zh**.
+  (Per decision: ms/ja/ar are intentionally skipped — the app's `formatSpot`
+  in `api/travel-spots.js` falls back to the English translation.)
+- ✅ **Seeder** `scripts/seed-regional-spots.js` — two modes:
+  - `node scripts/seed-regional-spots.js --emit-sql` → regenerates the 0003 SQL
+    (pure Node, no deps, no credentials).
+  - `node scripts/seed-regional-spots.js` → upserts into Supabase via the
+    service-role key (needs `.env.local` + `npm install`). Idempotent.
+- ✅ **Migration** `supabase/migrations/0003_regional_spots.sql` — generated from
+  the data module. 56 spots + 224 translation rows. Validated: every category &
+  best-time value satisfies the 0001 CHECK constraints; no name collision with
+  the 0002 demo spots; idempotent (`ON CONFLICT DO NOTHING`).
 
-> Rebrand is done & pushed. GitHub repo (`lee-monster/JalanMate`), Vercel project
-> (`jalanmate`), and the `jalanmate.vercel.app` domain are all set. Below is the
-> deploy/verify checklist + small follow-ups.
+## ⚠️ What REMAINS — the DB has NOT been seeded yet
 
-**On the other PC**: `git remote set-url origin https://github.com/lee-monster/JalanMate.git`, then `git pull`.
+The migration file exists and is committed, but **it was not yet run against
+Supabase** (this PC has no `.env.local` / service-role key). Do this first:
 
-**Small follow-ups**: `images/main_preview.png` (PWA "wide" screenshot) is still old
-art — replace with a real JalanMate screenshot; GA4 id is still `G-XXXXXXXXXX`; add
-`jalanmate.vercel.app` to Google Cloud OAuth JS origins + Maps key referrers.
+### Option A — Supabase SQL Editor (simplest, chosen route)
+1. Supabase Dashboard → (the project shared with TravelKo) → **SQL Editor** → New query
+2. Paste the **entire** contents of `supabase/migrations/0003_regional_spots.sql`
+3. **Run** → expect `Success. No rows returned`
+4. Verify:
+   ```sql
+   select region, count(*) as n
+   from travelid.spots where country = 'ID'
+   group by region order by region;
+   ```
+   Expect Jakarta / Yogyakarta / Malang / Bandung / Medan / Manado / Bogor = **8 each**
+   (plus the demo Bali/Borobudur/Bromo rows under their own regions).
+   `select count(*) from travelid.spot_translations;` should be **+224** vs before.
 
-### 🔥 Step 1 — Confirm Vercel env vars + redeploy
-Vercel dashboard → jalanmate project → Settings → Environment Variables.
-Add the following (Production / Preview / Development all checked):
-
-```
-PUBLIC_SITE_URL              https://jalanmate.vercel.app
-SUPABASE_URL                 (same as TravelKo)
-SUPABASE_ANON_KEY            (same as TravelKo)
-SUPABASE_SERVICE_ROLE_KEY    (same as TravelKo)
-SUPABASE_SCHEMA              travelid
-GOOGLE_MAPS_API_KEY          (frontend key — restrict to HTTP referrers)
-GOOGLE_GEOCODING_API_KEY     (server key)
-GOOGLE_CLIENT_ID             (reuse TravelKo's if same Google project)
-GEMINI_API_KEY               (from aistudio.google.com)
-```
-
-### Step 2 — Redeploy
-Vercel → Deployments → latest → ⋯ → Redeploy
-
-### Step 3 — Verify (run from your PC)
+### Option B — run the seeder from a PC that has the keys
 ```bash
-curl https://jalanmate.vercel.app/api/map-config
-# Expect: { "googleKey": "AIza...", "googleClientId": "...", "supabaseUrl": "https://...", "supabaseAnonKey": "...", "supabaseSchema": "travelid", "siteUrl": "..." }
-
-curl "https://jalanmate.vercel.app/api/travel-spots?lang=en&limit=3"
-# Expect: { "spots": [...3 demo spots...], "hasMore": true, ... }
-
-curl https://jalanmate.vercel.app/sitemap.xml | head -20
-# Expect: URLs starting with https://jalanmate.vercel.app/
-```
-
-### Step 4 — Browser smoke test
-Open https://jalanmate.vercel.app/ — verify:
-- Splash → map shows on Bali
-- 6 demo spots appear (3 in ID, 3 in MY)
-- Language switch works (try `ar` for RTL)
-- Region filter shows ID 🇮🇩 / MY 🇲🇾 grouped
-- Sign-in with Google works → name appears top-right
-
-### (Optional) Step 5 — Migrate the remaining 30 Notion spots
-```bash
+cp .env.example .env.local       # then fill SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
 npm install
-cp .env.example .env.local
-# Fill .env.local with NOTION_TOKEN_TRAVEL + SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
-node -r dotenv/config scripts/migrate-notion-to-supabase.js dotenv_config_path=.env.local
+node scripts/seed-regional-spots.js
 ```
+(Or `vercel link` then `vercel env pull .env.local` to fetch the keys.)
+
+### After seeding — smoke test
+Open the live site (or local) → Region filter should now show all 7 regions with
+spots; switch language to **ko** and **zh** to confirm translations render, and to
+**ms/ja/ar** to confirm the English fallback works.
 
 ---
 
-## Reference docs (in this repo)
+## To add MORE spots or fill in ms/ja/ar later
+Edit **only** `scripts/regional-spots-data.js`, then:
+```bash
+node scripts/seed-regional-spots.js --emit-sql   # regenerate 0003 SQL
+```
+and re-run the seed (idempotent — existing rows update in place). To add ms/ja/ar,
+extend each spot's `tr` object and the `TR_LANGS` array in the seeder.
 
-- `CLAUDE.md`         — full architecture, schema, auth flow
-- `DEPLOY.md`         — step-by-step deployment (this file is a quick excerpt)
-- `README.md`         — high-level overview
-- `WORK_LOG.md`       — historical work log (gitignored, OneDrive-only)
+## Older follow-ups (still open, lower priority)
+- `images/main_preview.png` (PWA "wide" screenshot) is still legacy art.
+- GA4 id is still `G-XXXXXXXXXX`.
+- Add `jalanmate.vercel.app` to Google Cloud OAuth JS origins + Maps key referrers.
+- Confirm Vercel env vars are set + redeploy (see git history of this file).
 
 ## Key external resources
-
-- GitHub repo:        https://github.com/lee-monster/JalanMate
-- Vercel project:     https://vercel.com/hbtars/jalanmate
-- Supabase project:   (same as TravelKo dashboard)
-- Notion parent page: https://www.notion.so/355722c54b8881548b33fa2f1417ba1d
+- GitHub repo:    https://github.com/lee-monster/JalanMate
+- Vercel project: https://vercel.com/hbtars/jalanmate
+- Supabase:       (same dashboard as TravelKo)
 
 ## If OneDrive lost something
-
-GitHub is the source of truth. Local OneDrive folder may have stale or
-half-synced files. To force-resync from authoritative source:
-
+GitHub is the source of truth. To force-resync (⚠️ wipes uncommitted local work):
 ```bash
-cd "C:\Users\User\OneDrive\0_project\JalanMate"
-git fetch origin
-git reset --hard origin/main      # ⚠️ wipes uncommitted local changes
+git fetch origin && git reset --hard origin/main
 ```
-
-Don't run `git reset --hard` unless you're sure no uncommitted work exists
-locally. `git status` first to check.
+Run `git status` first to be sure nothing local is unsaved.
