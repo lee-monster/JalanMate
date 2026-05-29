@@ -747,9 +747,9 @@
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (append) {
-          state.spots = state.spots.concat(data.items || []);
+          state.spots = state.spots.concat(data.spots || []);
         } else {
-          state.spots = data.items || [];
+          state.spots = data.spots || [];
         }
         // Cache all spots for bookmark lookup across filters
         state.spots.forEach(function(s) { state.spotCache[s.id] = s; });

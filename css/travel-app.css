@@ -48,7 +48,7 @@ body {
 }
 .ta-brand:hover { text-decoration: none; }
 .ta-brand-logo {
-  height: 34px; width: auto; object-fit: contain;
+  height: 30.6px; width: auto; object-fit: contain;
 }
 .ta-topbar-actions {
   display: flex; align-items: center; gap: 6px;
@@ -446,13 +446,12 @@ body {
 .ta-share-spot-facebook { background: #1877F2; }
 .ta-share-spot-zalo { background: #0068FF; }
 
-/* FAB - Register My Spot button.
-   bottom: 60px keeps clear of the Naver/Google attribution strip that runs
-   along the bottom edge of the map. */
+/* FAB - "Share a Spot" button. Compact pill anchored to the bottom-right
+   corner; bottom: 24px sits just above the Google attribution strip. */
 .ta-fab {
-  position: fixed; bottom: 60px; right: 24px; z-index: 50;
-  padding: 14px 24px; background: var(--t-primary); color: var(--t-white);
-  border: none; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+  position: fixed; bottom: 24px; right: 24px; z-index: 50;
+  padding: 10px 18px; background: var(--t-primary); color: var(--t-white);
+  border: none; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
   cursor: pointer; box-shadow: 0 4px 16px rgba(225,29,46,0.4);
   transition: all var(--t-transition); display: flex; align-items: center; gap: 8px;
 }
