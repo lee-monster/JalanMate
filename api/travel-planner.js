@@ -194,6 +194,11 @@ End the plan with a Grand Total Summary:
     Indonesia uses MUI certification — both make halal travel easy.
   - Note: "Prices are 2026 estimates; check operator sites before booking."
 
+For time-sensitive facts (current opening hours, ticket prices, ferry/flight
+schedules, seasonal closures), rely on Google Search rather than guessing — the
+sources you ground on are listed automatically at the end of the plan, so make
+those claims specific and accurate.
+
 Respond ENTIRELY in ${respondLang}. Use markdown headings, tables, and bold sparingly.
 ${visitTypeBlock}`;
 
@@ -235,7 +240,28 @@ estimates.`;
         detail: candidate && candidate.finishReason ? 'Finish reason: ' + candidate.finishReason : 'No candidates' });
     }
 
-    const plan = candidate.content.parts.filter((p) => p.text).map((p) => p.text).join('');
+    let plan = candidate.content.parts.filter((p) => p.text).map((p) => p.text).join('');
+
+    // Append the REAL sources the model grounded on via Google Search
+    // (groundingMetadata holds actual fetched URLs — not model-authored links,
+    // so they cannot be hallucinated). Surfacing them raises trust/accuracy.
+    const chunks = (candidate.groundingMetadata && candidate.groundingMetadata.groundingChunks) || [];
+    const seen = new Set();
+    const sources = [];
+    chunks.forEach((c) => {
+      const web = c && c.web;
+      if (!web || !web.uri || seen.has(web.uri)) return;
+      seen.add(web.uri);
+      sources.push({ uri: web.uri, title: (web.title || web.uri).trim() });
+    });
+    if (sources.length) {
+      const sourcesLabel = {
+        en: 'Sources', id: 'Sumber', ms: 'Sumber', ko: '출처',
+        zh: '来源', ja: '出典', ar: 'المصادر',
+      }[lang] || 'Sources';
+      plan += '\n\n---\n\n## ' + sourcesLabel + '\n\n' +
+        sources.map((s, i) => (i + 1) + '. [' + s.title + '](' + s.uri + ')').join('\n');
+    }
 
     // Increment usage; keep last 7 days
     try {
