@@ -41,37 +41,34 @@ Jakarta · Yogyakarta · Malang · Bandung · Medan · Manado · Bogor.
   best-time value satisfies the 0001 CHECK constraints; no name collision with
   the 0002 demo spots; idempotent (`ON CONFLICT DO NOTHING`).
 
-## ⚠️ What REMAINS — the DB has NOT been seeded yet
+## ✅ DONE — DB seeded & verified (2026-05-29)
 
-The migration file exists and is committed, but **it was not yet run against
-Supabase** (this PC has no `.env.local` / service-role key). Do this first:
+All three migrations (0001 schema · 0002 demo · 0003 regional) were run against
+the shared Supabase project via the SQL Editor, and verified with a read-only
+script. Counts (`node scripts/verify-seed.js`):
 
-### Option A — Supabase SQL Editor (simplest, chosen route)
-1. Supabase Dashboard → (the project shared with TravelKo) → **SQL Editor** → New query
-2. Paste the **entire** contents of `supabase/migrations/0003_regional_spots.sql`
-3. **Run** → expect `Success. No rows returned`
-4. Verify:
-   ```sql
-   select region, count(*) as n
-   from travelid.spots where country = 'ID'
-   group by region order by region;
-   ```
-   Expect Jakarta / Yogyakarta / Malang / Bandung / Medan / Manado / Bogor = **8 each**
-   (plus the demo Bali/Borobudur/Bromo rows under their own regions).
-   `select count(*) from travelid.spot_translations;` should be **+224** vs before.
+- **62 spots total** — ID: 59, MY: 3
+- 7 regions × 8 = 56 (Jakarta/Yogyakarta/Malang/Bandung/Medan/Manado/Bogor)
+  + demo Bali/Borobudur/Bromo (3 ID) + 3 demo MY
+- **266 spot_translations** rows (224 from 0003 + 42 from the 6 demo spots × 7 langs)
 
-### Option B — run the seeder from a PC that has the keys
+### This PC is now wired to Supabase directly
+`.env.local` was created by copying the **shared** Supabase URL +
+`SERVICE_ROLE_KEY` from the co-tenant project at
+`C:\Users\User\OneDrive\Agent\9_travel-planner\.env.local`
+(same project: `jycobzpclxofmxpxeegu.supabase.co`). `.env.local` is gitignored
+but OneDrive-synced, so the other PC inherits it too. `npm install` has been run.
+From now on the seeder / verify scripts run without the dashboard:
 ```bash
-cp .env.example .env.local       # then fill SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
-npm install
-node scripts/seed-regional-spots.js
+node scripts/verify-seed.js                       # read-only sanity check
+node scripts/seed-regional-spots.js               # idempotent re-seed (writes)
+node scripts/seed-regional-spots.js --emit-sql    # regenerate 0003 SQL (no creds)
 ```
-(Or `vercel link` then `vercel env pull .env.local` to fetch the keys.)
 
-### After seeding — smoke test
-Open the live site (or local) → Region filter should now show all 7 regions with
-spots; switch language to **ko** and **zh** to confirm translations render, and to
-**ms/ja/ar** to confirm the English fallback works.
+### Still TODO — smoke test in the live UI
+Open the live site → Region filter should show all 7 regions with spots; switch
+language to **ko** and **zh** to confirm translations render, and to **ms/ja/ar**
+to confirm the English fallback works.
 
 ---
 
