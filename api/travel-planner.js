@@ -8,6 +8,9 @@ const { getUserFromRequest, setCors } = require('./_lib/auth');
 const { getSupaAdmin } = require('./_lib/supabase');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// gemini-2.0-flash is no longer offered to new API projects; default to the
+// current GA Flash model. Overridable via env when models change again.
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 const DAILY_LIMIT = 20;
 
 module.exports = async function handler(req, res) {
@@ -208,7 +211,7 @@ island/peninsula, include meals, transport (mode + cost + duration), and time
 estimates.`;
 
   try {
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_API_KEY;
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
 
     const response = await fetch(url, {
       method: 'POST',
